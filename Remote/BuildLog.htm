@@ -1,0 +1,48 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=Windows-1252">
+</head>
+<body>
+<pre>
+<table width=100% bgcolor=#CFCFE5><tr> <td> <font face=arial size=+3>
+Build Log
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+<h3>------- Build started: Project: Freefalcon, Configuration: Remote|Win32 -------
+</h3>
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Command Lines
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Creating temporary file "f:\projects\Freefalcon\Remote\RSP00010F.rsp" with contents
+[
+/O2 /Op /Ot /G6 /I "Falclib\Include" /I ".\\" /I "codelib\include" /I "Vu2\Include" /I "Sim\Include" /I "Campaign\Include" /I "UI\Include" /I "Graphics\Include" /I "amd\inc\\" /D "_WINDOWS" /D "NDEBUG" /D "_LIB" /D "TARGET=m_i486" /D "WIN32" /D "STRICT" /D "WIN32_LEAN_AND_MEAN" /D "_MBCS" /Gm /EHsc /MT /Zp4 /GS /Fp".\build/release_win32/Falcon4.pch" /FAs /Fa".\\" /Fo".\build/release_win32/" /Fd".\build/release_win32/" /FR"Remote/" /W3 /c /Zi
+.\UI\SRC\Winmain.cpp
+.\UI\SRC\F4Config.cpp
+]
+Creating command line "cl.exe @f:\projects\Freefalcon\Remote\RSP00010F.rsp /nologo"
+Creating command line "rc.exe /d "NDEBUG" /l 0x409 /I "Falclib\Include" /fo"Remote/Falcon4.res" .\FALCLIB\INCLUDE\Falcon4.rc"
+Creating temporary file "f:\projects\Freefalcon\Remote\RSP000110.rsp" with contents
+[
+/OUT:"Remote/RedViper.exe" /INCREMENTAL:NO /NOLOGO /NODEFAULTLIB /DEBUG /PDB:"Remote/RedViper.pdb" /MAP:"Remote/RedViper.map" /SUBSYSTEM:WINDOWS /OPT:REF /MACHINE:I386 /FIXED:NO /FORCE:MULTIPLE .\build/release_win32\ResMgr\ResMgr.lib libCMT.lib libCPMT.lib atls.lib delayimp.lib Landh\Lib\st80w.lib d3dx.lib comsupp.lib amd\lib\release\amd3d.lib oldnames.lib comctl32.lib winmm.lib vfw32.lib wsock32.lib dsound.lib dxguid.lib dinput8.lib ddraw.lib .\build/release_win32\crashhandler\crashhandler.lib extlibs\dbghelp.lib version.lib .\build/release_win32\Graphics\nvdxt\nvdxt.lib extlibs\nvDXTlibMT.lib extlibs\nvDXTlibMT7.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib .\build\release_win32\Sim\HDigi\HDigi.lib .\build\release_win32\UI\General\UIGeneral.lib .\build\release_win32\Campaign\CampUpd\CampUpd.lib .\build\release_win32\Sim\Cockpit\Cockpit.lib .\build\release_win32\Graphics\Objects\Objects.lib .\build\release_win32\Sim\Visual\Visual.lib .\build\release_win32\Falclib\FalcLib.lib .\build\release_win32\Lists\Lists.lib .\build\release_win32\Sim\Displays\Displays.lib .\build\release_win32\Sim\OTWDrive\OTWDrive.lib .\build\release_win32\UI\Campaign\Campaign.lib .\build\release_win32\Sim\Feature\Feature.lib .\build\release_win32\UI95_Ext\UI95_ext.lib .\build\release_win32\Sim\FCC\FCC.lib .\build\release_win32\UI\Comms\UIComms.lib .\build\release_win32\Sim\Faults\Faults.lib .\build\release_win32\Comms\Comms.lib .\build\release_win32\Graphics\3Dlib\3DLib.lib .\build\release_win32\Sim\Ground\Ground.lib .\build\release_win32\Graphics\Utils\Utils.lib .\build\release_win32\UI\Setup\UISetup.lib .\build\release_win32\UI95\ui95.lib .\build\release_win32\Sim\SimInput\SimInput.lib .\build\release_win32\Graphics\BSPLib\BSPLib.lib .\build\release_win32\Graphics\Texture\Texture.lib .\build\release_win32\UI\Common\Common.lib .\build\release_win32\UI\TacRef\UITacref.lib .\build\release_win32\Navaids\Navaids.lib .\build\release_win32\Graphics\DXEngine\DXEngine.lib .\build\release_win32\Movie\Movie.lib .\build\release_win32\Campaign\CampTask\CampTask.lib .\build\release_win32\Sim\Helo\Helo.lib .\build\release_win32\UI\Logbook\UILogbook.lib .\build\release_win32\Graphics\Weather\Weather.lib .\build\release_win32\UI\Instant\UIInstant.lib .\build\release_win32\Graphics\Terrain\Terrain.lib .\build\release_win32\UI\TacEng\UITaceng.lib .\build\release_win32\FalcSnd\FalcSnd.lib .\build\release_win32\Campaign\CampLib\CampLib.lib .\build\release_win32\Sim\ICP\ICP.lib .\build\release_win32\Tools\Tools.lib .\build\release_win32\UI\Dogfight\UIDogfight.lib .\build\release_win32\Vu2\Vu2.lib .\build\release_win32\Sim\Irst\Irst.lib .\build\release_win32\Acmi\Acmi.lib .\build\release_win32\Sim\Digi\Digi.lib .\build\release_win32\Sim\Rwr\Rwr.lib .\build\release_win32\Sim\Bomb\Bomb.lib .\build\release_win32\Sim\Radar\Radar.lib .\build\release_win32\Campaign\CampTool\CampTool.lib .\build\release_win32\Sim\SimLoop\SimLoop.lib .\build\release_win32\Sim\SimLib\SimLib.lib .\build\release_win32\Sim\Missile\Missile.lib .\build\release_win32\Campaign\CampUI\CampUI.lib .\build\release_win32\Sim\Guns\Guns.lib .\build\release_win32\Sim\Aircraft\Aircraft.lib .\build\release_win32\UI\UI.lib .\build\release_win32\Sim\SimDrive\SimDrive.lib .\build\release_win32\Graphics\Renderer\Renderer.lib .\build\release_win32\Sim\airfarme\Airframe.lib .\build\release_win32\Graphics\DDStuff\DDStuff.lib .\build\release_win32\Sim\Eject\Eject.lib
+.\build\release_win32\F4Config.obj
+.\remote\Falcon4.res
+.\build\release_win32\Winmain.obj
+]
+Creating command line "link.exe @f:\projects\Freefalcon\Remote\RSP000110.rsp"
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Output Window
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Compiling...
+Winmain.cpp
+Falcon 4.0 alpha-3 (US)
+1,0,13,1
+1.0131
+alpha-3 US Edition
+F4Config.cpp
+Generating Code...
+Compiling resources...
+Linking...
+LINK : warning LNK4089: all references to 'comdlg32.dll' discarded by /OPT:REF
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Results
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+Build log was saved at "file://f:\projects\Freefalcon\Remote\BuildLog.htm"
+Freefalcon - 0 error(s), 1 warning(s)</pre></table><table   width=100% height=20 bgcolor=#CFCFE5><tr><td><font face=arial size=+2>
+</font></table></body></html>

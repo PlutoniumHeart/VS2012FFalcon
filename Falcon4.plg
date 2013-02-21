@@ -1,0 +1,92 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Objects - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\BALDEA~1\LOCALS~1\Temp\RSP103.tmp" with contents
+[
+/nologo /G6 /Zp4 /MT /W3 /GX /Zi /O1 /Op /Ob2 /I "..\..\Sim\Include" /I "..\..\Falclib\Include" /I "..\..\Campaign\Include" /I "..\..\Graphics/Include" /I "..\..\Vu2\Include" /I "..\..\Codelib\Include" /I "..\.." /D "NDEBUG" /D "_LIB" /D TARGET=m_i486 /D "WIN32" /D "_MBCS" /D "STRICT" /D "WIN32_LEAN_AND_MEAN" /Fo"..\..\build/release_win32\Graphics\Objects/" /Fd"..\..\build/release_win32\Graphics\Objects/" /FD /c 
+"E:\FFSC\SP3-2-13\Graphics\Objects\drawcld.cpp"
+"E:\FFSC\SP3-2-13\Graphics\Objects\drawovc.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\BALDEA~1\LOCALS~1\Temp\RSP103.tmp" 
+Creating temporary file "C:\DOCUME~1\BALDEA~1\LOCALS~1\Temp\RSP104.tmp" with contents
+[
+/nologo /out:"..\..\build/release_win32\Graphics\Objects\Objects.lib" 
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\draw2d.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\DrawBldg.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\DrawBrdg.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\Drawbsp.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\drawcld.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\DrawGrnd.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\drawguys.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\drawovc.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\DrawParticleSys.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\DrawPlat.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\drawpnt.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\drawpole.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\drawpuff.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\DrawRdbd.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\Drawsgmt.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\drawshdw.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\Drawtrcr.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Objects\Objlist.obj"
+]
+Creating command line "link.exe -lib @C:\DOCUME~1\BALDEA~1\LOCALS~1\Temp\RSP104.tmp"
+<h3>Output Window</h3>
+Compiling...
+drawcld.cpp
+drawovc.cpp
+Generating Code...
+Creating library...
+<h3>
+--------------------Configuration: Renderer - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\BALDEA~1\LOCALS~1\Temp\RSP105.tmp" with contents
+[
+/nologo /G6 /Zp4 /MT /W3 /GX /Zi /O1 /Op /Ob2 /I "..\..\Codelib\Include" /I "..\..\\" /I "..\Include" /I "..\..\vu2\include" /D "NDEBUG" /D "_LIB" /D TARGET=m_i486 /D "WIN32" /D "_MBCS" /D "STRICT" /D "WIN32_LEAN_AND_MEAN" /Fo"..\..\build/release_win32\Graphics\Renderer/" /Fd"..\..\build/release_win32\Graphics\Renderer/" /FD /c 
+"E:\FFSC\SP3-2-13\Graphics\Renderer\RenderNVG.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\BALDEA~1\LOCALS~1\Temp\RSP105.tmp" 
+Creating temporary file "C:\DOCUME~1\BALDEA~1\LOCALS~1\Temp\RSP106.tmp" with contents
+[
+/nologo /out:"..\..\build/release_win32\Graphics\Renderer\Renderer.lib" 
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\canvas3d.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\clip2d.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\clip3d.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\Display.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\gmComposit.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\gmradar.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\Mono2d.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\OTW.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\OTWcull.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\OTWdraw.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\OTWsky.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\Render2d.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\Render3d.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\RenderIR.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\RenderNVG.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\RenderTV.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\RenderWire.obj"
+"\FFSC\SP3-2-13\build/release_win32\Graphics\Renderer\Rviewpnt.obj"
+]
+Creating command line "link.exe -lib @C:\DOCUME~1\BALDEA~1\LOCALS~1\Temp\RSP106.tmp"
+<h3>Output Window</h3>
+Compiling...
+RenderNVG.cpp
+E:\FFSC\SP3-2-13\Graphics\Renderer\RenderNVG.cpp(52) : error C2065: 'GetRangeFog' : undeclared identifier
+E:\FFSC\SP3-2-13\Graphics\Renderer\RenderNVG.cpp(56) : error C2039: 's' : is not a member of 'TerrainVertex'
+        ..\Include\RenderOW.h(27) : see declaration of 'TerrainVertex'
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+F4-BMS.exe - 2 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

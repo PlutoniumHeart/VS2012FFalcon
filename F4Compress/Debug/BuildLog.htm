@@ -1,0 +1,126 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=Windows-1252">
+</head>
+<body>
+<pre>
+<table width=100% bgcolor=#CFCFE5><tr> <td> <font face=arial size=+3>
+Build Log
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+<h3>------- Build started: Project: F4Compress, Configuration: Debug|Win32 -------
+</h3>
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Command Lines
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Creating temporary file "f:\projects\Freefalcon\F4Compress\Debug\RSP00010D.rsp" with contents
+[
+/Od /G6 /I "..\\" /I "..\Falclib\Include" /I "..\codelib\include" /I "..\Vu2\Include" /I "..\Sim\Include" /I "..\Campaign\Include" /I "..\UI\Include" /I "..\Graphics\Include" /I "..\amd\inc" /I "..\codelib\resources\reslib\src" /I "..\codelib\tools\lists" /D "WIN32" /D "_CONSOLE" /D "_DEBUG" /D "TARGET=m_i486" /D "_CRT_NONSTDC_NO_DEPRECATE" /D "_CRT_SECURE_NO_WARNINGS" /D "_MBCS" /FD /EHsc /RTC1 /MTd /Zp4 /arch:SSE2 /Fp".\Debug/F4Compress.pch" /Fo".\Debug/" /Fd".\Debug/" /FR".\Debug/" /W3 /c /ZI
+\projects\Freefalcon\codelib\resources\reslib\src\unzip.c
+\projects\Freefalcon\FALCLIB\Token.cpp
+.\TheaterDef.cpp
+\projects\Freefalcon\codelib\resources\reslib\src\resmgr.c
+.\PlayerOp.cpp
+\projects\Freefalcon\FALCLIB\openfile.cpp
+\projects\Freefalcon\utils\lzss.cpp
+\projects\Freefalcon\codelib\tools\lists\lists.c
+\projects\Freefalcon\codelib\resources\reslib\src\inflate.c
+\projects\Freefalcon\FALCLIB\FileMemMap.cpp
+\projects\Freefalcon\SIM\SIMLIB\File.cpp
+\projects\Freefalcon\FALCLIB\F4find.cpp
+\projects\Freefalcon\UI\SRC\F4Config.cpp
+.\F4Compress.cpp
+\projects\Freefalcon\FALCLIB\dispopts.cpp
+\projects\Freefalcon\FALCLIB\dispcfg.cpp
+\projects\Freefalcon\TOOLS\MONO\Debuggr.cpp
+\projects\Freefalcon\CAMPAIGN\CAMPUI\CampStr.cpp
+\projects\Freefalcon\FALCLIB\AList.cpp
+]
+Creating command line "cl.exe @f:\projects\Freefalcon\F4Compress\Debug\RSP00010D.rsp /nologo"
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Output Window
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Compiling...
+unzip.c
+Generating Code...
+Compiling...
+Token.cpp
+TheaterDef.cpp
+Generating Code...
+Compiling...
+resmgr.c
+Generating Code...
+Compiling...
+PlayerOp.cpp
+openfile.cpp
+Falcon 4.0 alpha-3 (US)
+1,0,13,1
+1.0131
+alpha-3 US Edition
+lzss.cpp
+Generating Code...
+Compiling...
+lists.c
+inflate.c
+Generating Code...
+Compiling...
+FileMemMap.cpp
+File.cpp
+F4find.cpp
+F4Config.cpp
+F4Compress.cpp
+Note: including lib: nvDXTlibMT7.lib
+f:\projects\Freefalcon\F4Compress\F4Compress.cpp(286) : warning C4800: 'BOOL' : forcing value to bool 'true' or 'false' (performance warning)
+f:\projects\Freefalcon\F4Compress\F4Compress.cpp(206) : warning C4101: 'season' : unreferenced local variable
+f:\projects\Freefalcon\vu2\include\vu_templates.h(20) : error C2664: 'VuDeReferenceEntity' : cannot convert parameter 1 from 'FalconSessionEntity *' to 'VuEntity *'
+        Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+        f:\projects\Freefalcon\vu2\include\vu_templates.h(19) : while compiling class-template member function 'VuBin<E>::~VuBin(void)'
+        with
+        [
+            E=FalconSessionEntity
+        ]
+        c:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\include\utility(50) : see reference to class template instantiation 'VuBin<E>' being compiled
+        with
+        [
+            E=FalconSessionEntity
+        ]
+        c:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\include\xtree(46) : see reference to class template instantiation 'std::pair<_Ty1,_Ty2>' being compiled
+        with
+        [
+            _Ty1=const VuBin<FalconSessionEntity>,
+            _Ty2=TViewPoint *
+        ]
+        c:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\include\xtree(147) : see reference to class template instantiation 'std::_Tree_nod<_Traits>::_Node' being compiled
+        with
+        [
+            _Traits=std::_Tmap_traits<VuBin<FalconSessionEntity>,TViewPoint *,std::less<VuBin<FalconSessionEntity>>,std::allocator<std::pair<const VuBin<FalconSessionEntity>,TViewPoint *>>,false>
+        ]
+        c:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\include\xtree(146) : while compiling class-template member function 'std::_Tree<_Traits>::_Nodepref std::_Tree<_Traits>::_Left(std::_Tree<_Traits>::_Nodeptr)'
+        with
+        [
+            _Traits=std::_Tmap_traits<VuBin<FalconSessionEntity>,TViewPoint *,std::less<VuBin<FalconSessionEntity>>,std::allocator<std::pair<const VuBin<FalconSessionEntity>,TViewPoint *>>,false>
+        ]
+        c:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\include\map(77) : see reference to class template instantiation 'std::_Tree<_Traits>' being compiled
+        with
+        [
+            _Traits=std::_Tmap_traits<VuBin<FalconSessionEntity>,TViewPoint *,std::less<VuBin<FalconSessionEntity>>,std::allocator<std::pair<const VuBin<FalconSessionEntity>,TViewPoint *>>,false>
+        ]
+        f:\projects\Freefalcon\SIM\INCLUDE\Otwdrive.h(917) : see reference to class template instantiation 'std::map<_Kty,_Ty>' being compiled
+        with
+        [
+            _Kty=VuBin<FalconSessionEntity>,
+            _Ty=TViewPoint *
+        ]
+dispopts.cpp
+dispcfg.cpp
+Debuggr.cpp
+CampStr.cpp
+Falcon 4.0 alpha-3 (US)
+1,0,13,1
+1.0131
+alpha-3 US Edition
+AList.cpp
+Generating Code...
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Results
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+Build log was saved at "file://f:\projects\Freefalcon\F4Compress\Debug\BuildLog.htm"
+F4Compress - 1 error(s), 2 warning(s)</pre></table><table   width=100% height=20 bgcolor=#CFCFE5><tr><td><font face=arial size=+2>
+</font></table></body></html>

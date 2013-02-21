@@ -1,0 +1,414 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" content="text/html; charset=Windows-1252">
+</head>
+<body>
+<pre>
+<table width=100% bgcolor=#CFCFE5><tr> <td> <font face=arial size=+3>
+Build Log
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+<h3>------- Build started: Project: FalcLib, Configuration: Remote|Win32 -------
+</h3>
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Command Lines
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Creating temporary file "f:\projects\Freefalcon\FALCLIB\Remote\RSP0000D5.rsp" with contents
+[
+/O2 /Op /Ot /G6 /I "..\\" /I "..\include" /I "..\codelib\include" /I "..\graphics\include" /I "..\Falclib\Include" /I "..\vu2\include" /I "..\Campaign\Include" /I "..\UI\Include" /I "..\Sim\Include" /D "NDEBUG" /D "_LIB" /D "TARGET=m_i486" /D "WIN32" /D "STRICT" /D "WIN32_LEAN_AND_MEAN" /D "_MBCS" /Gm /EHsc /MT /Zp4 /GS /Fp".\..\build/release_win32\Falclib/FalcLib.pch" /FAs /Fa".\\" /Fo".\..\build/release_win32\Falclib/" /Fd".\..\build/release_win32\Falclib/" /W3 /c /Zi
+.\MsgSrc\WingmanMsg.cpp
+.\MsgSrc\WeatherMsg.cpp
+.\MsgSrc\WeaponUsageMsg.cpp
+.\MsgSrc\WeaponFireMsg.cpp
+.\Weapon.cpp
+.\vuxcreat.cpp
+.\MsgSrc\VoiceDataMsg.cpp
+\projects\Freefalcon\voicecomunication\Voice.cpp
+.\MsgSrc\UpdateSettings.cpp
+.\MsgSrc\UpdateMapPosition.cpp
+.\MsgSrc\UnitMsg.cpp
+.\MsgSrc\UnitAssignmentMsg.cpp
+.\Twoddraw.cpp
+.\MsgSrc\TrackMsg.cpp
+.\Token.cpp
+.\MsgSrc\TimingMsg.cpp
+.\TimerThread.cpp
+.\Threads.cpp
+.\ThreadMgr.cpp
+.\TheaterDef.cpp
+.\MsgSrc\TeamMsg.cpp
+.\MsgSrc\TankerMsg.cpp
+.\MsgSrc\SimTimingMsg.cpp
+.\MsgSrc\SimDirtyDataMsg.cpp
+.\MsgSrc\SimDataToggle.cpp
+.\MsgSrc\SimCampMsg.cpp
+.\MsgSrc\SendVCMsg.cpp
+.\MsgSrc\SendUnitData.cpp
+.\MsgSrc\senduimsg.cpp
+.\MsgSrc\SendSimMoverPosition.cpp
+.\MsgSrc\SendPersistantList.cpp
+.\MsgSrc\SendObjData.cpp
+.\MsgSrc\SendLogbook.cpp
+.\MsgSrc\SendImage.cpp
+.\MsgSrc\SendEvalMsg.cpp
+.\MsgSrc\SendDogfightSlot.cpp
+.\MsgSrc\SendDogfightInfo.cpp
+.\MsgSrc\SendChatMessage.cpp
+.\MsgSrc\SendCampaignMsg.cpp
+.\MsgSrc\SendAircraftSlot.cpp
+.\rules.cpp
+.\MsgSrc\RequestStatusMsg.cpp
+.\MsgSrc\RequestSimMoverPosition.cpp
+.\MsgSrc\RequestObject.cpp
+.\MsgSrc\RequestLogbook.cpp
+.\MsgSrc\RequestDogfightSlot.cpp
+.\MsgSrc\RequestDogfightInfo.cpp
+.\MsgSrc\RequestCampaignData.cpp
+.\MsgSrc\RequestAircraftSlot.cpp
+.\MsgSrc\RegenerationMsg.cpp
+.\MsgSrc\RadioChatterMsg.cpp
+.\prof_win32.c
+.\prof_process.c
+.\prof_gather.c
+.\MsgSrc\PlayerStatusMsg.cpp
+.\PlayerOp.cpp
+.\openfile.cpp
+.\MsgSrc\ObjectiveMsg.cpp
+.\MsgSrc\NavalTaskingMsg.cpp
+.\MsgSrc\MissionRequestMsg.cpp
+.\MsgSrc\MissileEndMsg.cpp
+.\messages.cpp
+.\mesgstr.cpp
+.\mesg.cpp
+.\mddriver.cpp
+\projects\Freefalcon\utils\lzss.cpp
+.\LookupTable.cpp
+.\MsgSrc\LaserDesignateMsg.cpp
+.\MsgSrc\LandingMessage.cpp
+.\MsgSrc\GraphicsTextDisplayMsg.cpp
+.\MsgSrc\GndTaskingMsg.cpp
+.\GetSimObjectData.cpp
+.\FileMemMap.cpp
+.\FileMap.cpp
+.\FalcSess.cpp
+.\MsgSrc\FalconFlightPlanMsg.cpp
+.\Falcmesg.cpp
+.\falcmem.cpp
+.\FalcList.cpp
+.\FalcGame.cpp
+.\falcent.cpp
+.\MsgSrc\FACMsg.cpp
+.\F4VU.cpp
+.\F4find.cpp
+.\F4Comms.cpp
+.\Entity.cpp
+.\MsgSrc\EjectMsg.cpp
+\projects\Freefalcon\voicecomunication\dxutil.cpp
+.\MsgSrc\DLinkMsg.cpp
+.\MsgSrc\DivertMsg.cpp
+.\dispopts.cpp
+.\dispcfg.cpp
+.\MsgSrc\DeathMessage.cpp
+.\MsgSrc\DamageMsg.cpp
+.\MsgSrc\ControlSurfaceMsg.cpp
+.\MsgSrc\CampWeaponFireMsg.cpp
+.\MsgSrc\CampTaskingMsg.cpp
+.\MsgSrc\CampMsg.cpp
+.\MsgSrc\CampEventMsg.cpp
+.\MsgSrc\CampEventDataMsg.cpp
+.\MsgSrc\CampDirtyDataMsg.cpp
+.\MsgSrc\CampDataMsg.cpp
+\projects\Freefalcon\utils\bitio.cpp
+.\MsgSrc\AWACSMsg.cpp
+.\MsgSrc\ATCMsg.cpp
+.\MsgSrc\ATCCmdMsg.cpp
+.\AList.cpp
+.\MsgSrc\AirTaskingMsg.cpp
+.\MsgSrc\AirAIModeChange.cpp
+.\MsgSrc\AddSFXMessage.cpp
+]
+Creating command line "cl.exe @f:\projects\Freefalcon\FALCLIB\Remote\RSP0000D5.rsp /nologo"
+Creating temporary file "f:\projects\Freefalcon\FALCLIB\Remote\RSP0000D6.rsp" with contents
+[
+/O2 /Op /Ot /G6 /I "..\\" /I "..\codelib\include" /I "..\graphics\include" /I "..\Falclib\Include" /I "..\vu2\include" /I "..\Campaign\Include" /I "..\UI\Include" /I "..\Sim\Include" /I "..\crashhandler" /D "NDEBUG" /D "_LIB" /D "TARGET=m_i486" /D "WIN32" /D "STRICT" /D "WIN32_LEAN_AND_MEAN" /D "_MBCS" /Gm /EHsc /MT /Zp4 /GS /Fp".\..\build/release_win32\Falclib/FalcLib.pch" /FAs /Fa".\\" /Fo".\..\build/release_win32\Falclib/" /Fd".\..\build/release_win32\Falclib/" /W3 /c /Zi
+.\ehandler.cpp
+]
+Creating command line "cl.exe @f:\projects\Freefalcon\FALCLIB\Remote\RSP0000D6.rsp /nologo"
+Creating temporary file "f:\projects\Freefalcon\FALCLIB\Remote\RSP0000D7.rsp" with contents
+[
+/Od /Og /Ob1 /Oi /Op /Ot /G6 /I "..\\" /I "..\include" /I "..\codelib\include" /I "..\graphics\include" /I "..\Falclib\Include" /I "..\vu2\include" /I "..\Campaign\Include" /I "..\UI\Include" /I "..\Sim\Include" /D "NDEBUG" /D "_LIB" /D "TARGET=m_i486" /D "WIN32" /D "STRICT" /D "WIN32_LEAN_AND_MEAN" /D "_MBCS" /GF /Gm /EHsc /MT /Zp4 /GS /Fp".\..\build/release_win32\Falclib/FalcLib.pch" /FAs /Fa".\\" /Fo".\..\build/release_win32\Falclib/" /Fd".\..\build/release_win32\Falclib/" /W3 /c /Zi
+.\classtbl.cpp
+]
+Creating command line "cl.exe @f:\projects\Freefalcon\FALCLIB\Remote\RSP0000D7.rsp /nologo"
+Creating temporary file "f:\projects\Freefalcon\FALCLIB\Remote\RSP0000D8.rsp" with contents
+[
+/OUT:".\..\build/release_win32\Falclib\FalcLib.lib" /NOLOGO
+\projects\Freefalcon\build\release_win32\Falclib\AddSFXMessage.obj
+\projects\Freefalcon\build\release_win32\Falclib\AirAIModeChange.obj
+\projects\Freefalcon\build\release_win32\Falclib\AirTaskingMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\AList.obj
+\projects\Freefalcon\build\release_win32\Falclib\ATCCmdMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\ATCMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\AWACSMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\bitio.obj
+\projects\Freefalcon\build\release_win32\Falclib\CampDataMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\CampDirtyDataMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\CampEventDataMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\CampEventMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\CampMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\CampTaskingMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\CampWeaponFireMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\classtbl.obj
+\projects\Freefalcon\build\release_win32\Falclib\ControlSurfaceMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\DamageMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\DeathMessage.obj
+\projects\Freefalcon\build\release_win32\Falclib\dispcfg.obj
+\projects\Freefalcon\build\release_win32\Falclib\dispopts.obj
+\projects\Freefalcon\build\release_win32\Falclib\DivertMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\DLinkMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\dxutil.obj
+\projects\Freefalcon\build\release_win32\Falclib\ehandler.obj
+\projects\Freefalcon\build\release_win32\Falclib\EjectMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\Entity.obj
+\projects\Freefalcon\build\release_win32\Falclib\F4Comms.obj
+\projects\Freefalcon\build\release_win32\Falclib\F4find.obj
+\projects\Freefalcon\build\release_win32\Falclib\F4VU.obj
+\projects\Freefalcon\build\release_win32\Falclib\FACMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\falcent.obj
+\projects\Freefalcon\build\release_win32\Falclib\FalcGame.obj
+\projects\Freefalcon\build\release_win32\Falclib\FalcList.obj
+\projects\Freefalcon\build\release_win32\Falclib\falcmem.obj
+\projects\Freefalcon\build\release_win32\Falclib\Falcmesg.obj
+\projects\Freefalcon\build\release_win32\Falclib\FalconFlightPlanMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\FalcSess.obj
+\projects\Freefalcon\build\release_win32\Falclib\FileMap.obj
+\projects\Freefalcon\build\release_win32\Falclib\FileMemMap.obj
+\projects\Freefalcon\build\release_win32\Falclib\GetSimObjectData.obj
+\projects\Freefalcon\build\release_win32\Falclib\GndTaskingMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\GraphicsTextDisplayMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\LandingMessage.obj
+\projects\Freefalcon\build\release_win32\Falclib\LaserDesignateMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\LookupTable.obj
+\projects\Freefalcon\build\release_win32\Falclib\lzss.obj
+\projects\Freefalcon\build\release_win32\Falclib\mddriver.obj
+\projects\Freefalcon\build\release_win32\Falclib\mesg.obj
+\projects\Freefalcon\build\release_win32\Falclib\mesgstr.obj
+\projects\Freefalcon\build\release_win32\Falclib\messages.obj
+\projects\Freefalcon\build\release_win32\Falclib\MissileEndMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\MissionRequestMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\NavalTaskingMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\ObjectiveMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\openfile.obj
+\projects\Freefalcon\build\release_win32\Falclib\PlayerOp.obj
+\projects\Freefalcon\build\release_win32\Falclib\PlayerStatusMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\prof_gather.obj
+\projects\Freefalcon\build\release_win32\Falclib\prof_process.obj
+\projects\Freefalcon\build\release_win32\Falclib\prof_win32.obj
+\projects\Freefalcon\build\release_win32\Falclib\RadioChatterMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\RegenerationMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\RequestAircraftSlot.obj
+\projects\Freefalcon\build\release_win32\Falclib\RequestCampaignData.obj
+\projects\Freefalcon\build\release_win32\Falclib\RequestDogfightInfo.obj
+\projects\Freefalcon\build\release_win32\Falclib\RequestDogfightSlot.obj
+\projects\Freefalcon\build\release_win32\Falclib\RequestLogbook.obj
+\projects\Freefalcon\build\release_win32\Falclib\RequestObject.obj
+\projects\Freefalcon\build\release_win32\Falclib\RequestSimMoverPosition.obj
+\projects\Freefalcon\build\release_win32\Falclib\RequestStatusMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\rules.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendAircraftSlot.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendCampaignMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendChatMessage.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendDogfightInfo.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendDogfightSlot.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendEvalMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendImage.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendLogbook.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendObjData.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendPersistantList.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendSimMoverPosition.obj
+\projects\Freefalcon\build\release_win32\Falclib\senduimsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendUnitData.obj
+\projects\Freefalcon\build\release_win32\Falclib\SendVCMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\SimCampMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\SimDataToggle.obj
+\projects\Freefalcon\build\release_win32\Falclib\SimDirtyDataMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\SimTimingMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\TankerMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\TeamMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\TheaterDef.obj
+\projects\Freefalcon\build\release_win32\Falclib\ThreadMgr.obj
+\projects\Freefalcon\build\release_win32\Falclib\Threads.obj
+\projects\Freefalcon\build\release_win32\Falclib\TimerThread.obj
+\projects\Freefalcon\build\release_win32\Falclib\TimingMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\Token.obj
+\projects\Freefalcon\build\release_win32\Falclib\TrackMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\Twoddraw.obj
+\projects\Freefalcon\build\release_win32\Falclib\UnitAssignmentMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\UnitMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\UpdateMapPosition.obj
+\projects\Freefalcon\build\release_win32\Falclib\UpdateSettings.obj
+\projects\Freefalcon\build\release_win32\Falclib\Voice.obj
+\projects\Freefalcon\build\release_win32\Falclib\VoiceDataMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\vuxcreat.obj
+\projects\Freefalcon\build\release_win32\Falclib\Weapon.obj
+\projects\Freefalcon\build\release_win32\Falclib\WeaponFireMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\WeaponUsageMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\WeatherMsg.obj
+\projects\Freefalcon\build\release_win32\Falclib\WingmanMsg.obj
+]
+Creating command line "lib.exe @f:\projects\Freefalcon\FALCLIB\Remote\RSP0000D8.rsp"
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Output Window
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>Compiling...
+WingmanMsg.cpp
+WeatherMsg.cpp
+WeaponUsageMsg.cpp
+WeaponFireMsg.cpp
+Weapon.cpp
+vuxcreat.cpp
+VoiceDataMsg.cpp
+Voice.cpp
+UpdateSettings.cpp
+UpdateMapPosition.cpp
+UnitMsg.cpp
+UnitAssignmentMsg.cpp
+Twoddraw.cpp
+TrackMsg.cpp
+Token.cpp
+TimingMsg.cpp
+TimerThread.cpp
+Threads.cpp
+ThreadMgr.cpp
+TheaterDef.cpp
+Generating Code...
+Compiling...
+TeamMsg.cpp
+TankerMsg.cpp
+SimTimingMsg.cpp
+SimDirtyDataMsg.cpp
+SimDataToggle.cpp
+SimCampMsg.cpp
+SendVCMsg.cpp
+SendUnitData.cpp
+senduimsg.cpp
+SendSimMoverPosition.cpp
+SendPersistantList.cpp
+SendObjData.cpp
+SendLogbook.cpp
+SendImage.cpp
+SendEvalMsg.cpp
+SendDogfightSlot.cpp
+SendDogfightInfo.cpp
+SendChatMessage.cpp
+SendCampaignMsg.cpp
+SendAircraftSlot.cpp
+Generating Code...
+Compiling...
+rules.cpp
+RequestStatusMsg.cpp
+RequestSimMoverPosition.cpp
+RequestObject.cpp
+RequestLogbook.cpp
+RequestDogfightSlot.cpp
+RequestDogfightInfo.cpp
+RequestCampaignData.cpp
+RequestAircraftSlot.cpp
+RegenerationMsg.cpp
+RadioChatterMsg.cpp
+Generating Code...
+Compiling...
+prof_win32.c
+prof_process.c
+prof_gather.c
+Generating Code...
+Compiling...
+PlayerStatusMsg.cpp
+PlayerOp.cpp
+openfile.cpp
+Falcon 4.0 alpha-3 (US)
+1,0,13,1
+1.0131
+alpha-3 US Edition
+ObjectiveMsg.cpp
+NavalTaskingMsg.cpp
+MissionRequestMsg.cpp
+MissileEndMsg.cpp
+messages.cpp
+mesgstr.cpp
+mesg.cpp
+mddriver.cpp
+Falcon 4.0 alpha-3 (US)
+1,0,13,1
+1.0131
+alpha-3 US Edition
+lzss.cpp
+LookupTable.cpp
+LaserDesignateMsg.cpp
+LandingMessage.cpp
+GraphicsTextDisplayMsg.cpp
+GndTaskingMsg.cpp
+GetSimObjectData.cpp
+FileMemMap.cpp
+FileMap.cpp
+Generating Code...
+Compiling...
+FalcSess.cpp
+FalconFlightPlanMsg.cpp
+Falcmesg.cpp
+falcmem.cpp
+FalcList.cpp
+FalcGame.cpp
+falcent.cpp
+FACMsg.cpp
+F4VU.cpp
+Falcon 4.0 alpha-3 (US)
+1,0,13,1
+1.0131
+alpha-3 US Edition
+F4find.cpp
+F4Comms.cpp
+Entity.cpp
+EjectMsg.cpp
+dxutil.cpp
+DLinkMsg.cpp
+DivertMsg.cpp
+dispopts.cpp
+dispcfg.cpp
+DeathMessage.cpp
+DamageMsg.cpp
+Generating Code...
+Compiling...
+ControlSurfaceMsg.cpp
+CampWeaponFireMsg.cpp
+CampTaskingMsg.cpp
+CampMsg.cpp
+CampEventMsg.cpp
+Falcon 4.0 alpha-3 (US)
+1,0,13,1
+1.0131
+alpha-3 US Edition
+CampEventDataMsg.cpp
+CampDirtyDataMsg.cpp
+CampDataMsg.cpp
+bitio.cpp
+AWACSMsg.cpp
+ATCMsg.cpp
+ATCCmdMsg.cpp
+AList.cpp
+AirTaskingMsg.cpp
+AirAIModeChange.cpp
+AddSFXMessage.cpp
+Generating Code...
+Compiling...
+ehandler.cpp
+Falcon 4.0 alpha-3 (US)
+1,0,13,1
+1.0131
+alpha-3 US Edition
+Compiling...
+classtbl.cpp
+Creating library...
+</pre></table><table width=100% bgcolor=#DFDFE5><tr><td><font face=arial size=+2>
+Results
+</font></table><table width=* cellspacing=0 cellpadding=0><tr><td width=0 bgcolor=#EDEDF5>&nbsp;</td><td width=0 bgcolor=#FFFFFF>&nbsp;</td><td width=*><pre>
+Build log was saved at "file://f:\projects\Freefalcon\FALCLIB\Remote\BuildLog.htm"
+FalcLib - 0 error(s), 0 warning(s)</pre></table><table   width=100% height=20 bgcolor=#CFCFE5><tr><td><font face=arial size=+2>
+</font></table></body></html>
