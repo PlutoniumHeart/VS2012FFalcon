@@ -64,6 +64,8 @@ local.properties
 .builds
 *.dotCover
 *.sdf
+*.asm
+*.suo
 
 ## TODO: If you have NuGet Package Restore enabled, uncomment this
 #packages/
