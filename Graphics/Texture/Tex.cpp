@@ -32,7 +32,8 @@ extern void WriteDTXnFile(unsigned long count, void *buffer);
 
 static HRESULT WINAPI MipLoadCallback(LPDIRECTDRAWSURFACE7 lpDDSurface, LPDDSURFACEDESC2 lpDDSurfaceDesc, LPVOID lpContext);
 
-struct MipLoadContext {
+struct MipLoadContext 
+{
 	int nLevel;
 	LPDIRECTDRAWSURFACE7 lpDDSurface;
 };
@@ -89,8 +90,10 @@ static char *arrSurfFmt2String[] =
 static int FindMsb(DWORD val)
 {
     int i = 0;
-	for(i = 0; i < 32; i++){
-		if(val & (1 << (31 - i))){
+	for(i = 0; i < 32; i++)
+	{
+		if(val & (1 << (31 - i)))
+		{
 			break;
 		}
 	}
@@ -116,18 +119,18 @@ Texture::Texture()
 	//sfr: added palette control
 	//paletteFromBank = thFromBank = false;
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	InterlockedIncrement((long *)&m_dwNumHandles);		// Number of instances
 	InterlockedExchangeAdd((long *)&m_dwTotalBytes,sizeof(*this));
-	#endif
+#endif
 };
 
 Texture::~Texture()
 {
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	//InterlockedIncrement((long *)&m_dwNumHandles);		// Number of instances
 	//InterlockedExchangeAdd((long *)&m_dwTotalBytes,-sizeof(*this));
-	#endif
+#endif
 
     // Pu 239
     if((texHandle != NULL) || (imageData != NULL)) 
@@ -145,13 +148,15 @@ Texture::~Texture()
 void Texture::SetupForDevice(DXContext *texRC, char *path)
 {
 	// Store the texture path for future reference
-	if(strlen(path )+1 >= sizeof(TexturePath)){
+	if(strlen(path )+1 >= sizeof(TexturePath))
+	{
 		ShiError("Texture path name overflow!");
 	}
 
 	strcpy(TexturePath,path);
 
-	if(TexturePath[strlen(TexturePath)-1] != '\\'){
+	if(TexturePath[strlen(TexturePath)-1] != '\\')
+	{
 		strcat(TexturePath, "\\");
 	}
 
@@ -194,14 +199,16 @@ BOOL Texture::LoadImage(char *filename, DWORD newFlags, BOOL addDefaultPath)
 		strcpy(fullname,TexturePath);
 		strcat(fullname,filename);
 	}
-	else{
+	else
+	{
 		strcpy(fullname,filename);
 	}
 
 	texFile.imageType = CheckImageType(fullname);
 	ShiAssert(texFile.imageType != IMAGE_TYPE_UNKNOWN);
 
-	if (texFile.imageType == IMAGE_TYPE_APL) {
+	if (texFile.imageType == IMAGE_TYPE_APL) 
+	{
 		flags |= MPR_TI_ALPHA;
 	}
 
@@ -218,10 +225,12 @@ BOOL Texture::LoadImage(char *filename, DWORD newFlags, BOOL addDefaultPath)
 	dimensions = texFile.image.width;
 	ShiAssert(dimensions <= 2048);
 
-	if (texFile.image.palette){
+	if (texFile.image.palette)
+	{
 		chromaKey = texFile.image.palette[0];
 	}
-	else {
+	else 
+	{
 		// Default to blue chroma key color
 		chromaKey = 0xFFFF0000;
 	}
@@ -238,7 +247,8 @@ BOOL Texture::LoadImage(char *filename, DWORD newFlags, BOOL addDefaultPath)
 			palette->Setup32((DWORD *)texFile.image.palette);
 		}
 
-		else {
+		else 
+		{
 			palette->Reference();
 		}
 
@@ -299,15 +309,16 @@ BOOL Texture::LoadImage(char *filename, DWORD newFlags, BOOL addDefaultPath)
 		dimensions = ddsd.dwLinearSize;
 	}
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	InterlockedExchangeAdd((long *)&m_dwTotalBytes,dimensions * dimensions);
-	#endif
+#endif
 
 	return TRUE;
 }
 
 //sfr: moved here
-void Texture::FreeAll() {
+void Texture::FreeAll() 
+{
 	FreeTexture(); 
 	FreeImage();
 	//FreePalette(); 
@@ -327,7 +338,8 @@ void Texture::FreeImage()
 	}
 
 	//FIXME - WTF is going on here?
-	if (texHandle == NULL){
+	if (texHandle == NULL)
+	{
 		FreePalette();
 	}
 }
@@ -336,17 +348,18 @@ void Texture::FreeImage()
 bool Texture::CreateTexture(char *strName)
 {
 	ShiAssert(rc != NULL);
-    // Pu239 exception handled somewhere down the code
-	//ShiAssert(imageData);
+	ShiAssert(imageData);
 	ShiAssert(texHandle == NULL);
 
 	// JB 010318 CTD
-	if(/* !F4IsBadReadPtr(palette,sizeof(Palette)) &&*/ (flags & MPR_TI_PALETTE) ){
+	if(/* !F4IsBadReadPtr(palette,sizeof(Palette)) &&*/ (flags & MPR_TI_PALETTE) )
+	{
 		palette->Activate();
 		ShiAssert(palette->palHandle);
 
 		// JB 010616
-		if (palette->palHandle == NULL){
+		if (palette->palHandle == NULL)
+		{
 			return false;
 		}
 
@@ -357,14 +370,17 @@ bool Texture::CreateTexture(char *strName)
 		texHandle->Create(strName,(WORD)flags,8,static_cast<UInt16>(dimensions),static_cast<UInt16>(dimensions));
 
 		// OW: Prevent a crash
-		if (imageData != NULL){
-			if(!texHandle->Load(0,chromaKey,(BYTE *)imageData)){
+		if (imageData != NULL)
+		{
+			if(!texHandle->Load(0,chromaKey,(BYTE *)imageData))
+			{
 				return false;
 			}
 		}
 		return true;
 	}
-	else {
+	else 
+	{
 		int width = 0;
 
 		if(flags&MPR_TI_16)
@@ -393,13 +409,15 @@ bool Texture::CreateTexture(char *strName)
 // Release the MPR texture we're holding.
 void Texture::FreeTexture()
 {
-	if( texHandle != NULL ){
+	if( texHandle != NULL )
+	{
 		delete texHandle;
 		texHandle = NULL;
 	}
 
 	// We're totally gone, so get rid of our palette if we had one
-	if (imageData == NULL){
+	if (imageData == NULL)
+	{
 		FreePalette();
 	}
 }
@@ -418,12 +436,14 @@ BOOL Texture::LoadAndCreate(char *filename, DWORD newFlags)
 // Release the MPR palette and palette data we're holding.
 void Texture::FreePalette()
 {
-	if ((palette != NULL) && (palette->Release() == 0)){
+	if ((palette != NULL) && (palette->Release() == 0))
+	{
 		// sfr: added palette check and corectedx the > to >=
 		if (
 			(palette < &ThePaletteBank.PalettePool[0]) || 
 			(palette >= &ThePaletteBank.PalettePool[ThePaletteBank.nPalettes])
-		){
+		)
+		{
 			// we cannot delete palettes that come from bank
 			delete palette;
 		}
@@ -438,7 +458,8 @@ bool Texture::UpdateMPR(char *strName)
 	ShiAssert(imageData);
 	ShiAssert(texHandle);
 
-	if(!texHandle || !imageData){
+	if(!texHandle || !imageData)
+	{
 		return false;
 	}
 
@@ -448,7 +469,8 @@ bool Texture::UpdateMPR(char *strName)
 // OW
 void Texture::RestoreAll()
 {
-	if (texHandle){
+	if (texHandle)
+	{
 		texHandle->RestoreAll();
 	}
 }
@@ -496,19 +518,22 @@ TextureHandle::~TextureHandle()
 	//InterlockedExchangeAdd((long *)&m_dwTotalBytes,-sizeof(*this));
 	//InterlockedExchangeAdd((long *)&m_dwTotalBytes,-m_strName.size());
 
-	if( m_pDDS ){
+	if( m_pDDS )
+	{
 		DDSURFACEDESC2 ddsd;
 		ZeroMemory(&ddsd,sizeof(ddsd));
 		ddsd.dwSize = sizeof(ddsd);
 		HRESULT hr = m_pDDS->GetSurfaceDesc(&ddsd);
 		ShiAssert(SUCCEEDED(hr));
 
-		if(ddsd.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY){
+		if(ddsd.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY)
+		{
 			//InterlockedExchangeAdd((long *)&m_dwTotalBytes,-(ddsd.lPitch * ddsd.dwHeight));
 		}
 	}
 
-	if( m_pImageData && m_bImageDataOwned ){
+	if( m_pImageData && m_bImageDataOwned )
+	{
 		DWORD dwSize = m_nImageDataStride * m_nHeight;
 /*		InterlockedExchangeAdd((long *)&m_dwTotalBytes,-dwSize);
 		InterlockedExchangeAdd((long *)&m_dwBitmapBytes,-dwSize);	*/	
@@ -516,10 +541,16 @@ TextureHandle::~TextureHandle()
 #endif
 
 	// JB 010318 CTD
-	if (m_pDDS && !F4IsBadReadPtr(m_pDDS,sizeof(IDirectDrawSurface7))) m_pDDS->Release();
+	if (m_pDDS && !F4IsBadReadPtr(m_pDDS,sizeof(IDirectDrawSurface7))) 
+		m_pDDS->Release();
+
 	m_pDDS = NULL;
-	if (m_pPalAttach) m_pPalAttach->DetachFromTexture(this);
-	if (m_pImageData && m_bImageDataOwned) delete[] m_pImageData;
+
+	if (m_pPalAttach) 
+		m_pPalAttach->DetachFromTexture(this);
+
+	if (m_pImageData && m_bImageDataOwned) 
+		delete [] m_pImageData;
 }
 
 bool TextureHandle::Create(char *strName, UInt32 info, UInt16 bits, UInt16 width, UInt16 height, DWORD dwFlags)
@@ -531,7 +562,8 @@ bool TextureHandle::Create(char *strName, UInt32 info, UInt16 bits, UInt16 width
 	m_dwFlags = info;
 
 #ifdef _DEBUG
-	if( strName ){
+	if( strName )
+	{
 		m_strName = strName;
 		InterlockedExchangeAdd((long*)&m_dwTotalBytes,m_strName.size());
 	}
@@ -556,7 +588,8 @@ bool TextureHandle::Create(char *strName, UInt32 info, UInt16 bits, UInt16 width
 			ddsd.dwMipMapCount = 5;
 			ddsd.ddsCaps.dwCaps |= DDSCAPS_MIPMAP | DDSCAPS_COMPLEX;
 		}
-		else {
+		else 
+		{
 			ddsd.dwMipMapCount = 1;
 		}
 
@@ -573,10 +606,12 @@ bool TextureHandle::Create(char *strName, UInt32 info, UInt16 bits, UInt16 width
 			int nMsb;
 
 			nMsb = FindMsb(ddsd.dwWidth);
-			if(ddsd.dwWidth & ~(1 << nMsb)) ddsd.dwWidth = 1 << (nMsb + 1);
+			if(ddsd.dwWidth & ~(1 << nMsb)) 
+				ddsd.dwWidth = 1 << (nMsb + 1);
 
 			nMsb = FindMsb(ddsd.dwHeight);
-			if(ddsd.dwHeight & ~(1 << nMsb)) ddsd.dwHeight = 1 << (nMsb + 1);
+			if(ddsd.dwHeight & ~(1 << nMsb)) 
+				ddsd.dwHeight = 1 << (nMsb + 1);
 		}
 
 		// Force square
@@ -611,41 +646,52 @@ bool TextureHandle::Create(char *strName, UInt32 info, UInt16 bits, UInt16 width
 					ddsd.ddsCaps.dwCaps2 |= DDSCAPS2_DONOTPERSIST;
 			}
 			// Note: mutually exclusive with texture management
-			else if(dwFlags & FLAG_INLOCALVIDMEM){
+			else if(dwFlags & FLAG_INLOCALVIDMEM)
+			{
 				ddsd.ddsCaps.dwCaps |= DDSCAPS_VIDEOMEMORY;
 			}
 		}
-		else{
+		else
+		{
 			ddsd.ddsCaps.dwCaps  |= DDSCAPS_SYSTEMMEMORY;
 		}
 
-		if(dwFlags & FLAG_HINT_STATIC){
+		if(dwFlags & FLAG_HINT_STATIC)
+		{
 			ddsd.ddsCaps.dwCaps2 |= DDSCAPS2_HINTSTATIC;
 		}
 
-		if(dwFlags & FLAG_HINT_DYNAMIC){
+		if(dwFlags & FLAG_HINT_DYNAMIC)
+		{
 			ddsd.ddsCaps.dwCaps2 |= DDSCAPS2_HINTDYNAMIC;
 		}
 
-		if( m_dwFlags & MPR_TI_PALETTE ){
+		if( m_dwFlags & MPR_TI_PALETTE )
+		{
 			ShiAssert(m_pPalAttach);
 
-			if( m_dwFlags & MPR_TI_ALPHA ){
-				if(m_dwFlags & MPR_TI_CHROMAKEY){
+			if( m_dwFlags & MPR_TI_ALPHA )
+			{
+				if(m_dwFlags & MPR_TI_CHROMAKEY)
+				{
 					ddsd.ddpfPixelFormat = m_arrPF[TEX_CAT_CHROMA_ALPHA];
 				}
-				else{
+				else
+				{
 					ddsd.ddpfPixelFormat = m_arrPF[TEX_CAT_ALPHA];
 				}
 			}
-			else if(m_dwFlags & MPR_TI_CHROMAKEY){
+			else if(m_dwFlags & MPR_TI_CHROMAKEY)
+			{
 				ddsd.ddpfPixelFormat = m_arrPF[TEX_CAT_CHROMA];
 			}
-			else{
+			else
+			{
 				ddsd.ddpfPixelFormat = m_arrPF[TEX_CAT_DEFAULT];
 			}
 		}
-		else{
+		else
+		{
 			if( dwFlags & FLAG_MATCHPRIMARY )
 			{
 				IDirectDrawSurface7Ptr pDDS;
@@ -661,17 +707,21 @@ bool TextureHandle::Create(char *strName, UInt32 info, UInt16 bits, UInt16 width
 				CheckHR(pDD->GetDisplayMode(&ddsdMode));
 				ddsd.ddpfPixelFormat = ddsdMode.ddpfPixelFormat;
 			}
-			else if( m_dwFlags & MPR_TI_DDS ){
+			else if( m_dwFlags & MPR_TI_DDS )
+			{
 				ddsd.ddpfPixelFormat.dwSize = 32;
 				ddsd.ddpfPixelFormat.dwFlags |= DDPF_FOURCC;
 
-				if( m_dwFlags&MPR_TI_DXT1 )	{
+				if( m_dwFlags&MPR_TI_DXT1 )	
+				{
 					ddsd.ddpfPixelFormat.dwFourCC = MAKEFOURCC('D','X','T','1');
 				}
-				else if( m_dwFlags&MPR_TI_DXT3 ){
+				else if( m_dwFlags&MPR_TI_DXT3 )
+				{
 					ddsd.ddpfPixelFormat.dwFourCC = MAKEFOURCC('D','X','T','3');
 				}
-				else if( m_dwFlags&MPR_TI_DXT5 ){
+				else if( m_dwFlags&MPR_TI_DXT5 )
+				{
 					ddsd.ddpfPixelFormat.dwFourCC = MAKEFOURCC('D','X','T','5');
 				}
 			}
@@ -680,15 +730,18 @@ bool TextureHandle::Create(char *strName, UInt32 info, UInt16 bits, UInt16 width
 		// Create the surface
 		HRESULT hr = rc->m_pDD->CreateSurface(&ddsd,&m_pDDS, NULL);
 
-		if(FAILED(hr)){
-			if(hr == DDERR_OUTOFVIDEOMEMORY){
+		if(FAILED(hr))
+		{
+			if(hr == DDERR_OUTOFVIDEOMEMORY)
+			{
 				MonoPrint("TextureHandle::Create - EVICTING MANAGED TEXTURES !!\n");
 
 				// If we are out of video memory, evict all managed textures and retry
 				CheckHR(rc->m_pD3D->EvictManagedTextures());
 				CheckHR(rc->m_pDD->CreateSurface(&ddsd, &m_pDDS, NULL));
 			}
-			else {
+			else 
+			{
 				throw _com_error(hr);
 			}
 		}
@@ -709,7 +762,7 @@ bool TextureHandle::Create(char *strName, UInt32 info, UInt16 bits, UInt16 width
 			}
 		}
 
-		#ifdef _DEBUG
+#ifdef _DEBUG
 		if(m_pDDS)
 		{
 			DDSURFACEDESC2 ddsd;
@@ -728,7 +781,7 @@ bool TextureHandle::Create(char *strName, UInt32 info, UInt16 bits, UInt16 width
 			if(ddsd.ddsCaps.dwCaps & DDSCAPS_SYSTEMMEMORY)
 				InterlockedExchangeAdd((long *)&m_dwTotalBytes,ddsd.lPitch * ddsd.dwHeight);
 		}
-		#endif
+#endif
 
 		return true;
 	}
@@ -745,7 +798,8 @@ bool TextureHandle::Load(UInt16 mip, UInt chroma, UInt8 *TexBuffer, bool bDoNotL
 	ShiAssert(TexBuffer);
 
 	// MLR 2003-10-10 - Prevent CTD.
-	if(!TexBuffer){
+	if(!TexBuffer)
+	{
 		return false;
 	}
 
@@ -842,7 +896,8 @@ bool TextureHandle::Load(UInt16 mip, UInt chroma, UInt8 *TexBuffer, bool bDoNotL
 		}
 
 		// Load it
-		if(!bDoNotLoadBits){
+		if(!bDoNotLoadBits)
+		{
 			if( !Reload() )
 			{
 				// If loading failed free memory
@@ -865,7 +920,7 @@ bool TextureHandle::Load(UInt16 mip, UInt chroma, UInt8 *TexBuffer, bool bDoNotL
 			InterlockedExchangeAdd((long *)&m_dwTotalBytes,-(m_nImageDataStride * m_nHeight));
 			#endif
 
-			delete[] m_pImageData;
+			delete [] m_pImageData;
 		}
 
 		// Temporary value
@@ -934,7 +989,8 @@ bool TextureHandle::Reload()
 	// No DX context
 	if (!m_pDDS) return false;
 
-	if (!(m_dwFlags & MPR_TI_DDS)){
+	if (!(m_dwFlags & MPR_TI_DDS))
+	{
 		if ( !(m_dwFlags & MPR_TI_PALETTE) )
 		{
 			ShiAssert(false);
@@ -942,7 +998,8 @@ bool TextureHandle::Reload()
 		}
 	}
 
-	if (!m_pImageData) return false;
+	if (!m_pImageData) 
+		return false;
 
 	DDSURFACEDESC2 ddsd;
 	ZeroMemory(&ddsd,sizeof(ddsd));
@@ -957,14 +1014,17 @@ bool TextureHandle::Reload()
 
 		HRESULT hr = m_pDDS->Lock(NULL,&ddsd,DDLOCK_DONOTWAIT | DDLOCK_WRITEONLY | DDLOCK_SURFACEMEMORYPTR,NULL);
 
-		if(FAILED(hr)){
-			if(hr == DDERR_SURFACELOST)	{
+		if(FAILED(hr))
+		{
+			if(hr == DDERR_SURFACELOST)	
+			{
 				// If the surface is lost, restore it and retry
 				CheckHR(m_pDDS->Restore());
 
 				CheckHR(m_pDDS->Lock(NULL,&ddsd,DDLOCK_WAIT | DDLOCK_WRITEONLY | DDLOCK_SURFACEMEMORYPTR,NULL));
 			}
-			else {
+			else 
+			{
 				throw _com_error(hr);
 			}
 		}
@@ -974,7 +1034,8 @@ bool TextureHandle::Reload()
 
 // Reloading is a different story - because this is called VERY frequently we have to be very fast with whatever we are doing here
 
-		if( m_dwFlags&MPR_TI_DDS ){
+		if( m_dwFlags&MPR_TI_DDS )
+		{
 			BYTE *pDst = (BYTE *)ddsd.lpSurface;
 			BYTE *pSrc = m_pImageData;
 
@@ -984,9 +1045,10 @@ bool TextureHandle::Reload()
 			}*/
 		}
 		// sfr: weird.. added {} around switch
-		else{
-			switch(m_eSurfFmt)
+		else
 		{
+			switch(m_eSurfFmt)
+			{
 			case D3DX_SF_PALETTE8:
 			{
 				BYTE *pSrc = m_pImageData;
@@ -1038,7 +1100,8 @@ bool TextureHandle::Reload()
 				{
 					DWORD dwSize = m_nWidth * m_nHeight;
 
-					for(int i=0; static_cast<unsigned int>(i)<dwSize; i++){
+					for(int i=0; static_cast<unsigned int>(i)<dwSize; i++)
+					{
 						pDst[i] = palette[pSrc[i]];
 					}
 				}
@@ -1080,7 +1143,8 @@ bool TextureHandle::Reload()
 				WORD *pDst = (WORD *)ddsd.lpSurface;
 
 				// JB 010404 CTD
-				if(F4IsBadReadPtr(pSrc,sizeof(BYTE)) || F4IsBadReadPtr(pDst,sizeof(WORD))) break;
+				if(F4IsBadReadPtr(pSrc,sizeof(BYTE)) || F4IsBadReadPtr(pDst,sizeof(WORD))) 
+					break;
 
 				DWORD dwPitch = ddsd.lPitch >> 1;
 
@@ -1241,7 +1305,7 @@ bool TextureHandle::Reload()
 
 			default:
 				ShiAssert(false);
-		}
+			}
 
 		}
 		CheckHR(m_pDDS->Unlock(NULL));
@@ -1261,7 +1325,8 @@ bool TextureHandle::Reload()
 	catch( _com_error e )
 	{
 		// Unlock if still locked
-		if(ddsd.lpSurface) m_pDDS->Unlock(NULL);
+		if(ddsd.lpSurface) 
+			m_pDDS->Unlock(NULL);
 
 		ReportTextureLoadError(e.Error(),true);
 		return false;
@@ -1276,16 +1341,17 @@ void TextureHandle::RestoreAll()
 
 		if(SUCCEEDED(hr))
 		{
-			#ifdef _DEBUG
+#ifdef _DEBUG
 			MonoPrint("TextureHandle::RestoreAll - %s restored successfully\n",m_strName.c_str());
-			#endif
+#endif
 
 			Reload();
 		}
 
-		#ifdef _DEBUG
-		else MonoPrint("TextureHandle::RestoreAll - FAILED to restore %s \n",m_strName.c_str());
-		#endif
+#ifdef _DEBUG
+		else 
+			MonoPrint("TextureHandle::RestoreAll - FAILED to restore %s \n",m_strName.c_str());
+#endif
 	}
 }
 
@@ -1346,29 +1412,31 @@ void TextureHandle::Clear()
 
 bool TextureHandle::SetPriority(DWORD dwPrio)
 {
-	if(m_pDDS) return SUCCEEDED(m_pDDS->SetPriority(dwPrio));
+	if(m_pDDS) 
+		return SUCCEEDED(m_pDDS->SetPriority(dwPrio));
 	return false;
 }
 
 void TextureHandle::PreLoad()
 {
-	if(m_pDDS && m_pD3DD){
+	if(m_pDDS && m_pD3DD)
+	{
 		m_pD3DD->PreLoad(m_pDDS);
 	}
 }
 
 void TextureHandle::ReportTextureLoadError(HRESULT hr, bool bDuringLoad)
 {
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	MonoPrint("Texture: Failed to %s texture %s (Code: %X)\n", bDuringLoad ? "load" : "create", m_strName.c_str(), hr);
-	#endif
+#endif
 }
 
 void TextureHandle::ReportTextureLoadError(char *strReason)
 {
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	MonoPrint("Texture: %s failed to load (Reason: %X)\n", m_strName.c_str(), strReason);
-	#endif
+#endif
 }
 
 void TextureHandle::PaletteAttach(PaletteHandle *p)
@@ -1391,7 +1459,8 @@ void TextureHandle::StaticInit(IDirect3DDevice7 *pD3DD)
 		return;
 
 	m_pD3DHWDeviceDesc = new D3DDEVICEDESC7;
-	if(!m_pD3DHWDeviceDesc) return;
+	if(!m_pD3DHWDeviceDesc) 
+		return;
 
 	HRESULT hr = m_pD3DD->GetCaps(m_pD3DHWDeviceDesc);
 	ShiAssert(SUCCEEDED(hr));
@@ -1420,11 +1489,13 @@ void TextureHandle::StaticInit(IDirect3DDevice7 *pD3DD)
 	if(DisplayOptions.m_texMode == DisplayOptionsClass::TEX_MODE_16){
 		ptsi = tsi_16;
 	}
-	else{
+	else
+	{
 		ptsi = tsi_32;
 	}
 
-	for( int i = 0; i < TEX_CAT_MAX; i++ ){
+	for( int i = 0; i < TEX_CAT_MAX; i++ )
+	{
 		m_pD3DD->EnumTextureFormats(TextureSearchCallback,&ptsi[i]);
 		ShiAssert(ptsi[i].bFoundGoodFormat)
 	}
@@ -1439,28 +1510,32 @@ void TextureHandle::StaticCleanup()
 	}
 
 	// sfr: doesnt this leak??
-	if(m_pD3DD){
+	if(m_pD3DD)
+	{
 		m_pD3DD = NULL;
 	}
 }
 
 HRESULT CALLBACK TextureHandle::TextureSearchCallback(DDPIXELFORMAT* pddpf, VOID* param)
 {
-	if(NULL==pddpf || NULL==param){
+	if(NULL==pddpf || NULL==param)
+	{
         return DDENUMRET_OK;
 	}
 
     TEXTURESEARCHINFO* ptsi = (TEXTURESEARCHINFO *)param;
 
     // Skip any funky modes
-	if(pddpf->dwFlags & (DDPF_LUMINANCE|DDPF_BUMPLUMINANCE|DDPF_BUMPDUDV)){
+	if(pddpf->dwFlags & (DDPF_LUMINANCE|DDPF_BUMPLUMINANCE|DDPF_BUMPDUDV))
+	{
         return DDENUMRET_OK;
 	}
 
     // Retired
     if( ptsi->bUsePalette )
     {
-		if(!(pddpf->dwFlags & DDPF_PALETTEINDEXED8)){
+		if(!(pddpf->dwFlags & DDPF_PALETTEINDEXED8))
+		{
             return DDENUMRET_OK;
 		}
 
@@ -1471,32 +1546,39 @@ HRESULT CALLBACK TextureHandle::TextureSearchCallback(DDPIXELFORMAT* pddpf, VOID
     }
 
     // Else, skip any paletized formats (all modes under 16bpp)
-	if(pddpf->dwRGBBitCount < 16){
+	if(pddpf->dwRGBBitCount < 16)
+	{
         return DDENUMRET_OK;
 	}
 
     // Skip any FourCC formats
-	if(pddpf->dwFourCC != 0){
+	if(pddpf->dwFourCC != 0)
+	{
         return DDENUMRET_OK;
 	}
 
 	// Calc alpha depth
 	DWORD dwMask = pddpf->dwRGBAlphaBitMask;
 	WORD wAlphaBits = 0;
-	while(dwMask) {	
-		dwMask = dwMask & ( dwMask - 1 ); wAlphaBits++; 
+	while(dwMask) 
+	{	
+		dwMask = dwMask & ( dwMask - 1 ); 
+		wAlphaBits++; 
 	}
 
     // Make sure current alpha format agrees with requested format type
-	if((ptsi->dwDesiredAlphaBPP) && !(pddpf->dwFlags&DDPF_ALPHAPIXELS) || wAlphaBits < ptsi->dwDesiredAlphaBPP){
+	if((ptsi->dwDesiredAlphaBPP) && !(pddpf->dwFlags&DDPF_ALPHAPIXELS) || wAlphaBits < ptsi->dwDesiredAlphaBPP)
+	{
         return DDENUMRET_OK;
 	}
-	if((!ptsi->dwDesiredAlphaBPP) && (pddpf->dwFlags&DDPF_ALPHAPIXELS)){
+	if((!ptsi->dwDesiredAlphaBPP) && (pddpf->dwFlags&DDPF_ALPHAPIXELS))
+	{
         return DDENUMRET_OK;
 	}
 
     // Check if we found a good match
-    if( pddpf->dwRGBBitCount == ptsi->dwDesiredBPP ){
+    if( pddpf->dwRGBBitCount == ptsi->dwDesiredBPP )
+	{
         memcpy(ptsi->pddpf,pddpf,sizeof(DDPIXELFORMAT));
         ptsi->bFoundGoodFormat = TRUE;
         return DDENUMRET_CANCEL;
@@ -1523,7 +1605,8 @@ DWORD RGB32ToSurfaceColor(DWORD col, LPDIRECTDRAWSURFACE7 lpDDSurface, DDSURFACE
 
 	DDSURFACEDESC2 ddsd;
 
-	if(pddsd == NULL){
+	if(pddsd == NULL)
+	{
 		ZeroMemory(&ddsd,sizeof(ddsd));
 		ddsd.dwSize = sizeof(ddsd);
 		HRESULT hr = lpDDSurface->GetSurfaceDesc(&ddsd);
@@ -1544,12 +1627,14 @@ DWORD RGB32ToSurfaceColor(DWORD col, LPDIRECTDRAWSURFACE7 lpDDSurface, DDSURFACE
 	redShift = 8;
 	ShiAssert(mask);
 
-	while( !(mask & 1) ){
+	while( !(mask & 1) )
+	{
 		mask >>= 1;
 		redShift--;
 	}
 
-	while( mask & 1 ){
+	while( mask & 1 )
+	{
 		mask >>= 1;
 		redShift--;
 	}
@@ -1559,12 +1644,14 @@ DWORD RGB32ToSurfaceColor(DWORD col, LPDIRECTDRAWSURFACE7 lpDDSurface, DDSURFACE
 	greenShift = 16;
 	ShiAssert(mask);
 
-	while( !(mask & 1) ){
+	while( !(mask & 1) )
+	{
 		mask >>= 1;
 		greenShift--;
 	}
 
-	while( mask & 1 ){
+	while( mask & 1 )
+	{
 		mask >>= 1;
 		greenShift--;
 	}
@@ -1574,12 +1661,14 @@ DWORD RGB32ToSurfaceColor(DWORD col, LPDIRECTDRAWSURFACE7 lpDDSurface, DDSURFACE
 	ShiAssert(mask);
 	blueShift = 24;
 
-	while( !(mask & 1) ){
+	while( !(mask & 1) )
+	{
 		mask >>= 1;
 		blueShift--;
 	}
 
-	while( mask & 1 ){
+	while( mask & 1 )
+	{
 		mask >>= 1;
 		blueShift--;
 	}
@@ -1588,26 +1677,32 @@ DWORD RGB32ToSurfaceColor(DWORD col, LPDIRECTDRAWSURFACE7 lpDDSurface, DDSURFACE
 	DWORD dwResult;	
 
 	// RED
-	if (redShift >= 0){
+	if (redShift >= 0)
+	{
 		dwResult = (col >>  redShift) & pddsd->ddpfPixelFormat.dwRBitMask;
 	}
-	else{
+	else
+	{
 		dwResult = (col << -redShift) & pddsd->ddpfPixelFormat.dwRBitMask;
 	}
 
 	// GREEN
-	if (greenShift >= 0){
+	if (greenShift >= 0)
+	{
 		dwResult |= (col >>  greenShift) & pddsd->ddpfPixelFormat.dwGBitMask;
 	}
-	else{
+	else
+	{
 		dwResult |= (col << -greenShift) & pddsd->ddpfPixelFormat.dwGBitMask;
 	}
 
 	// BLUE
-	if(blueShift >= 0){
+	if(blueShift >= 0)
+	{
 		dwResult |= (col >>  blueShift) & pddsd->ddpfPixelFormat.dwBBitMask;
 	}
-	else{
+	else
+	{
 		dwResult |= (col << -blueShift) & pddsd->ddpfPixelFormat.dwBBitMask;
 	}
 
@@ -1628,7 +1723,8 @@ static void SetMipLevelColor(MipLoadContext *pCtx)
 	HRESULT hr = pCtx->lpDDSurface->GetSurfaceDesc(&ddsd);
 	ShiAssert(SUCCEEDED(hr));
 
-	if(FAILED(hr)){
+	if(FAILED(hr))
+	{
 		return;
 	}
 
@@ -1648,7 +1744,8 @@ static HRESULT WINAPI MipLoadCallback(LPDIRECTDRAWSURFACE7 lpDDSurface, LPDDSURF
 
 	if(lpDDSurfaceDesc->ddsCaps.dwCaps & DDSCAPS_MIPMAP)
 	{
-		if(g_bShowMipUsage){
+		if(g_bShowMipUsage)
+		{
 			SetMipLevelColor(pCtx);
 		}
 		else
@@ -1683,7 +1780,8 @@ bool Texture::SaveDDS_DXTn(const char *szFileName, BYTE* pDst, int dimensions, D
 
 	fp = fopen(szFileName,"rb");
 
-	if(fp){
+	if(fp)
+	{
 		fclose(fp);
 		return false;
 	}
@@ -1756,7 +1854,7 @@ bool Texture::DumpImageToFile(char *szFile, int palID)
 
 	SaveDDS_DXTn(szFileName,pDst,this->dimensions,this->flags);
 
-	delete[] pDst;
+	delete [] pDst;
 
 	// Night texture
 /*	if(palID == 3)
@@ -1829,7 +1927,8 @@ bool Texture::DumpImageToFile(char *szFile, int palID)
 	}
 */
 	// Filter out fake chroma textures
-	if(!bChroma){
+	if(!bChroma)
+	{
 		this->flags &= ~MPR_TI_CHROMAKEY;
 	}
 

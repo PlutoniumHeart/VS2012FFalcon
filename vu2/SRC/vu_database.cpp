@@ -212,7 +212,8 @@ void VuDatabase::ReallyRemove(VuEntity *entity){
 	entity->SetVuState(VU_MEM_REMOVED);
 }
 
-VuEntity *VuDatabase::Find(VU_ID entityId) const {
+VuEntity *VuDatabase::Find(VU_ID entityId) const 
+{
 	return dbHash_->Find(entityId);
 }
 

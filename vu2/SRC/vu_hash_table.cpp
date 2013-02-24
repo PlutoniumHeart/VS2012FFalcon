@@ -43,10 +43,15 @@ VU_ERRCODE VuHashTable::Remove(VU_ID entityId){
 
 }
 
-VuEntity *VuHashTable::Find(VU_ID entityId) const {
+VuEntity *VuHashTable::Find(VU_ID entityId) const 
+{
 	VuListIterator it(&table_[getIndex(entityId)]);
-	for (VuEntity *e = it.GetFirst(); e != NULL; e = it.GetNext()){
-		if ((e->VuState() == VU_MEM_ACTIVE) && (e->Id() == entityId)){ return e; }
+	for (VuEntity *e = it.GetFirst(); e != NULL; e = it.GetNext())
+	{
+		if ((e->VuState() == VU_MEM_ACTIVE) && (e->Id() == entityId))
+		{
+			return e; 
+		}
 	}
 	return NULL;
 }
@@ -99,7 +104,8 @@ VuEntity *VuHashTable::Find(VuEntity *ent) const {
 
 #endif
 
-unsigned int VuHashTable::getIndex(VU_ID id) const {
+unsigned int VuHashTable::getIndex(VU_ID id) const 
+{
 	return ((VU_KEY)id * key_) % capacity_;
 }
 

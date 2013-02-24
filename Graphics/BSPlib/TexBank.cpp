@@ -281,7 +281,9 @@ void TextureBankClass::Reference(int id)
         // the palette.
         TexturePool[id].tex.SetPalette(&ThePaletteBank.PalettePool[TexturePool[id].palID]);
         ShiAssert(TexturePool[id].tex.GetPalette());
-        TexturePool[id].tex.GetPalette()->Reference();
+		// Pu239 this checks are necessary because we have missing texture files
+		if(TexturePool[id].tex.imageData != NULL)
+			TexturePool[id].tex.GetPalette()->Reference();
 
         // Mark for the request if not already marked
         if (!TexFlags[id].OnOrder)
@@ -842,6 +844,12 @@ bool TextureBankClass::UpdateBank(void)
             // if Texture not yet loaded, load it
             if (!TexturePool[id].tex.imageData) 
 				ReadImageData(id);
+
+			// Pu239 We have some missing texture files, if we let the routine continue will later generate assertion failure.
+			if(TexturePool[id].tex.imageData == NULL)
+			{
+				continue;
+			}
 
             // if Texture not yet crated, crate it
             if (!TexturePool[id].tex.TexHandle()) 

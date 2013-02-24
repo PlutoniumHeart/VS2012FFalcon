@@ -46,39 +46,63 @@ typedef	unsigned long VU_KEY;
 typedef	unsigned long VU_ID_NUMBER;
 
 // sfr: back to inline for efficiency
-class VU_SESSION_ID {
+class VU_SESSION_ID 
+{
 public:
 	// constructor
-	VU_SESSION_ID() : value_(0) {}
-	VU_SESSION_ID(unsigned long value) : value_((unsigned long)value) { }
+	VU_SESSION_ID():
+	value_(0) 
+	{
+	}
 
-	int operator == (const VU_SESSION_ID &rhs) const{
+
+	VU_SESSION_ID(unsigned long value):
+	value_((unsigned long)value) 
+	{
+	}
+
+
+	int operator == (const VU_SESSION_ID &rhs) const
+	{
 		return (value_ == rhs.value_ ? TRUE : FALSE); 
 	}
 
-	int operator != (const VU_SESSION_ID &rhs) const { 
+
+	int operator != (const VU_SESSION_ID &rhs) const 
+	{ 
 		return (value_ != rhs.value_ ? TRUE : FALSE); 
 	}
 
-	int operator > (const VU_SESSION_ID &rhs) const { 
+
+	int operator > (const VU_SESSION_ID &rhs) const 
+	{ 
 		return (value_ > rhs.value_ ? TRUE : FALSE); 
 	}
 
-	int operator >= (const VU_SESSION_ID &rhs) const { 
+
+	int operator >= (const VU_SESSION_ID &rhs) const 
+	{ 
 		return (value_ >= rhs.value_ ? TRUE : FALSE); 
 	}
 
-	int operator < (const VU_SESSION_ID &rhs) const { 
+
+	int operator < (const VU_SESSION_ID &rhs) const 
+	{ 
 		return (value_ < rhs.value_ ? TRUE : FALSE); 
 	}
 
-	int operator <= (const VU_SESSION_ID &rhs) const { 
+
+	int operator <= (const VU_SESSION_ID &rhs) const 
+	{ 
 		return (value_ <= rhs.value_ ? TRUE : FALSE); 
 	}
 
-	operator unsigned long() const { 
+
+	operator unsigned long() const 
+	{ 
 		return (unsigned long) value_; 
 	}
+
 
 	// note: these are private to prevent (mis)use
 private:
@@ -94,72 +118,115 @@ public:
 	unsigned long 	value_;
 };
 
-class VU_ID {
+class VU_ID 
+{
 public:
 	//sfr: vu change
-	VU_ID() : num_(0), creator_(0){}
-	VU_ID(VU_SESSION_ID sessionpart, VU_ID_NUMBER idpart) : num_(idpart), creator_(sessionpart){}
+	VU_ID(): 
+	num_(0), 
+	creator_(0)
+	{
+	}
+
+
+	VU_ID(VU_SESSION_ID sessionpart, VU_ID_NUMBER idpart):
+	num_(idpart), 
+	creator_(sessionpart)
+	{
+	}
+
 
 	// basic operator overloading
-	bool operator == (const VU_ID &rhs) const { 
+	bool operator == (const VU_ID &rhs) const 
+	{ 
 		return (
 			num_ == rhs.num_ ? 
 			(creator_ == rhs.creator_ ? true : false) : 
 			false
 		); 
 	}
-	bool operator != (const VU_ID &rhs) const { 
+
+
+	bool operator != (const VU_ID &rhs) const 
+	{ 
 		return (
 			num_ == rhs.num_ ? 
 			(creator_ == rhs.creator_ ? false : true) : 
 			true
 		); 
 	}
-	bool operator > (const VU_ID &rhs) const {
-		if (creator_ > rhs.creator_){
+
+
+	bool operator > (const VU_ID &rhs) const 
+	{
+		if (creator_ > rhs.creator_)
+		{
 			return true;
 		}
-		if (creator_ == rhs.creator_)	{
-			if (num_ > rhs.num_){
+		if (creator_ == rhs.creator_)	
+		{
+			if (num_ > rhs.num_)
+			{
 				return true;
 			}
 		}
 		return false;
 	}
-	bool operator >= (const VU_ID &rhs) const {
-		if (creator_ > rhs.creator_){
+
+
+	bool operator >= (const VU_ID &rhs) const 
+	{
+		if (creator_ > rhs.creator_)
+		{
 			return true;
 		}
-		if (creator_ == rhs.creator_){
-			if (num_ >= rhs.num_){
+		if (creator_ == rhs.creator_)
+		{
+			if (num_ >= rhs.num_)
+			{
 				return true;
 			}
 		}
 		return false;
 	}
-	bool operator < (const VU_ID &rhs) const {
-		if (creator_ < rhs.creator_){
+
+
+	bool operator < (const VU_ID &rhs) const 
+	{
+		if (creator_ < rhs.creator_)
+		{
 			return true;
 		}
-		if (creator_ == rhs.creator_){
-			if (num_ < rhs.num_){
+		if (creator_ == rhs.creator_)
+		{
+			if (num_ < rhs.num_)
+			{
 				return true;
 			}
 		}
 		return false;
 	}
-	bool operator <= (const VU_ID &rhs) const {
-		if (creator_ < rhs.creator_){
+
+
+	bool operator <= (const VU_ID &rhs) const 
+	{
+		if (creator_ < rhs.creator_)
+		{
 			return true;
 		}
-		if (creator_ == rhs.creator_){
-			if (num_ <= rhs.num_){
+		if (creator_ == rhs.creator_)
+		{
+			if (num_ <= rhs.num_)
+			{
 				return true;
 			}
 		}
 		return false;
 	}
-	operator VU_KEY() const { 
+
+
+	operator VU_KEY() const 
+	{ 
 		return (VU_KEY)(((unsigned short)creator_ << 16) | ((unsigned short)num_)); 
 	}
 
@@ -181,7 +248,8 @@ public:
 /** Represents an entity address. All entities are composed of 
 * an IP address and 2 receive ports (one for reliable)
 */
-class VU_ADDRESS {
+class VU_ADDRESS 
+{
 public:
 	/** default constructor
 	* the receive ports always need to be specified
@@ -190,20 +258,25 @@ public:
 		unsigned long ip = 0,                                //< entity IP
 		unsigned short recvPort = 0,//CAPI_UDP_PORT,         //< port where he receives
 		unsigned short reliableRecvPort = 0 //CAPI_TCP_PORT  //< port where he receives reliable data
-	){
+	)
+	{
 		this->ip = ip;
 		this->recvPort = recvPort;
 		this->reliableRecvPort = reliableRecvPort;
 	}
 
+
 	// returns the struct size
-	int Size() const {
+	int Size() const 
+	{
 		// ip + ports
 		return sizeof(long) + sizeof(short)*2;
 	}
 
+
 	// equality: everything equal
-	bool operator==(const VU_ADDRESS & rhs) const{
+	bool operator==(const VU_ADDRESS & rhs) const
+	{
 		return (
 			(this->ip == rhs.ip) && 
 			(this->recvPort == rhs.recvPort) &&
@@ -220,7 +293,8 @@ public:
 	bool IsPrivate() const;
 
 	// ports and ip data in host order
-	unsigned short recvPort, reliableRecvPort;
+	unsigned short recvPort;
+	unsigned short reliableRecvPort;
 	unsigned long ip;
 };
 

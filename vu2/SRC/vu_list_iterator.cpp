@@ -1,8 +1,10 @@
 #include "vu2.h"
 //#include "vu_priv.h"
 
-VuListIterator::VuListIterator (VuLinkedList* coll) : VuIterator(coll){
-	if (coll != NULL){
+VuListIterator::VuListIterator (VuLinkedList* coll) : VuIterator(coll)
+{
+	if (coll != NULL)
+	{
 		curr_ = coll->l_.end();
 	}
 }
@@ -16,14 +18,27 @@ void VuListIterator::RemoveCurrent(){
 	bl.erase(curr_);
 }
 
-VuEntity *VuListIterator::GetFirst(){
-	if (!collection_){ return NULL; }
+VuEntity *VuListIterator::GetFirst()
+{
+	if (!collection_)
+	{ 
+		return NULL; 
+	}
 	VuLinkedList *vl = static_cast<VuLinkedList*>(collection_);
-	if (vl->l_.empty()){ return NULL; }
+	if (vl->l_.empty())
+	{ 
+		return NULL; 
+	}
 	curr_ = vl->l_.begin();
 	VuEntityBin &eb = *curr_;
-	if (eb->VuState() != VU_MEM_ACTIVE){ return GetNext(); }
-	else { return *eb; }
+	if (eb->VuState() != VU_MEM_ACTIVE)
+	{ 
+		return GetNext(); 
+	}
+	else 
+	{ 
+		return *eb; 
+	}
 }
 
 VuEntity *VuListIterator::GetNext(){

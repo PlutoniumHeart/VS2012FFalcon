@@ -670,7 +670,8 @@ void ClearAllHardPointBSPs(void)
 {
 	int i,j;
 
-	for(i=0;i<4;i++)
+	// Pu239 someone put '4' here in the loop, causing assertion failure when exiting the weapon loadout page.
+	for(i=0;i<PlaneCount;i++)
 	{
 		for(j=1;j<HARDPOINT_MAX;j++)
 		{

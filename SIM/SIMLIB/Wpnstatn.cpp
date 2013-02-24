@@ -45,6 +45,12 @@ BasicWeaponStation::~BasicWeaponStation()
 {
 }
 
+
+void BasicWeaponStation::SetHPId(int id)
+{
+	hpId = id;
+}
+
 GunClass* BasicWeaponStation::GetGun (void)
 { 
 	if (weaponPointer && weaponPointer->IsGun())
@@ -453,7 +459,8 @@ void AdvancedWeaponStation::AttachAllWeaponBSP(void)
 //	else
 		weapPtr = weaponPointer.get();
 
-	while(weapPtr){
+	while(weapPtr)
+	{
 		AttachWeaponBSP(weapPtr);
 		weapPtr = weapPtr->GetNextOnRail();
 	}
@@ -541,7 +548,8 @@ void AdvancedWeaponStation::AttachWeaponBSP(SimWeaponClass *weapPtr)
 
 	DrawableBSP *weapBSP = (DrawableBSP *)weapPtr->drawPointer;
 
-	if(!weapBSP){		
+	if(!weapBSP)
+	{		
 		Tpoint hpPos;
 		Trotation viewRot = IMatrix;
 
@@ -549,18 +557,21 @@ void AdvancedWeaponStation::AttachWeaponBSP(SimWeaponClass *weapPtr)
 
 		GetSubPosition(weapslot, &hpPos.x, &hpPos.y, &hpPos.z);
 
-		if (OTWDriver.IsActive()){
+		if (OTWDriver.IsActive())
+		{
 			OTWDriver.CreateVisualObject(weapPtr);
 			weapBSP = (DrawableBSP *)weapPtr->drawPointer;
 		}
-		else {
+		else 
+		{
 			weapBSP = new DrawableBSP (
 				Falcon4ClassTable[WeaponDataTable[wid].Index].visType[0], 
 			    &hpPos, &viewRot, OTWDriver.Scale()
 			);
 			weapPtr->drawPointer = (DrawableObject *)weapBSP;
 		}
-		if(weapPtr->GetType() == TYPE_LAUNCHER){
+		if(weapPtr->GetType() == TYPE_LAUNCHER)
+		{
 			weapBSP->SetSwitchMask(0,1);
 		}
 	}
@@ -610,7 +621,8 @@ VuBin<SimWeaponClass> BasicWeaponStation::DetachFirstWeapon(void)
 {
 	// with the basic class, we may want to load the next weapons BSP and attach it?
 	VuBin<SimWeaponClass> weapptr=weaponPointer;
-	if (weapptr){
+	if (weapptr)
+	{
 		weaponPointer.reset(weapptr->GetNextOnRail());
 		DetachWeaponBSP(weapptr.get());
 		weapptr->nextOnRail.reset();
@@ -624,7 +636,8 @@ VuBin<SimWeaponClass> AdvancedWeaponStation::DetachFirstWeapon(void)
 	// with the advanced class, we may want to load the next weapons BSP and attach it if
 	// there is no rack or pylon?
 	VuBin<SimWeaponClass> weapptr = weaponPointer;
-	if(weapptr){
+	if(weapptr)
+	{
 		DetachWeaponBSP(weapptr.get());
 		weaponPointer.reset(weapptr->GetNextOnRail());
 		weapptr->nextOnRail.reset();
@@ -711,7 +724,7 @@ void AdvancedWeaponStation::DeleteAllWeaponBSP(void)
 void BasicWeaponStation::DetachWeaponBSP(SimWeaponClass *weapPtr)
 {
 	if(!weapPtr || weapPtr!=weaponPointer)
-	return;
+		return;
 
 	DrawableBSP *weapBSP = (DrawableBSP *)weapPtr->drawPointer;
 
@@ -729,7 +742,7 @@ void BasicWeaponStation::DetachWeaponBSP(SimWeaponClass *weapPtr)
 void AdvancedWeaponStation::DetachWeaponBSP(SimWeaponClass *weapPtr)
 {
 	if(!weapPtr)
-	return;
+		return;
 
 	DrawableBSP *weapBSP = (DrawableBSP *)weapPtr->drawPointer;
 
@@ -828,8 +841,10 @@ int AdvancedWeaponStation::DetermineRackData(int HPGroup, int WeaponId, int Weap
 
 	SetWeaponClass((WeaponClass)wpnDefinition->weaponClass);
 
-	if(g_bBMSRackData){
-		if(RDFindBestRack(HPGroup,weaponId,WeaponCount,&rd)){
+	if(g_bBMSRackData)
+	{
+		if(RDFindBestRack(HPGroup,weaponId,WeaponCount,&rd))
+		{
 			SetupPoints(rd.rackStations);
 
 			rackDataFlags=rd.flags;
@@ -837,14 +852,16 @@ int AdvancedWeaponStation::DetermineRackData(int HPGroup, int WeaponId, int Weap
 			rackmnemonic  = rd.rackmnemonic;
 			loadOrder     = rd.loadOrder;
 
-			if(rd.rackCT){
+			if(rd.rackCT)
+			{
 				int w = (short)(
 					((int)Falcon4ClassTable[rd.rackCT].dataPtr - (int)WeaponDataTable) / sizeof(WeaponClassDataType)
 				);
 				SetRackId(w);
 			}
 
-			if(rd.pylonCT){
+			if(rd.pylonCT)
+			{
 				int w = (short)(
 					((int)Falcon4ClassTable[rd.pylonCT].dataPtr - (int)WeaponDataTable) / sizeof(WeaponClassDataType)
 				);
@@ -876,10 +893,12 @@ int AdvancedWeaponStation::DetermineRackData(int HPGroup, int WeaponId, int Weap
 	{	// JPO new scheme
 		int rack = FindBestRackIDByPlaneAndWeapon(HPGroup, WeaponDataTable[weaponId].SimweapIndex, WeaponCount);
 		ShiAssert(rack < MaxRackObjects); // -1 means nothing defined currently fallback to old scheme
-		if (rack > 0 && rack < MaxRackObjects){
+		if (rack > 0 && rack < MaxRackObjects)
+		{
 			RackObject *rackp = &RackObjectTable[rack];
 			SetupPoints(rackp->maxoccupancy);
-			if ((wc->Flags & WEAP_ALWAYSRACK) == 0){
+			if ((wc->Flags & WEAP_ALWAYSRACK) == 0)
+			{
 				int rackid = (short)(((int)
 					Falcon4ClassTable[rackp->ctind].dataPtr - (int)WeaponDataTable) / sizeof(WeaponClassDataType)
 				);

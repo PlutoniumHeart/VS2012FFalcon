@@ -3008,7 +3008,8 @@ int DecodeObjectiveDeltas(VU_BYTE **stream, long *rem, FalconSessionEntity *)
 
 	buf = new VU_BYTE[size];
 	bufhead = buf;
-	if (LZSS_Expand(*stream, rem[0], buf, size) < 0){
+	if (LZSS_Expand(*stream, rem[0], buf, size) < 0)
+	{
 //		char err[200];
 //		sprintf(err, "%s %d: error expanding data", __FILE__, __LINE__);
 //		throw std::InvalidBufferException(err);
@@ -3016,18 +3017,21 @@ int DecodeObjectiveDeltas(VU_BYTE **stream, long *rem, FalconSessionEntity *)
 	//our new buffer is size size
 	rem[0] = size;
 
-	while (count) {
+	while (count) 
+	{
 		
 		memcpychk(&vuid, &buf, sizeof(VU_ID), rem);
 		o = FindObjective(vuid);
 
 		ShiAssert (o);
 
-		if (o) {
+		if (o) 
+		{
 			o->UpdateFromData(&buf, rem);
 			count --;
 		}
-		else {
+		else 
+		{
 			count = 0;
 		}
 	}

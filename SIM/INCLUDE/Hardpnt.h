@@ -60,7 +60,7 @@ class BasicWeaponStation
 		virtual void Cleanup (void) {};
 
 		// Virtualized access functions
-		void SetHPId(int id)  {hpId = id;};
+		void SetHPId(int id);//  {hpId = id;};
 //		void SetPodId(int id) {podId = id;};
 //		int  GetPodId(int id) {return(podId);};
 		virtual void SetPosition (float, float, float)				{};

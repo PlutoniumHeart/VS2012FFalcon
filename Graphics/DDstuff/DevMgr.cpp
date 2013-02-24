@@ -531,6 +531,21 @@ DXContext::~DXContext()
 	if(m_pDevID) delete m_pDevID;
 }
 
+
+int DXContext::AddRef()
+{
+	return ++refcount;
+}
+
+
+int DXContext::Release()
+{
+	int rc = --refcount;
+	if (refcount <= 0) 
+		delete this;
+	return rc;
+}
+
 void DXContext::Shutdown()
 {
 //	MonoPrint("DXContext::Shutdown()\n");

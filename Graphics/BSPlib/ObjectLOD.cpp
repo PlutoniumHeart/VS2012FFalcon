@@ -60,6 +60,19 @@ ObjectLOD::~ObjectLOD()
 }
 
 
+void ObjectLOD::Draw() const
+{
+	ShiAssert( root ); 
+	root->Draw();
+}
+
+
+short ObjectLOD::WhoAmI()
+{
+	return static_cast<short>(this - TheObjectLODs);
+}
+
+
 void ObjectLOD::SetupEmptyTable( int numEntries )
 {
 #ifdef USE_SMART_HEAP
@@ -68,11 +81,11 @@ void ObjectLOD::SetupEmptyTable( int numEntries )
 
 	// Create the contiguous array of (unitialized) LOD records
 	ShiAssert( TheObjectLODs == NULL );
-	#ifdef USE_SH_POOLS
+#ifdef USE_SH_POOLS
 	TheObjectLODs = (ObjectLOD *)MemAllocPtr(gBSPLibMemPool, sizeof(ObjectLOD)*(numEntries), 0 );
-	#else
+#else
 	TheObjectLODs = new ObjectLOD[numEntries];
-	#endif
+#endif
 	TheObjectLODsCount = numEntries;
 
 	// Allocate space for load buffer
@@ -87,7 +100,8 @@ void ObjectLOD::SetupEmptyTable( int numEntries )
 
 	DWORD	  Count = TheObjectLODsCount;
 	ObjectLOD *Lod = &TheObjectLODs[0];
-	while(Count--){
+	while(Count--)
+	{
 		// next LOD
 		Lod++;
 	}
@@ -134,7 +148,8 @@ void ObjectLOD::SetupTable( int file, char *basename )
 	strcpy( filename, basename );
 	strcat(filename, ".DXL");
 
-	if (!ObjectLodMap.Open(filename, FALSE, !g_bUseMappedFiles)) {
+	if (!ObjectLodMap.Open(filename, FALSE, !g_bUseMappedFiles)) 
+	{
 		char message[256];
 		sprintf( message, "Failed to open object LOD database %s", filename );
 		ShiError( message );
@@ -144,7 +159,8 @@ void ObjectLOD::SetupTable( int file, char *basename )
 	ObjectLOD *Lod = &TheObjectLODs[0];
 	DWORD	  Count = TheObjectLODsCount;
 	char	  Spare[12];
-	while(Count--){
+	while(Count--)
+	{
 		// Spare unused data - 12 bytes
 		read(file, &Spare, 12);
 		// Read data serially
@@ -154,15 +170,19 @@ void ObjectLOD::SetupTable( int file, char *basename )
 		// Make a copy of the Texture numbers used by the Model
 		DxDbHeader rt;
 		//read the model header
-		if(ObjectLodMap.ReadDataAt(Lod->fileoffset, &rt, sizeof(DxDbHeader))){
+		if(ObjectLodMap.ReadDataAt(Lod->fileoffset, &rt, sizeof(DxDbHeader)))
+		{
 			// if a bad version, skuip
-			if((rt.Version & 0xffff) == (~rt.Version >>16)){
+			if((rt.Version & 0xffff) == (~rt.Version >>16))
+			{
 				// assign the number of textures to the model
 				Lod->NrTextures = rt.dwTexNr;
-				if(Lod->NrTextures){
+				if(Lod->NrTextures)
+				{
 					// allocate space and load the textures table from the model
 					Lod->TexBank = (DWORD*)malloc(Lod->NrTextures * sizeof(DWORD));
-					if(Lod->TexBank) ObjectLodMap.ReadDataAt(Lod->fileoffset + sizeof(DxDbHeader), Lod->TexBank, Lod->NrTextures * sizeof(DWORD));
+					if(Lod->TexBank) 
+						ObjectLodMap.ReadDataAt(Lod->fileoffset + sizeof(DxDbHeader), Lod->TexBank, Lod->NrTextures * sizeof(DWORD));
 				}
 			}
 		}
@@ -184,15 +204,18 @@ void ObjectLOD::SetupTable( int file, char *basename )
 void ObjectLOD::CleanupTable( void )
 {
 	// Make sure all objects are freed
-	for (int i=0; i<TheObjectLODsCount; i++) {
+	for (int i=0; i<TheObjectLODsCount; i++) 
+	{
 		ShiAssert( TheObjectLODs[i].refCount == 0 );
-		if(TheObjectLODs[i].root){
+		if(TheObjectLODs[i].root)
+		{
 			// Mark for release the LOD
 			TheObjectLODs[i].OnRelease = true;
 			// Put into Release List
 			CacheRelease[ReleaseIn++] = i;
 			// ring the in pointer
-			if(ReleaseIn >= (TheObjectLODsCount + CACHE_MARGIN) ) ReleaseIn = 0;
+			if(ReleaseIn >= (TheObjectLODsCount + CACHE_MARGIN) ) 
+				ReleaseIn = 0;
 		}
 	}
 
@@ -201,12 +224,12 @@ void ObjectLOD::CleanupTable( void )
 	WaitUpdates();
 
 	// Free our array of object LODs
-	delete[] TheObjectLODs;
+	delete [] TheObjectLODs;
 	TheObjectLODs = NULL;
 	TheObjectLODsCount = 0;
 
 	// Free our tag list buffer
-	delete[] tagListBuffer;
+	delete [] tagListBuffer;
 	tagListBuffer = NULL;
 
 	// Close our data file
@@ -218,12 +241,21 @@ void ObjectLOD::CleanupTable( void )
 
 	if (LodBufferSize)
 	{
-		if( LodBuffer ) free(LodBuffer);
+		if( LodBuffer ) 
+			free(LodBuffer);
 	}
 	LodBufferSize = 0;
 
-	if(CacheLoad) free(CacheLoad), CacheLoad = NULL;
-	if(CacheRelease) free(CacheRelease), CacheRelease = NULL;
+	if(CacheLoad) 
+	{
+		free(CacheLoad);
+		CacheLoad = NULL;
+	}
+	if(CacheRelease) 
+	{
+		free(CacheRelease);
+		CacheRelease = NULL;
+	}
 	LoadIn = LoadOut = ReleaseIn = ReleaseOut = 0;
 
 	LODsLoaded = 0;
@@ -244,10 +276,12 @@ BOOL ObjectLOD::Fetch(void)
 
 	// if object is on release do nothing
 	// DO NOT RETURN A ROOT THAT MAY BE VANISHING, deleted by loader task
-	if(OnRelease || OnOrder) return false;
+	if(OnRelease || OnOrder) 
+		return false;
 
 	// If we already have our data
-	if (root) return true;
+	if (root) 
+		return true;
 
 	// Mark as ordered
 	OnOrder = true;
@@ -255,7 +289,8 @@ BOOL ObjectLOD::Fetch(void)
 	CacheLoad[LoadIn] = WhoAmI();
 	// ring the in pointer, work on TEMP to avoid problems with ReleaseOut comparison in other thread
 	short Temp = LoadIn + 1;
-	if(Temp >= (TheObjectLODsCount + CACHE_MARGIN) ) Temp = 0;
+	if(Temp >= (TheObjectLODsCount + CACHE_MARGIN) )
+		Temp = 0;
 	LoadIn = Temp;
 	// Kick the Loader
 	// FRB - removing Wakeup is responsible for the VERY long load times!
@@ -274,14 +309,16 @@ void ObjectLOD::Unload( void )
 {
     
 	// if nothing loaded or already on release, return
-	if(!root || OnRelease) return;
+	if(!root || OnRelease) 
+		return;
 	// Setup the Flag about Release
 	OnRelease = true;
 	// Put into Release List
 	CacheRelease[ReleaseIn] = WhoAmI();
 	// ring the in pointer, work on TEMP to avoid problems with ReleaseOut comparison in other thread
 	short Temp = ReleaseIn + 1;
-	if(Temp >= (TheObjectLODsCount + CACHE_MARGIN) ) Temp = 0;
+	if(Temp >= (TheObjectLODsCount + CACHE_MARGIN) ) 
+		Temp = 0;
 	ReleaseIn = Temp;
 	// Kick the Loader
 	TheLoader.WakeUp();
@@ -304,7 +341,8 @@ MEM_POOL	ObjectLOD::pool;
 void ObjectLOD::ReleaseLodList(void)
 {
 
-	for(int a=0; a<TheObjectLODsCount; a++) TheObjectLODs[a].Unload();
+	for(int a=0; a<TheObjectLODsCount; a++) 
+		TheObjectLODs[a].Unload();
 	// wait for all done
 	WaitUpdates();
 
@@ -320,21 +358,29 @@ DWORD ObjectLOD::Load(void)
 
 	gDebugLodID = WhoAmI();
 	// check for buffer size... if smaller make a new Buffer
-	if(filesize > LodBufferSize) free(LodBuffer), LodBufferSize = filesize, LodBuffer = (BYTE*)malloc(LodBufferSize);
+	if(filesize > LodBufferSize) 
+	{
+		free(LodBuffer);
+		LodBufferSize = filesize;
+		LodBuffer = (BYTE*)malloc(LodBufferSize);
+	}
 	
 	//Default the Root to null
 	root=NULL;
 
 	// if Memory allocated
-	if( LodBuffer ){
+	if( LodBuffer )
+	{
 		// if model is loaded
-		if (ObjectLodMap.ReadDataAt(fileoffset, LodBuffer, filesize)){
+		if (ObjectLodMap.ReadDataAt(fileoffset, LodBuffer, filesize))
+		{
 			// Assign with casting to a pointer the header of data
 			Header=(DxDbHeader*) LodBuffer;
 			// Get the LOD ID
 			DxID=Header->Id;
 			// Request the VB Manager to add the model in buffer - if object Allocated
-			if(TheVbManager.SetupModel(DxID, LodBuffer, Header->VBClass)){
+			if(TheVbManager.SetupModel(DxID, LodBuffer, Header->VBClass))
+			{
 				// Update the Root from VB Manager
 				root=(BRoot*)TheVbManager.GetModelRoot(DxID);
 				// update flags and assert as good
@@ -356,7 +402,7 @@ DWORD ObjectLOD::Load(void)
 
 void ObjectLOD::Free( void )
 {
-  gDebugLodID = (DWORD)WhoAmI();
+	gDebugLodID = (DWORD)WhoAmI();
 	if (gDebugLodID == 0)
 		return;
 
@@ -378,24 +424,33 @@ void ObjectLOD::Free( void )
 bool ObjectLOD::UpdateLods( void )
 {
 
-	while( LoadIn != LoadOut || ReleaseIn != ReleaseOut){
+	while( LoadIn != LoadOut || ReleaseIn != ReleaseOut)
+	{
 		// if something to Load
-		if(LoadOut != LoadIn){
+		if(LoadOut != LoadIn)
+		{
 			// the amount of data loaded
 			DWORD	LoadSize = 0;
 //			while( LoadSize < MAX_LOD_LOAD_SIZE && LoadOut != LoadIn){
 				ObjectLOD	&Lod = TheObjectLODs[CacheLoad[LoadOut++]];
-				if(!Lod.root && Lod.OnOrder) LoadSize += Lod.Load(), Sleep(20);
+				if(!Lod.root && Lod.OnOrder) 
+				{
+					LoadSize += Lod.Load();
+					Sleep(20);
+				}
 				// Load is done IN ANY CASE
 				Lod.OnOrder = false;
 				// ring the done pointer
-				if(LoadOut >= (TheObjectLODsCount + CACHE_MARGIN) ) LoadOut = 0;
+				if(LoadOut >= (TheObjectLODsCount + CACHE_MARGIN) ) 
+					LoadOut = 0;
 //			}
 			// * MANAGE ONLY 1 LOD PER CALL FRAME *
-			if(RatedLoad) return true;
+			if(RatedLoad) 
+				return true;
 		}
 
-		if(ReleaseIn != ReleaseOut){
+		if(ReleaseIn != ReleaseOut)
+		{
 			ObjectLOD	&Lod = TheObjectLODs[CacheRelease[ReleaseOut++]];
 			if(!F4IsBadReadPtr(Lod.root,sizeof(ObjectLOD)))
 			{
@@ -407,9 +462,11 @@ bool ObjectLOD::UpdateLods( void )
 			// Release is done IN ANY CASE
 			Lod.OnRelease = false;
 			// ring the done pointer
-			if(ReleaseOut >= (TheObjectLODsCount + CACHE_MARGIN) ) ReleaseOut = 0;
+			if(ReleaseOut >= (TheObjectLODsCount + CACHE_MARGIN) ) 
+				ReleaseOut = 0;
 			// * MANAGE ONLY 1 LOD PER CALL FRAME *
-			if(RatedLoad) return true;
+			if(RatedLoad) 
+				return true;
 		}
 	}
 
@@ -421,7 +478,8 @@ bool ObjectLOD::UpdateLods( void )
 void ObjectLOD::WaitUpdates( void )
 {	
 	// if no data to wait, exit here
-	if(LoadIn == LoadOut && ReleaseIn == ReleaseOut) return;
+	if(LoadIn == LoadOut && ReleaseIn == ReleaseOut)
+		return;
 	// Pause the Loader...
 	TheLoader.SetPause(true);
 	while(!TheLoader.Paused());
@@ -440,7 +498,8 @@ void	ObjectLOD::ReferenceTexSet(DWORD TexSetNr, DWORD TexSetMax)
 {
 	gDebugLodID = WhoAmI();
 	// check for textures to reference
-	if(NrTextures){
+	if(NrTextures)
+	{
 		// calculate the bank size
 		DWORD	BankSize = NrTextures / TexSetMax;
 		// reference the bank textures
@@ -455,7 +514,8 @@ void	ObjectLOD::ReleaseTexSet(DWORD TexSetNr, DWORD TexSetMax)
 
 
 	// check for textures to dereference
-	if(NrTextures){
+	if(NrTextures)
+	{
 		// calculate the bank size
 		DWORD	BankSize = NrTextures / TexSetMax;
 		// reference the bank textures
@@ -472,7 +532,12 @@ void	ObjectLOD::Reference(void)
 	refCount++;
 }
 
-void	ObjectLOD::Release(void){
+void	ObjectLOD::Release(void)
+{
 	// Dereference the object, and eventually uload
-	refCount--; if(refCount==0) Unload();
+	// Pu239 refuse to do a refCount reduction if it is already 0 (Why this is happening?)
+	if(refCount>0)
+		refCount--; 
+	if(refCount==0) 
+		Unload();
 }

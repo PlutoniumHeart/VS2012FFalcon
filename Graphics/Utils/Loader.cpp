@@ -66,7 +66,8 @@ void Loader::Setup()
 	// Create the synmchronization objects we'll need
 	strcpy( WakeEventName, "LoaderWakeupCall" );
 	WakeEventHandle = CreateEvent( NULL, FALSE, FALSE, WakeEventName );
-	if ( !WakeEventHandle ) {
+	if ( !WakeEventHandle ) 
+	{
 		ShiError( "Failed to create the loader wake up event" );
 	} 
 	InitializeCriticalSection( &cs_loaderQ );
@@ -77,13 +78,15 @@ void Loader::Setup()
 		NULL, 0, (unsigned int (__stdcall *)(void*))MainLoopWrapper, this, 0, ( unsigned * ) &threadID 
 	);	
 
-	if ( !threadHandle ) {
+	if ( !threadHandle ) 
+	{
 		ShiError( "Failed to spawn loader" );
 	} 
 }
 
 
-void Loader::Cleanup(){
+void Loader::Cleanup()
+{
 	DWORD retval;
 
 	// Request that the loader shutdown
@@ -119,7 +122,8 @@ void Loader::Cleanup(){
 
 
 // Dummy wrapper to get from C-Style Thread spawning back into C++ calling convention
-DWORD Loader::MainLoopWrapper( LPVOID myself ){
+DWORD Loader::MainLoopWrapper( LPVOID myself )
+{
 	return ( ((Loader*)myself)->MainLoop() );
 }
 
@@ -130,27 +134,33 @@ DWORD Loader::MainLoop()
 	LoaderQ	*Active;
 	actionDone = false;
 
-	while (!shutDown) {
+	while (!shutDown) 
+	{
 
 		// Process everything in our queue
-		if (paused == RUNNING) {
+		if (paused == RUNNING) 
+		{
 			actionDone = false;
 			// The LOD updating run
 			actionDone |= ObjectLOD::UpdateLods();
 			actionDone |= TheTextureBank.UpdateBank();
 
-			while ((Active = GetNextRequest()) && (!shutDown)) {
+			while ((Active = GetNextRequest()) && (!shutDown)) 
+			{
 				// Check queue status
-				if (queueStatus == QUEUE_FIFO) {					
+				if (queueStatus == QUEUE_FIFO) 
+				{					
 					// Make the callback to notify the requestor
 					// NOTE:  The callback is responsible for deleting the queue entry!
 					ShiAssert( (Active->callback != NULL) );
 					Active->callback( Active );					   
    				} 
-				else if (queueStatus == QUEUE_SORTING) {
+				else if (queueStatus == QUEUE_SORTING) 
+				{
 					SortLoaderQueue ();
 				} 
-				else if (queueStatus == QUEUE_STORING) {
+				else if (queueStatus == QUEUE_STORING) 
+				{
 					ReplaceHeadEntry (Active);
 				}
 			}
@@ -158,12 +168,14 @@ DWORD Loader::MainLoop()
 			// We dropped out of the processing loop, so we're either shutting down, or
 			// the queue is empty
 			EnterCriticalSection( &cs_loaderQ );
-			if (!head) {
+			if (!head) 
+			{
 				queueIsEmpty = TRUE;
 			}
 			LeaveCriticalSection( &cs_loaderQ );
 		} 
-		else {
+		else 
+		{
 			// Note that we're truely paused now
 			paused = PAUSED;
 		}
@@ -189,25 +201,32 @@ void Loader::Dequeue( LoaderQ *Old )
 {
 	ShiAssert( Old );
 
-	if (Old->prev) {
+	if (Old->prev) 
+	{
 		Old->prev->next = Old->next;
-	} else {
+	}
+	else 
+	{
 		ShiAssert( head == Old );
 		head = Old->next;
 	}
 
-	if (Old->next) {
+	if (Old->next) 
+	{
 		Old->next->prev = Old->prev;
-	} else {
+	} 
+	else 
+	{
 		ShiAssert( tail == Old );
 		tail = Old->prev;
 	}
 
 #ifdef LOADER_INSTRUMENT
-			lastDequeueAt	= GetTickCount();
+	lastDequeueAt	= GetTickCount();
 #endif
 
-	if (!head) {
+	if (!head) 
+	{
 		// Wake the main loop to ensure it sets the queueIsEmpty flag as appropriate
 		SetEvent( WakeEventHandle );
 	}
@@ -220,13 +239,15 @@ void Loader::Enqueue( LoaderQ *New )
 	// This is debug code -- should go once I'm done testing.
 #ifdef _DEBUG
 	LoaderQ	*p = head;
-	while (p) {
+	while (p) 
+	{
 
 		// See if this is a duplicate
 		if ((p->fileoffset	== New->fileoffset) &&
 			(p->filename	== New->filename  ) &&
 			(p->parameter	== New->parameter ) &&
-			(p->callback	== New->callback  )) {
+			(p->callback	== New->callback  )) 
+		{
 
 			return;
 			ShiAssert( !"Caught trying to add duplicate request" );
@@ -240,10 +261,13 @@ void Loader::Enqueue( LoaderQ *New )
 	New->next = NULL;
 	New->prev = tail;
 
-	if (!tail) {
+	if (!tail) 
+	{
 		head = New;
 		queueIsEmpty = FALSE;
-	} else {
+	} 
+	else 
+	{
 		tail->next = New;
 	}
 
@@ -264,7 +288,8 @@ void Loader::EnqueueRequest( LoaderQ *New )
 	EnterCriticalSection( &cs_loaderQ );
 
 	// Link the new queue entry to the end of the Q
-	if (!shutDown) {
+	if (!shutDown) 
+	{
     	Enqueue( New );
     }
 
@@ -299,7 +324,8 @@ LoaderQ* Loader::GetNextRequest( void )
 
  	// We always dequeue the head of the list
 	request = head;
-	if (head) {
+	if (head) 
+	{
 		Dequeue( head );
 	}
 
@@ -319,13 +345,15 @@ BOOL Loader::CancelRequest( void(*callback)(LoaderQ*), void *parameter, char *fi
 	EnterCriticalSection( &cs_loaderQ );
 
 	p = head;
-	while (p) {
+	while (p) 
+	{
 
 		// See if this is the one we want to cancel
 		if ((p->filename	== filename  ) &&
 			(p->fileoffset	== fileoffset) &&
 			(p->parameter	== parameter ) &&
-			(p->callback	== callback  )) {
+			(p->callback	== callback  )) 
+		{
 
 			Dequeue( p );
 			delete p;
@@ -347,11 +375,15 @@ BOOL Loader::CancelRequest( void(*callback)(LoaderQ*), void *parameter, char *fi
 
 void Loader::SetPause( BOOL state )
 {
-	if (state) {
-		if (paused == RUNNING) {
+	if (state) 
+	{
+		if (paused == RUNNING) 
+		{
 			paused = PAUSING;
 		}
-	} else {
+	} 
+	else 
+	{
 		paused = RUNNING;
 	}
 	WakeUp();
@@ -390,10 +422,12 @@ void Loader::WaitForLoader( void )
 void Loader::WaitLoader( void )
 {
 
-	while ( !queueIsEmpty ) {
+	while ( !queueIsEmpty ) 
+	{
 
 #ifdef LOADER_INSTRUMENT
-		if (forceWakeEvent > 0) {
+		if (forceWakeEvent > 0) 
+		{
 			SetEvent( WakeEventHandle );
 			forceWakeEvent--;
 		}

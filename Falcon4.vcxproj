@@ -63,6 +63,7 @@
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(DX81_SDK)\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);$(DX81_SDK)\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>./build/release_win32/\</OutDir>
@@ -70,6 +71,7 @@
     <ExtensionsToDeleteOnClean>*.obj%3b*.ilk%3b*.pdb%3b*.tlb%3b*.tli%3b*.tlh%3b*.tmp%3b*.rsp%3b*.bat%3b*.asm%3b$(TargetPath)</ExtensionsToDeleteOnClean>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(DX81_SDK)\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath);$(DX81_SDK)\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Remote|Win32'">
     <OutDir>$(Configuration)\</OutDir>

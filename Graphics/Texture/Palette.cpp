@@ -14,13 +14,15 @@
 static DXContext	*rc = NULL; 	
 
 //sfr: for debugging I put this in the cpp file
-Palette::Palette()	{ 
+Palette::Palette()	
+{ 
 	refCount = 0; 
 	palHandle = NULL; 
 	memset(paletteData, 0, sizeof(paletteData)); 
 };
 
-Palette::~Palette()	{
+Palette::~Palette()	
+{
 	ShiAssert( refCount == 0); 
 };
 
@@ -135,11 +137,14 @@ int Palette::Release( void )
 //JAM 30Sep03
 //	ShiAssert( refCount > 0 );
 
-	if(refCount > 0) refCount--;
+	if(refCount > 0) 
+		refCount--;
 //JAM
 
-	if (refCount == 0) {
-		if (palHandle) {
+	if (refCount == 0) 
+	{
+		if (palHandle) 
+		{
 			ShiAssert( rc != NULL);
 
 			delete palHandle;
@@ -175,7 +180,8 @@ void Palette::LightTexturePalette( Tcolor *light )
 	pal[0] = paletteData[0];
 
 	// Build the lite version of the palette in temporary storage
-	while (to < stop) {
+	while (to < stop)
+	{
 		*to  =    (FloatToInt32(*(from)   * r))			// Red
 				| (FloatToInt32(*(from+1) * g) << 8)	// Green
 				| (FloatToInt32(*(from+2) * b) << 16)	// Blue
@@ -213,14 +219,16 @@ void Palette::LightTexturePaletteRange( Tcolor *light, int palStart, int palEnd 
 	stop = pal + palStart;
 
 	// Just copy the entries until we reach the start index
-	while (to < stop) {
+	while (to < stop) 
+	{
 		*to++ = *(DWORD*)from;			
 		from += 4;
 	}
 	
 	// Now light the specified range
 	stop = pal + palEnd+1;
-	while (to < stop) {
+	while (to < stop) 
+	{
 		*to++  =  (FloatToInt32(*(from)   * r))			// Red
 				| (FloatToInt32(*(from+1) * g) << 8)	// Green
 				| (FloatToInt32(*(from+2) * b) << 16)	// Blue
@@ -230,7 +238,8 @@ void Palette::LightTexturePaletteRange( Tcolor *light, int palStart, int palEnd 
 
 	// Now copy the values beyond the ending index
 	stop = pal + 256;
-	while (to < stop) {
+	while (to < stop) 
+	{
 		*to++ = *(DWORD*)from;			
 		from += 4;
 	}
@@ -258,7 +267,8 @@ void Palette::LightTexturePaletteBuilding( Tcolor *light )
 	b = light->b;
 
 	// Special case for NVG mode
-	if (TheTimeOfDay.GetNVGmode()) {
+	if (TheTimeOfDay.GetNVGmode()) 
+	{
 		r = 0.0f;
 		g = NVG_LIGHT_LEVEL;
 		b = 0.0f;
@@ -273,7 +283,8 @@ void Palette::LightTexturePaletteBuilding( Tcolor *light )
 	pal[0] = paletteData[0];
 
 	// Darken the "normal" palette entries
-	while (to < stop) {
+	while (to < stop) 
+	{
 		*to  =    (FloatToInt32(*(from)   * r))			// Red
 				| (FloatToInt32(*(from+1) * g) << 8)	// Green
 				| (FloatToInt32(*(from+2) * b) << 16)	// Blue
@@ -283,9 +294,11 @@ void Palette::LightTexturePaletteBuilding( Tcolor *light )
 	}
 
 	// Only turn on the lights if it is dark enough
-	if (light->g > 0.5f) {
+	if (light->g > 0.5f) 
+	{
 		stop = pal + 256;
-		while (to < stop) {
+		while (to < stop) 
+		{
 			*to  =    (FloatToInt32(*(from)   * r))			// Red
 					| (FloatToInt32(*(from+1) * g) << 8)	// Green
 					| (FloatToInt32(*(from+2) * b) << 16)	// Blue
@@ -293,9 +306,12 @@ void Palette::LightTexturePaletteBuilding( Tcolor *light )
 			from += 4;
 			to ++;
 		}
-	} else {
+	} 
+	else 
+	{
 		// TODO: Blend these in gradually
-		if (TheTimeOfDay.GetNVGmode()) {
+		if (TheTimeOfDay.GetNVGmode()) 
+		{
 			*to	= 0xFF00FF00;	to++;
 			*to	= 0xFF00FF00;	to++;
 			*to	= 0xFF00FF00;	to++;
@@ -304,7 +320,9 @@ void Palette::LightTexturePaletteBuilding( Tcolor *light )
 			*to	= 0xFF00FF00;	to++;
 			*to	= 0xFF00FF00;	to++;
 			*to	= 0xFF00FF00;	to++;
-		} else {
+		} 
+		else 
+		{
 			*to	= 0xFF0000FF;	to++;
 			*to	= 0xFF0F30BE;	to++;
 			*to	= 0xFFFF0000;	to++;
@@ -338,7 +356,8 @@ void Palette::LightTexturePaletteReflection( Tcolor *light )
 	b = light->b;
 
 	// Special case for NVG mode
-	if (TheTimeOfDay.GetNVGmode()) {
+	if (TheTimeOfDay.GetNVGmode())
+	{
 		r = 0.0f;
 		g = NVG_LIGHT_LEVEL;
 		b = 0.0f;
@@ -353,7 +372,8 @@ void Palette::LightTexturePaletteReflection( Tcolor *light )
 	pal[0] = paletteData[0];
 
 	// Build the lite version of the palette in temporary storage
-	while (to < stop) {
+	while (to < stop) 
+	{
 		*to  =    (FloatToInt32(*(from)   * r))			// Red
 				| (FloatToInt32(*(from+1) * g) << 8)	// Green
 				| (FloatToInt32(*(from+2) * b) << 16)	// Blue
@@ -377,7 +397,8 @@ DWORD PaletteHandle::m_dwTotalBytes = 0;			// Total number of bytes allocated (i
 PaletteHandle::PaletteHandle(IDirectDraw7 *pDD, UInt16 PalBitsPerEntry, UInt16 PalNumEntries)
 {
 	DWORD dwFlags = DDPCAPS_8BIT;
-	if(PalNumEntries == 0x100) dwFlags |= DDPCAPS_ALLOW256;
+	if(PalNumEntries == 0x100) 
+		dwFlags |= DDPCAPS_ALLOW256;
 
 	DWORD pal[256];
 	ZeroMemory(pal, sizeof(DWORD) * PalNumEntries);
@@ -393,24 +414,25 @@ PaletteHandle::PaletteHandle(IDirectDraw7 *pDD, UInt16 PalBitsPerEntry, UInt16 P
 	m_pPalData = new DWORD[256];
 	ShiAssert(m_pPalData);
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	InterlockedIncrement((long *) &m_dwNumHandles);		// Number of instances
 	InterlockedExchangeAdd((long *) &m_dwTotalBytes, sizeof(*this));
 	InterlockedExchangeAdd((long *) &m_dwTotalBytes, sizeof(DWORD[256]) * 2);
-	#endif
+#endif
 }
 
 PaletteHandle::~PaletteHandle()
 {
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	//InterlockedDecrement((long *) &m_dwNumHandles);		// Number of instances
 	//InterlockedExchangeAdd((long *) &m_dwTotalBytes, -sizeof(*this));
 	//InterlockedExchangeAdd((long *) &m_dwTotalBytes, -(sizeof(DWORD[256]) * 2));
 	//InterlockedExchangeAdd((long *) &m_dwTotalBytes, -(m_arrAttachedTextures.size() * 4));
-	#endif
+#endif
 
 	// Detach from textures
-	for( int i=0 ; ( static_cast<unsigned int>(i) < m_arrAttachedTextures.size()) ; i++){
+	for( int i=0 ; ( static_cast<unsigned int>(i) < m_arrAttachedTextures.size()) ; i++)
+	{
 		m_arrAttachedTextures[i]->PaletteDetach(this);
 	}
 	m_arrAttachedTextures.clear();
@@ -422,13 +444,15 @@ PaletteHandle::~PaletteHandle()
 		m_pIDDP = NULL;
 	}
 
-	if(m_pPalData) delete[] m_pPalData;
+	if(m_pPalData) 
+		delete [] m_pPalData;
 }
 
 void PaletteHandle::Load(UInt16 info, UInt16 PalBitsPerEntry, UInt16 index, UInt16 entries,UInt8 *PalBuffer)
 {
 	ShiAssert(m_pIDDP && entries <= m_nNumEntries);
-	if(!m_pIDDP || !m_pPalData) return;
+	if(!m_pIDDP || !m_pPalData) 
+		return;
 
 	if((DWORD *) PalBuffer != m_pPalData)
 		memcpy(m_pPalData, PalBuffer, sizeof(DWORD) * entries);
@@ -455,7 +479,8 @@ void PaletteHandle::Load(UInt16 info, UInt16 PalBitsPerEntry, UInt16 index, UInt
 void PaletteHandle::AttachToTexture(TextureHandle *pTex)
 {
 	ShiAssert(pTex);
-	if(!pTex) return;
+	if(!pTex) 
+		return;
 
 	std::vector<TextureHandle *>::iterator it = GetAttachedTextureIndex(pTex);
 
@@ -466,15 +491,16 @@ void PaletteHandle::AttachToTexture(TextureHandle *pTex)
 	m_arrAttachedTextures.push_back(pTex);
 	pTex->PaletteAttach(this);
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	InterlockedExchangeAdd((long *) &m_dwTotalBytes, sizeof(pTex));
-	#endif
+#endif
 }
 
 void PaletteHandle::DetachFromTexture(TextureHandle *pTex)
 {
 	ShiAssert(pTex);
-	if(!pTex) return;
+	if(!pTex)
+		return;
 
 	std::vector<TextureHandle *>::iterator it = GetAttachedTextureIndex(pTex);
 	ShiAssert(it != m_arrAttachedTextures.end());	// do not detach twice
@@ -485,9 +511,9 @@ void PaletteHandle::DetachFromTexture(TextureHandle *pTex)
 	m_arrAttachedTextures.erase(it);
 	pTex->PaletteDetach(this);
 
-	#ifdef _DEBUG
+#ifdef _DEBUG
 	//InterlockedExchangeAdd((long *) &m_dwTotalBytes, -sizeof(pTex));
-	#endif
+#endif
 }
 
 std::vector<TextureHandle *>::iterator PaletteHandle::GetAttachedTextureIndex(TextureHandle *pTex)

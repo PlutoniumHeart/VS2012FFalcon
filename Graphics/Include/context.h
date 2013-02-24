@@ -323,17 +323,17 @@ public:
 	DWORD TestCooperativeLevel();
 
 	// JPO - use simple reference counting
-	int AddRef()
-	{
+	int AddRef();
+	/*{
 		return ++refcount;
-	};
+	};*/
 
-	int Release()
-	{
+	int Release();
+	/*{
 		int rc = --refcount;
 		if (refcount <= 0) delete this;
 		return rc;
-	};
+	};*/
 
 protected:
 	void EnumZBufferFormats(void *parr);

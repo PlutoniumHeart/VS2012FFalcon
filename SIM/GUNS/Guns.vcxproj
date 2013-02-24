@@ -58,10 +58,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>.\..\..\build/debug_win32\Sim\Guns\</OutDir>
     <IntDir>.\..\..\build/debug_win32\Sim\Guns\</IntDir>
+    <IncludePath>$(IncludePath);$(DX81_SDK)\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>.\..\..\build/release_win32\Sim\Guns\</OutDir>
     <IntDir>.\..\..\build/release_win32\Sim\Guns\</IntDir>
+    <IncludePath>$(IncludePath);$(DX81_SDK)\include</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Remote|Win32'">
     <OutDir>$(Configuration)\</OutDir>

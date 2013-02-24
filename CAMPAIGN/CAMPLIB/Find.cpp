@@ -454,10 +454,12 @@ CampaignTime TimeBetweenO (Objective o1, Objective o2, int speed)
 	return TimeBetween (x,y,tx,ty,speed);
 }									 
 
-Objective FindObjective(VU_ID id){
+Objective FindObjective(VU_ID id)
+{
 	VuEntity*		e;
 	e = vuDatabase->Find(id);
-	if (e && GetEntityClass(e) == CLASS_OBJECTIVE){
+	if (e && GetEntityClass(e) == CLASS_OBJECTIVE)
+	{
 		return (Objective)e;
 	}
 	return NULL;
