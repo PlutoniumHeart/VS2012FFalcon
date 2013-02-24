@@ -4,6 +4,6 @@
     <LocalDebuggerWorkingDirectory>..\..\FreeFalcon6</LocalDebuggerWorkingDirectory>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
     <LocalDebuggerCommandArguments>-window</LocalDebuggerCommandArguments>
-    <LocalDebuggerCommand>D:\Projects\FreeFalcon\build\debug_win32\Freefalcon.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>D:\Projects\VS2012FFalcon\build\debug_win32\Freefalcon.exe</LocalDebuggerCommand>
   </PropertyGroup>
 </Project>
