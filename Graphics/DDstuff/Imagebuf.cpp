@@ -826,9 +826,14 @@ void ImageBuffer::Compose( ImageBuffer *srcBuffer, RECT *dstRect, RECT *srcRect)
 			rcSrc.top += m_rcFront.top;
 
 			hr = m_pBltTarget->BltFast(rcSrc.left, rcSrc.top, srcBuffer->m_pDDSBack, dstRect, DDBLTFAST_WAIT | DDBLTFAST_NOCOLORKEY);
+            //ShiAssert(SUCCEEDED(hr));
 		}
 
-		else hr = m_pBltTarget->BltFast(srcRect->left, srcRect->top, srcBuffer->m_pDDSBack, dstRect, DDBLTFAST_WAIT | DDBLTFAST_NOCOLORKEY);
+		else 
+        {
+            hr = m_pBltTarget->BltFast(srcRect->left, srcRect->top, srcBuffer->m_pDDSBack, dstRect, DDBLTFAST_WAIT | DDBLTFAST_NOCOLORKEY);
+            //ShiAssert(SUCCEEDED(hr));
+        }
 	}
 
 	else
@@ -841,13 +846,36 @@ void ImageBuffer::Compose( ImageBuffer *srcBuffer, RECT *dstRect, RECT *srcRect)
 			rcSrc.top += m_rcFront.top;
 			rcSrc.bottom += m_rcFront.top;
 
+            // Pu239 quick fix.
+            if(dstRect->right > 1024)
+            {
+                int tmp = dstRect->right-1024;
+                //dstRect->left = dstRect->left-tmp;
+                dstRect->right = dstRect->right-tmp;
+                rcSrc.right -= tmp;
+            }
+
+            if(dstRect->bottom > 768)
+            {
+                int tmp = dstRect->bottom-768;
+                //dstRect->top = dstRect->top - tmp;
+                dstRect->bottom = dstRect->bottom - tmp;
+                rcSrc.bottom -= tmp;
+            }
+
 			hr = m_pBltTarget->Blt(&rcSrc, srcBuffer->m_pDDSBack, dstRect, DDBLT_WAIT, NULL);
+            ShiAssert(SUCCEEDED(hr));
 		}
 
-		else hr = m_pBltTarget->Blt(srcRect, srcBuffer->m_pDDSBack, dstRect, DDBLT_WAIT, NULL);
+		else 
+        {
+            hr = m_pBltTarget->Blt(srcRect, srcBuffer->m_pDDSBack, dstRect, DDBLT_WAIT, NULL);
+            //ShiAssert(SUCCEEDED(hr));
+        }
 	}
 
-	ShiAssert(SUCCEEDED(hr));
+	ShiAssert(SUCCEEDED(hr)); // Pu239 In campaign this assertion failes 3 times for 0x88760096: DDERR_INVALIDRECT Rectangle provided was invalid. Quick fix provided above.
+    // Goint to be replaced by Opengl anyway, I am not spending too much time on it. Might be some driver issue. 
 
 	if(!SUCCEEDED(hr))
 		MonoPrint("ImageBuffer::Compose - Error 0x%X\n", hr);

@@ -1582,14 +1582,16 @@ void C_Handler::EndOutputThread()
 		OutputLoop_=0;
 		SetEvent (WakeOutput_);
 		// Wait for thread to end
-		while (OutputLoop_ == 0){
+		while (OutputLoop_ == 0)
+        {
 			Sleep(1);
 		}
 
 		CloseHandle(OutputThread_);
 		OutputThread_=0;
 	}
-	if (WakeOutput_){
+	if (WakeOutput_)
+    {
 		CloseHandle(WakeOutput_);
 		WakeOutput_=NULL;
 	}
@@ -1599,7 +1601,8 @@ void C_Handler::EndOutputThread()
 void C_Handler::SuspendOutput()
 {
 	EnterCritical();
-	if(TimerThread_){
+	if(TimerThread_)
+    {
 		SuspendThread(OutputThread_);
 	}
 	LeaveCritical();
@@ -1608,7 +1611,8 @@ void C_Handler::SuspendOutput()
 void C_Handler::ResumeOutput()
 {
 	EnterCritical();
-	if(TimerThread_){
+	if(TimerThread_)
+    {
 		ResumeThread (OutputThread_);
 	}
 	LeaveCritical();
@@ -1953,7 +1957,8 @@ long C_Handler::EventHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 		{	
 			WORD MouseZ;
 			HelpOff();
-			if(OldInputMessage()){
+			if(OldInputMessage())
+            {
 				retval=0;
 				break;
 			}
@@ -1968,14 +1973,16 @@ long C_Handler::EventHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 			MouseX = (WORD)p.x;
 			MouseY = (WORD)p.y;
 			overme=GetWindow(MouseX,MouseY);
-			if (overme == NULL){
+			if (overme == NULL)
+            {
 				break; 
 			}
 
 			// so we are rolling wheel inside an active window
 
 			// grab component we are over
-			if (!GrabItem(MouseX, MouseY, overme, MessageType)){
+			if (!GrabItem(MouseX, MouseY, overme, MessageType))
+            {
 				break;
 			}
 
@@ -2004,7 +2011,8 @@ long C_Handler::EventHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 			MouseX = LOWORD(lParam);
 			MouseY = HIWORD(lParam);
 			overme=GetWindow(MouseX,MouseY);
-			if(overme == NULL){
+			if(overme == NULL)
+            {
 				retval=0;
 				break; 
 			}
@@ -2020,26 +2028,31 @@ long C_Handler::EventHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 			if(gPopupMgr->AMenuOpened() && !overme->IsMenu())
 				gPopupMgr->CloseMenu();
 
-			if(Dragging()){
+			if(Dragging())
+            {
 				DropItem(MouseX,MouseY,overme);
 			}
 
 			if(GrabItem(MouseX,MouseY,overme,MessageType))
 			{
-				if(MouseCallback_){
+				if(MouseCallback_)
+                {
 					ret=(*MouseCallback_)(Grab_.Control_,MouseX,MouseY,overme,(short)MessageType);//!
 				}
-				else{
+				else
+                {
 					ret=TRUE;
 				}
 
-				if(ret){
+				if(ret)
+                {
 					overme->SetControl(Grab_.ID_);
 					WindowToFront(overme);
 					Grab_.Control_->Process(Grab_.ID_,(short)MessageType);//!
 				}
 			}
-			else {
+			else 
+            {
 				overme->DeactivateControl();
 				if(MouseCallback_)
 					ret=(*MouseCallback_)(NULL,MouseX,MouseY,overme,(short)MessageType);//!
@@ -2071,35 +2084,44 @@ long C_Handler::EventHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 			MessageType=C_TYPE_LMOUSEUP;
 			LastUp_=MessageType;
 			LastUpTime_=GetMessageTime();
-			if(Dragging()){
+			if(Dragging())
+            {
 				DropItem(MouseX,MouseY,overme);
 				MessageType=C_TYPE_LDROP;
 			}
 
-			if(Grab_.Control_){
-				if(this != gMainHandler){
+			if(Grab_.Control_)
+            {
+				if(this != gMainHandler)
+                {
 					ret=TRUE;
 				}
 
-				if(MouseCallback_ && Grab_.Control_){
+				if(MouseCallback_ && Grab_.Control_)
+                {
 					ret=(*MouseCallback_)(Grab_.Control_,MouseX,MouseY,overme,(short)MessageType);	//!
 				}
-				else {
+				else 
+                {
 					ret=TRUE;
 				}
 
-				if (this != gMainHandler){
+				if (this != gMainHandler)
+                {
 					ret=TRUE;
 				}
 
-				if(ret && Grab_.Control_){
-					if(Grab_.Control_->GetFlags() & C_BIT_ABSOLUTE){
+				if(ret && Grab_.Control_)
+                {
+					if(Grab_.Control_->GetFlags() & C_BIT_ABSOLUTE)
+                    {
 						Grab_.Control_->SetRelXY(
 							MouseX-Grab_.Window_->GetX()-Grab_.Control_->GetX(),
 							MouseY-Grab_.Window_->GetY()-Grab_.Control_->GetY()
 						);
 					}
-					else {
+					else 
+                    {
 						Grab_.Control_->SetRelXY(
 							MouseX-Grab_.Window_->GetX() - 
 							Grab_.Window_->ClientArea_[Grab_.Control_->GetClient()].left -
@@ -2117,26 +2139,32 @@ long C_Handler::EventHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 					}
 				}
 
-				if(this != gMainHandler){
+				if(this != gMainHandler)
+                {
 					ret=TRUE;
 				}
 
 				Grab_.Control_=NULL;
 				Grab_.Window_=NULL;				
 			}
-			else {
+			else 
+            {
 				overme->DeactivateControl();						 
-				if(MouseCallback_){
+				if(MouseCallback_)
+                {
 					ret=(*MouseCallback_)(NULL,MouseX,MouseY,overme, (short)MessageType);	//!
 				}
-				if(ret){
+				if(ret)
+                {
 					WindowToFront(overme);
 				}
 
 				if(MouseX < overme->GetX() || MouseY < overme->GetY() || MouseX > (overme->GetX()+overme->GetW()) || MouseY > (overme->GetY()+overme->GetH()))
 				{
-					if(overme->GetOwner()){
-						if(overme->GetOwner()->CloseWindow()){
+					if(overme->GetOwner())
+                    {
+						if(overme->GetOwner()->CloseWindow())
+                        {
 							overme=NULL;
 						}
 					}
@@ -2144,12 +2172,15 @@ long C_Handler::EventHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 				Grab_.Window_=NULL;
 			}
 			overme=GetWindow(MouseX,MouseY);
-			if(overme){
+			if(overme)
+            {
 				OverControl_=overme->MouseOver(MouseX-overme->GetX(),MouseY-overme->GetY(),OverControl_);
-				if(OverLast_.Control_ != OverControl_){
+				if(OverLast_.Control_ != OverControl_)
+                {
 					HelpOff();
 					OverLast_.Control_=OverControl_;
-					if(OverControl_){
+					if(OverControl_)
+                    {
 						OverLast_.Time_=GetCurrentTime();
 						OverLast_.Tip_=gStringMgr->GetString(OverControl_->GetHelpText());
 						OverLast_.MouseX_=MouseX;
@@ -2162,7 +2193,8 @@ long C_Handler::EventHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPar
 		case WM_LBUTTONDBLCLK:
 			break;
 			HelpOff();
-			if(OldInputMessage()){
+			if(OldInputMessage())
+            {
 				retval=0;
 				break;
 			}
