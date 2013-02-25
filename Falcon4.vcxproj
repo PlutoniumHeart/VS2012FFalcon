@@ -271,6 +271,7 @@
     <Image Include="Falclib\Include\midfnton.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="Falclib\Include\cur00001.cur" />
     <None Include="Falclib\Include\cursor.cur" />
     <None Include="Falclib\Include\Cursor1.cur" />
