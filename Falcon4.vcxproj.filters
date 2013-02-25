@@ -181,6 +181,5 @@
     </None>
     <None Include="Falclib\Include\mainfnt.fnt" />
     <None Include="Falclib\Include\midfnt.fnt" />
-    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>
