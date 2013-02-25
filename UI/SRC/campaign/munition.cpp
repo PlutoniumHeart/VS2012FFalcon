@@ -201,11 +201,13 @@ void TallyStores()
 			// Tally stores Types
 			wid=-1;
 			for(k=0;k<QuantityCount[i];k++)
+			{
 				if(Quantity[i][0][k] == gCurStores[i].WeaponID[j])
 				{
 					wid=k;
 					break;
 				}
+			}
 			if(wid == -1)
 			{
 				wid=QuantityCount[i]++;
@@ -257,11 +259,13 @@ short TotalAvailable(short weaponID)
 		onboard=0;
 		// JB 020219 Limit munition planecount to less than five otherwise we overwrite memory.
 		for(i=0;i<PlaneCount && i < 4;i++)
+		{
 			for(j=0;j<HARDPOINT_MAX;j++)
 			{
 				if(Quantity[i][0][j] == weaponID)
 					onboard+=Quantity[i][1][j];
 			}
+		}
 		return(static_cast<short>(max(avail - onboard,0)));
 	}
 	return(0);
@@ -273,12 +277,15 @@ void PlaceLoadedWeapons(LoadoutStruct *loadout)
 	long i,j,count;
 
 	for(i=0;i<4;i++)
+	{
 		if(PlaneEditList[i])
 			memset(&gCurStores[i],0,sizeof(LoadoutStruct));
+	}
 
 	TallyStores();
 
 	for(i=0;i<4;i++)
+	{
 		if(PlaneEditList[i])
 		{
 			for(j=1;j<HardPoints;j++)
@@ -303,6 +310,7 @@ void PlaceLoadedWeapons(LoadoutStruct *loadout)
 				}
 			}
 		}
+	}
 	TallyStores();
 }
 
@@ -595,7 +603,8 @@ void ClearHardPoint(long plane,long hardpoint,long,RailInfo *rail)
 	VuBin<SimWeaponClass> nextPtr;
 
 	weapPtr = rail->hardPoint.weaponPointer;
-	while (weapPtr){
+	while (weapPtr)
+	{
 		nextPtr.reset(weapPtr->GetNextOnRail());
 		weapPtr.reset();
 		weapPtr = nextPtr;
@@ -718,7 +727,8 @@ void LoadHardPoint(long plane,long hardpoint,long,RailInfo *rail)
 	short /*bits,*/i;
 
 	Plane=gUIViewer->Find((plane << 24));
-	if(Plane == NULL) return;
+	if(Plane == NULL) 
+		return;
 
 	PlaneBSP = (DrawableBSP *)Plane->object;
 
@@ -735,9 +745,11 @@ void LoadHardPoint(long plane,long hardpoint,long,RailInfo *rail)
 		// Load from back of rack to front (ie, 2 missiles on a tri-rack will
 		// load into slot 1 and 2, not 0 and 1)
 		weapPtr.reset(new SimWeaponClass(WeaponDataTable[rail->hardPoint.weaponId].Index + VU_LAST_ENTITY_TYPE));
-		if (weapPtr){
+		if (weapPtr)
+		{
 			weapPtr->SetRackSlot(rail->hardPoint.NumPoints()-(i+1));
-			if (lastPtr){
+			if (lastPtr)
+			{
 				weapPtr->nextOnRail = lastPtr;
 			}
 			lastPtr = weapPtr;
@@ -745,8 +757,10 @@ void LoadHardPoint(long plane,long hardpoint,long,RailInfo *rail)
 	}
 	rail->hardPoint.weaponPointer = weapPtr;
 	int *lo = rail->hardPoint.GetLoadOrder();
-	if(lo){
-		for (i=0; i<rail->weaponCount && weapPtr; i++){
+	if(lo)
+	{
+		for (i=0; i<rail->weaponCount && weapPtr; i++)
+		{
 			weapPtr->SetRackSlot(lo[i]);
 			weapPtr = weapPtr->nextOnRail;
 		}
@@ -806,8 +820,10 @@ void LoadHardPoint(long plane,long num,long center)
 	int i;
 
 	Plane=gUIViewer->Find((plane << 24));
-	if(Plane == NULL) return;
-	if(!(VisFlag & (1 << num))) return;
+	if(Plane == NULL) 
+		return;
+	if(!(VisFlag & (1 << num))) 
+		return;
 
 	Rack=gUIViewer->Find((plane << 24) + (num << 16));
 
@@ -907,7 +923,8 @@ void LoadFlight(VU_ID flightID)
 	gStores=new StoresList;
 
 	flt=(Flight)FindUnit(flightID);
-	if(flt == NULL) return;
+	if(flt == NULL) 
+		return;
 
 	for(i=0;i<5;i++)
 	{
@@ -940,8 +957,9 @@ void LoadFlight(VU_ID flightID)
 	ac			= flt->GetTotalVehicles();
 	loads		= flt->GetNumberOfLoadouts();
 
+	// Pu239 ac counts from 1 to 4 instead of 0 to 3
 	// JB 020219 Limit munition planecount to less than five otherwise we overwrite memory.
-	ShiAssert( ac > 0 && loads > 0 && ac < 4);
+	ShiAssert( ac > 0 && loads > 0 && ac <= 4);
 
 	// save info from what is in the flight
 	for (v=0; v<ac && v < 4; v++)
@@ -1026,7 +1044,8 @@ void LoadFlight(VU_ID flightID)
 
 		// Figure out the weapons
 
-		for(j=1;j<HardPoints;j++) {
+		for(j=1;j<HardPoints;j++)
+		{
 		    //if (g_bNewRackData)
 			GetJRackAndWeapon(vc, classPtr, gCurStores[i].WeaponID[j], gCurStores[i].WeaponCount[j], static_cast<short>(j), &gCurRails[i].rail[j]);
 		    //else
@@ -1107,11 +1126,13 @@ void SetPlaneToArm(long Plane,BOOL ArmIt)
 
 	// JB 020219 Limit munition planecount to less than five otherwise we overwrite memory.
 	for(i=0;i<PlaneCount && i < 4;i++)
+	{
 		if(PlaneEditList[i])
 		{
 			FirstPlane=i;
 			return;
 		}
+	}
 }
 
 BOOL MuniTimeCB(C_Base *control)
@@ -1701,11 +1722,13 @@ void UpdateStoresTally(C_Window *win)
 				}
 			}
 			if(wid != -1)
+			{
 				if(Quantity[FirstPlane][1][wid])
 				{
 					_stprintf(buf,"%1d",Quantity[FirstPlane][1][wid]);
 					((C_Text*)cur->Control_)->SetText(buf);
 				}
+			}
 			cur->Control_->Refresh();
 		}
 
@@ -1964,7 +1987,8 @@ void SetCurrentLoadout()
 					}
 					cur->Control_->SetUserNumber(0,gCurStores[FirstPlane].WeaponCount[j]);
 					short state = (gCurStores[FirstPlane].WeaponCount[j] << 1)+Diff;
-					if (state > C_STATE_20) {
+					if (state > C_STATE_20) 
+					{
 						state = Diff ? C_STATE_19 : C_STATE_20;
 					}
 					cur->Control_->SetState(state);
@@ -2644,12 +2668,12 @@ void RestoreStores(C_Window *win)
 	ShiAssert( ac > 0 && loads > 0 );
 
 	for (v=0; v<ac; v++)
-		{
-		if (v < loads)
-			memcpy(&gCurStores[v], flt->GetLoadout(v), sizeof(LoadoutStruct));
-		else
-			memcpy(&gCurStores[v], flt->GetLoadout(0), sizeof(LoadoutStruct));
-		}
+	{
+	if (v < loads)
+		memcpy(&gCurStores[v], flt->GetLoadout(v), sizeof(LoadoutStruct));
+	else
+		memcpy(&gCurStores[v], flt->GetLoadout(0), sizeof(LoadoutStruct));
+	}
 	memcpy(&gCurStores[4], flt->GetLoadout(0), sizeof(LoadoutStruct));
 
 	for(i=0;i<4;i++)
@@ -2723,13 +2747,13 @@ void UseStores()
 
 	// KCK: Need to rationalize the loadout structure
 	for (i=0; i<ac; i++)
-		{
+	{
 		for (hp=0; hp<HARDPOINT_MAX; hp++)
-			{
+		{
 			if (!gCurStores[i].WeaponCount[hp])
 				gCurStores[i].WeaponID[hp] = 0;
-			}
 		}
+	}
 
 	CampEnterCriticalSection();
 
@@ -2737,10 +2761,10 @@ void UseStores()
 	if (loads < ac)
 		sq->UpdateSquadronStores (loadout[0].WeaponID, loadout[0].WeaponCount, 0, -ac);
 	else
-		{
+	{
 		for (i=0; i<loads; i++)
 			sq->UpdateSquadronStores (loadout[i].WeaponID, loadout[i].WeaponCount, 0, -1);
-		}
+	}
 
 	// Notify the squadron that we've used some weapons
 	for (i=0; i<ac; i++)
@@ -2756,7 +2780,7 @@ void UseStores()
 	// After the player mucks with it, we're going to use one PER aircraft.
 	newloadout = new LoadoutStruct[ac];
 	for (i=0; i<ac; i++)
-		{
+	{
 		// Hardpoint 0 never changes (KCK: this seems like a weird way to do this, 
 		// but Peter doesn't save off the gun loadout because he wants to be able to
 		// use the loadout for multiple aircraft -although, I have my doubts that
@@ -2764,11 +2788,11 @@ void UseStores()
 		newloadout[i].WeaponID[0] = loadout[0].WeaponID[0];
 		newloadout[i].WeaponCount[0] = loadout[0].WeaponCount[0];
 		for (hp=1; hp<HardPoints; hp++)
-			{
+		{
 			newloadout[i].WeaponID[hp] = gCurStores[i].WeaponID[hp];
 			newloadout[i].WeaponCount[hp] = gCurStores[i].WeaponCount[hp];
-			}
 		}
+	}
 	flt->SetLoadout(newloadout,ac);
 
 	CampLeaveCriticalSection();

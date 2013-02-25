@@ -562,11 +562,13 @@ void ImageBuffer::ComputeColorShifts( void )
 	mask = m_ddsdFront.ddpfPixelFormat.dwRBitMask;
 	redShift = 8;
 	ShiAssert( mask );
-	while( !(mask & 1) ) {
+	while( !(mask & 1) ) 
+	{
 		mask >>= 1;
 		redShift--;
 	}
-	while( mask & 1 ) {
+	while( mask & 1 ) 
+	{
 		mask >>= 1;
 		redShift--;
 	}
@@ -575,11 +577,13 @@ void ImageBuffer::ComputeColorShifts( void )
 	mask = m_ddsdFront.ddpfPixelFormat.dwGBitMask;
 	greenShift = 16;
 	ShiAssert( mask );
-	while( !(mask & 1) ) {
+	while( !(mask & 1) ) 
+	{
 		mask >>= 1;
 		greenShift--;
 	}
-	while( mask & 1 ) {
+	while( mask & 1 ) 
+	{
 		mask >>= 1;
 		greenShift--;
 	}
@@ -588,11 +592,13 @@ void ImageBuffer::ComputeColorShifts( void )
 	mask = m_ddsdFront.ddpfPixelFormat.dwBBitMask;
 	ShiAssert( mask );
 	blueShift = 24;
-	while( !(mask & 1) ) {
+	while( !(mask & 1) ) 
+	{
 		mask >>= 1;
 		blueShift--;
 	}
-	while( mask & 1 ) {
+	while( mask & 1 ) 
+	{
 		mask >>= 1;
 		blueShift--;
 	}
@@ -609,7 +615,8 @@ void ImageBuffer::GetColorMasks( UInt32 *r, UInt32 *g, UInt32* b )
 void ImageBuffer::UpdateFrontWindowRect( RECT *rect )
 {
 	// ShiAssert( frontType == Primary );	// This is only useful for the primary surface
-	if(rect) m_rcFront = *rect;
+	if(rect) 
+		m_rcFront = *rect;
 	m_bFrontRectValid = rect && (m_rcFront.left || m_rcFront.right);
 }
 
@@ -632,7 +639,8 @@ void *ImageBuffer::Lock(bool bLockMutexOnly, bool bWriteOnly)
 
 //	DWORD dwFlags = DDLOCK_NOSYSLOCK | DDLOCK_WAIT | DDLOCK_SURFACEMEMORYPTR;
 	DWORD dwFlags = DDLOCK_WAIT | DDLOCK_SURFACEMEMORYPTR;
-	if(bWriteOnly) dwFlags |= DDLOCK_WRITEONLY;
+	if(bWriteOnly) 
+		dwFlags |= DDLOCK_WRITEONLY;
 
 	int nRetries = 1;
 
@@ -717,23 +725,32 @@ WORD ImageBuffer::Pixel32toPixel16( UInt32 ABGR )
 //	ShiAssert( PixelSize() == 2 );	// Only returns 16 bit values
 
 	// RED
-	if (redShift >= 0) {
+	if (redShift >= 0) 
+	{
 		color = (ABGR >>  redShift) & m_ddsdFront.ddpfPixelFormat.dwRBitMask;
-	} else {
+	} 
+	else 
+	{
 		color = (ABGR << -redShift) & m_ddsdFront.ddpfPixelFormat.dwRBitMask;
 	}
 
 	// GREEN
-	if (greenShift >= 0) {
+	if (greenShift >= 0) 
+	{
 		color |= (ABGR >>  greenShift) & m_ddsdFront.ddpfPixelFormat.dwGBitMask;
-	} else {
+	}
+	else 
+	{
 		color |= (ABGR << -greenShift) & m_ddsdFront.ddpfPixelFormat.dwGBitMask;
 	}
 
 	// BLUE
-	if (blueShift >= 0) {
+	if (blueShift >= 0) 
+	{
 		color |= (ABGR >>  blueShift) & m_ddsdFront.ddpfPixelFormat.dwBBitMask;
-	} else {
+	} 
+	else 
+	{
 		color |= (ABGR << -blueShift) & m_ddsdFront.ddpfPixelFormat.dwBBitMask;
 	}
 
@@ -748,23 +765,32 @@ DWORD ImageBuffer::Pixel32toPixel32( UInt32 ABGR )
 //	ShiAssert( PixelSize() == 2 );	// Only returns 16 bit values
 
 	// RED
-	if (redShift >= 0) {
+	if (redShift >= 0)
+	{
 		color = (ABGR >>  redShift) & m_ddsdFront.ddpfPixelFormat.dwRBitMask;
-	} else {
+	} 
+	else 
+	{
 		color = (ABGR << -redShift) & m_ddsdFront.ddpfPixelFormat.dwRBitMask;
 	}
 
 	// GREEN
-	if (greenShift >= 0) {
+	if (greenShift >= 0) 
+	{
 		color |= (ABGR >>  greenShift) & m_ddsdFront.ddpfPixelFormat.dwGBitMask;
-	} else {
+	} 
+	else 
+	{
 		color |= (ABGR << -greenShift) & m_ddsdFront.ddpfPixelFormat.dwGBitMask;
 	}
 
 	// BLUE
-	if (blueShift >= 0) {
+	if (blueShift >= 0) 
+	{
 		color |= (ABGR >>  blueShift) & m_ddsdFront.ddpfPixelFormat.dwBBitMask;
-	} else {
+	} 
+	else 
+	{
 		color |= (ABGR << -blueShift) & m_ddsdFront.ddpfPixelFormat.dwBBitMask;
 	}
 
@@ -781,23 +807,32 @@ UInt32 ImageBuffer::Pixel16toPixel32( WORD pixel )
 	ShiAssert( PixelSize() == 2 );	// Only returns 16 bit values
 
 	// RED
-	if (redShift >= 0) {
+	if (redShift >= 0) 
+	{
 		color = (pixel & m_ddsdFront.ddpfPixelFormat.dwRBitMask) <<  redShift;
-	} else {
+	} 
+	else
+	{
 		color = (pixel & m_ddsdFront.ddpfPixelFormat.dwRBitMask) >> -redShift;
 	}
 
 	// GREEN
-	if (greenShift >= 0) {
+	if (greenShift >= 0) 
+	{
 		color |= (pixel & m_ddsdFront.ddpfPixelFormat.dwGBitMask) <<  greenShift;
-	} else {
+	} 
+	else 
+	{
 		color |= (pixel & m_ddsdFront.ddpfPixelFormat.dwGBitMask) >> -greenShift;
 	}
 
 	// BLUE
-	if (blueShift >= 0) {
+	if (blueShift >= 0) 
+	{
 		color |= (pixel & m_ddsdFront.ddpfPixelFormat.dwBBitMask) <<  blueShift;
-	} else {
+	} 
+	else 
+	{
 		color |= (pixel & m_ddsdFront.ddpfPixelFormat.dwBBitMask) >> -blueShift;
 	}
 
@@ -850,17 +885,19 @@ void ImageBuffer::Compose( ImageBuffer *srcBuffer, RECT *dstRect, RECT *srcRect)
             if(dstRect->right > 1024)
             {
                 int tmp = dstRect->right-1024;
-                //dstRect->left = dstRect->left-tmp;
+                dstRect->left = dstRect->left-tmp;
                 dstRect->right = dstRect->right-tmp;
                 rcSrc.right -= tmp;
+				rcSrc.left -= tmp;
             }
 
             if(dstRect->bottom > 768)
             {
                 int tmp = dstRect->bottom-768;
-                //dstRect->top = dstRect->top - tmp;
+                dstRect->top = dstRect->top - tmp;
                 dstRect->bottom = dstRect->bottom - tmp;
                 rcSrc.bottom -= tmp;
+				rcSrc.top -= tmp;
             }
 
 			hr = m_pBltTarget->Blt(&rcSrc, srcBuffer->m_pDDSBack, dstRect, DDBLT_WAIT, NULL);
@@ -905,7 +942,8 @@ void ImageBuffer::ComposeTransparent( ImageBuffer *srcBuffer, RECT *dstRect, REC
 			hr = m_pBltTarget->BltFast(rcSrc.left, rcSrc.top, srcBuffer->m_pDDSBack, dstRect, DDBLTFAST_WAIT | DDBLTFAST_SRCCOLORKEY);
 		}
 
-		else hr = m_pBltTarget->BltFast(srcRect->left, srcRect->top, srcBuffer->m_pDDSBack, dstRect, DDBLTFAST_WAIT | DDBLTFAST_SRCCOLORKEY );
+		else 
+			hr = m_pBltTarget->BltFast(srcRect->left, srcRect->top, srcBuffer->m_pDDSBack, dstRect, DDBLTFAST_WAIT | DDBLTFAST_SRCCOLORKEY );
 	}
 
 	else
@@ -921,7 +959,8 @@ void ImageBuffer::ComposeTransparent( ImageBuffer *srcBuffer, RECT *dstRect, REC
 			hr = m_pBltTarget->Blt(&rcSrc, srcBuffer->m_pDDSBack, dstRect, DDBLT_WAIT | DDBLT_KEYSRC, NULL);
 		}
 
-		else hr = m_pBltTarget->Blt(srcRect, srcBuffer->m_pDDSBack, dstRect, DDBLT_WAIT | DDBLT_KEYSRC, NULL);
+		else
+			hr = m_pBltTarget->Blt(srcRect, srcBuffer->m_pDDSBack, dstRect, DDBLT_WAIT | DDBLT_KEYSRC, NULL);
 	}
 
 	ShiAssert(SUCCEEDED(hr));
@@ -983,7 +1022,8 @@ void ImageBuffer::ComposeRoundRot( ImageBuffer *srcBuffer, RECT *srcRect, RECT *
 	// Probably this will break if it is ever used to target a Primary surface
 	// in a window with no back buffer.  We'd need to account for the window
 	// offset in screen space.
-	if (srcRect->right - srcRect->left == dstRect->right - dstRect->left) {
+	if (srcRect->right - srcRect->left == dstRect->right - dstRect->left) 
+	{
 		ShiAssert((srcRect->bottom - srcRect->top) == (dstRect->bottom - dstRect->top));
 		ShiAssert((srcRect->right - srcRect->left) == (dstRect->right - dstRect->left));
 
@@ -991,7 +1031,9 @@ void ImageBuffer::ComposeRoundRot( ImageBuffer *srcBuffer, RECT *srcRect, RECT *
 							(int)(angle *  2607.594587618f),// 180.0f / PI * 4096 / 90.0f (convertion from radians to Erick's)
 							srcRect, dstRect,
 							startStopArray );
-	} else {
+	} 
+	else 
+	{
 		ShiAssert(2*(srcRect->bottom - srcRect->top) == (dstRect->bottom - dstRect->top));
 		ShiAssert(2*(srcRect->right - srcRect->left) == (dstRect->right - dstRect->left));
 
@@ -1161,8 +1203,10 @@ void ImageBuffer::BackBufferToRAW( char *filename )
 				}
 
 				// Write the scanline to disk
-				if ( !WriteFile( fileID, buffer, bufferSize, &bytes, NULL ) )  bytes=0xFFFFFFFF;
-				if ( bytes != bufferSize ) {
+				if ( !WriteFile( fileID, buffer, bufferSize, &bytes, NULL ) ) 
+					bytes=0xFFFFFFFF;
+				if ( bytes != bufferSize ) 
+				{
 					char string[256];
 					PutErrorString( string );
 					strcat( string, "Couldn't write screen dump file." );
@@ -1184,7 +1228,8 @@ void ImageBuffer::BackBufferToRAW( char *filename )
 				p=buffer;
 
 				// Step accross the scanline converting each pixel to RGB
-				for (c=rect.left; c<rect.right; c++){
+				for (c=rect.left; c<rect.right; c++)
+				{
 					
 					// Get the 16 bit color from the surface and convert to 32 bit ABGR
 					pixel = (DWORD*)Pixel( imagePtr, r, c );
@@ -1196,8 +1241,10 @@ void ImageBuffer::BackBufferToRAW( char *filename )
 				}
 
 				// Write the scanline to disk
-				if ( !WriteFile( fileID, buffer, bufferSize, &bytes, NULL ) )  bytes=0xFFFFFFFF;
-				if ( bytes != bufferSize ) {
+				if ( !WriteFile( fileID, buffer, bufferSize, &bytes, NULL ) ) 
+					bytes=0xFFFFFFFF;
+				if ( bytes != bufferSize ) 
+				{
 					char string[256];
 					PutErrorString( string );
 					strcat( string, "Couldn't write screen dump file." );
@@ -1213,7 +1260,7 @@ void ImageBuffer::BackBufferToRAW( char *filename )
 
 	// Close the output RAW file and free the output buffer
 	CloseHandle( fileID );
-	delete[] buffer;
+	delete [] buffer;
 }
 
 // OW
@@ -1242,7 +1289,8 @@ void ImageBuffer::RestoreAll()
 
 					if(SUCCEEDED(hr))
 						MonoPrint("ImageBuffer::RestoreAll - Back restored\n");
-					else MonoPrint("ImageBuffer::RestoreAll - Failed to restore back (0x%X)\n", hr);
+					else 
+						MonoPrint("ImageBuffer::RestoreAll - Failed to restore back (0x%X)\n", hr);
 				}
 			}
 		}
@@ -1265,8 +1313,10 @@ void ImageBuffer::Clear( UInt32 color )
 	imageptr=Lock();
 	ShiAssert(imageptr);
 		
-	for (int r=0;r<height;r++) {
-		for (int c=0;c<width;c++) {
+	for (int r=0;r<height;r++) 
+	{
+		for (int c=0;c<width;c++) 
+		{
 			pixel = (WORD*)Pixel( imageptr, r, c );
 			*pixel=Pixel32toPixel16(color);
 		}

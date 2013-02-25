@@ -28,7 +28,8 @@
 // Squadron Class
 // =========================
 
-class SquadronClass : public AirUnitClass {
+class SquadronClass : public AirUnitClass 
+{
 #ifdef USE_SH_POOLS
 public:
     // Overload new/delete to use a SmartHeap fixed size pool
@@ -66,19 +67,19 @@ public:
 
 	// Access Functions
 	uchar GetAvailableStores(int i);
-	ulong GetSchedule(int i) { return schedule[i]; }
-	VU_ID GetHotSpot(void) { return hot_spot; }
-	uchar GetRating(int i) { return rating[i]; }
-	short GetAAKills(void) { return aa_kills; }
-	short GetAGKills(void) { return ag_kills; }
-	short GetASKills(void) { return as_kills; }
-	short GetANKills(void) { return an_kills; }
-	short GetMissionsFlown(void) { return missions_flown; }
-	short GetMissionScore(void) { return mission_score; }
-	uchar GetTotalLosses(void) { return total_losses; }
-	uchar GetPilotLosses(void) { return pilot_losses; }
-	uchar GetAssigned (void) { return assigned; }
-	uchar GetPatchID (void) { return squadron_patch; }
+	ulong GetSchedule(int i);
+	VU_ID GetHotSpot(void);
+	uchar GetRating(int i);
+	short GetAAKills(void);
+	short GetAGKills(void);
+	short GetASKills(void);
+	short GetANKills(void);
+	short GetMissionsFlown(void);
+	short GetMissionScore(void);
+	uchar GetTotalLosses(void);
+	uchar GetPilotLosses(void);
+	uchar GetAssigned (void);
+	uchar GetPatchID (void);
 	
 	void SetSchedule(int, ulong);	// OR ulong into schedule
 	void ClearSchedule(int);		// set it to 0
@@ -106,16 +107,16 @@ public:
 	virtual VU_ERRCODE Handle(VuFullUpdateEvent *event);
 
 	// Required pure virtuals
-	virtual int Reaction (CampEntity, int, float)	{	return 0; }
+	virtual int Reaction (CampEntity, int, float);
 	virtual int MoveUnit (CampaignTime);
 	// RV - Biker - Same for choppers
 	virtual int MoveChopperUnit (CampaignTime);
 	// RV - Biker - Move this to appropriate function
 	void Scramble (void);
-	virtual int ChooseTactic (void)					{ return 0; }
-	virtual int CheckTactic (int)				{ return 0; }
-	virtual int Real (void)							{ return 0; }
-	virtual int IsSquadron (void)					{ return TRUE; }
+	virtual int ChooseTactic (void);
+	virtual int CheckTactic (int);
+	virtual int Real (void);
+	virtual int IsSquadron (void);
 	virtual int GetUnitSupplyNeed (int total);
 	virtual int GetUnitFuelNeed (int total);
 	virtual void SupplyUnit (int supply, int fuel);
@@ -129,29 +130,29 @@ public:
 	// Core functions
 	virtual void UseFuel (long f);
 	virtual void SetSquadronFuel (long f);
-	virtual void SetUnitSpecialty (int s)			{ specialty = (uchar)s; }
+	virtual void SetUnitSpecialty (int s);
 	virtual void SetUnitStores (int w, uchar v);
 	virtual void SetUnitAirbase (VU_ID ID);
 	virtual void SetLastResupply (int s);
-	virtual void SetLastResupplyTime (CampaignTime t)	{ last_resupply_time = t; }
-	virtual long GetSquadronFuel (void)				{ return fuel; }
-	virtual int GetUnitSpecialty (void)				{ return (int)specialty; }
-	virtual uchar GetUnitStores (int w)				{ return stores[w]; }
-	virtual CampaignTime GetLastResupplyTime (void)	{ return last_resupply_time; }
-	virtual int GetLastResupply (void)				{ return last_resupply; }
-	virtual CampEntity GetUnitAirbase (void)		{ return FindEntity(airbase_id); }
-	virtual VU_ID GetUnitAirbaseID (void)			{ return airbase_id; }
+	virtual void SetLastResupplyTime (CampaignTime t);
+	virtual long GetSquadronFuel (void);
+	virtual int GetUnitSpecialty (void);
+	virtual uchar GetUnitStores (int w);
+	virtual CampaignTime GetLastResupplyTime (void);
+	virtual int GetLastResupply (void);
+	virtual CampEntity GetUnitAirbase (void);
+	virtual VU_ID GetUnitAirbaseID (void);
 	virtual void DisposeChildren (void);
-	int GetPilotID (int pilot)						{ return pilot_data[pilot].pilot_id; }
-	PilotClass* GetPilotData (int pilot)			{ return &pilot_data[pilot]; }
-	PilotInfoClass* GetPilotInfo (int pilot)		{ return &PilotInfo[pilot_data[pilot].pilot_id]; }
+	int GetPilotID (int pilot);
+	PilotClass* GetPilotData (int pilot);
+	PilotInfoClass* GetPilotInfo (int pilot);
 	int NumActivePilots (void);
 	void InitPilots (void);
 	void ReinforcePilots (int max_new_pilots);
-	void SetPilotStatus (int pilot, int s)			{ pilot_data[pilot].pilot_status = (uchar)s; }
-	int GetPilotStatus (int pilot)					{ return pilot_data[pilot].pilot_status; }
+	void SetPilotStatus (int pilot, int s);
+	int GetPilotStatus (int pilot);
 	void ScoreKill (int pilot, int killtype);
-	void ScoreMission (short missions)				{ missions_flown = static_cast<short>(missions_flown + missions); } // this looks silly but gets rid of warning, since changing the type could invalidate save files
+	void ScoreMission (short missions); 
 	void ShiftSchedule (void);
 	int FindAvailableAircraft (MissionRequest mis);
 	void ScheduleAircraft (Flight fl, MissionRequest mis);
