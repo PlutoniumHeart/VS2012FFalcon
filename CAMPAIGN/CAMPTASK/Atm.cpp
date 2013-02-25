@@ -310,17 +310,20 @@ AirTaskingManagerClass::~AirTaskingManagerClass()
 	delete tankerList;
 	delete ecmList;
 	delete awacsList;
-	while (airbaseList){
+	while (airbaseList)
+	{
 		next = airbaseList->next;
 		delete airbaseList;
 		airbaseList = next;
 	}
-	if (squadronList){
+	if (squadronList)
+	{
 		squadronList->Unregister();
 		delete squadronList;
 		squadronList = NULL;
 	}
-	if (packageList){
+	if (packageList)
+	{
 		packageList->Unregister();
 		delete packageList;
 		packageList = NULL;
@@ -483,7 +486,8 @@ int AirTaskingManagerClass::Task (void)
 	{
 		VuListIterator		packit(packageList);
 		pc = (Package) packit.GetFirst();
-		while (pc){
+		while (pc)
+		{
 			if (!pc->Final())
 				pc->CheckNeedRequests();
 			pc = (Package) packit.GetNext();
@@ -545,44 +549,46 @@ int AirTaskingManagerClass::Task (void)
 		switch (res)
 		{
 				case PRET_SUCCESS:
-						// Tally any new Counter Air missions
-						if (MissionData[mis->mission].skill == ARO_CA)
-						{
-							if (pc)
-								averageCAStrength = (averageCAStrength * 4 + pc->GetAAStrength())/5;
-							currentCAMissions++;
-						}
-						// Insert this package into our active package list
-						if (pc && !(mis->flags & AMIS_IMMEDIATE))
-						{
-							packageList->ForcedInsert(pc);
-							pc = NULL;
-						}
-						// JB 000811 - Move the Remove and NULL around since references to mis could otherwise cause a crash (occured once)
-						//requestList->Remove(pp);//-
-						//pp = NULL;//-
-						if (!mis->action_type && !(MissionData[mis->mission].flags & AMIS_FLYALWAYS))
-							missionsFilled++;
-						requestList->Remove(pp);//+
-						pp = NULL;//+
-						// JB 000811
-						break;
+					// Tally any new Counter Air missions
+					if (MissionData[mis->mission].skill == ARO_CA)
+					{
+						if (pc)
+							averageCAStrength = (averageCAStrength * 4 + pc->GetAAStrength())/5;
+						currentCAMissions++;
+					}
+					// Insert this package into our active package list
+					if (pc && !(mis->flags & AMIS_IMMEDIATE))
+					{
+						packageList->ForcedInsert(pc);
+						pc = NULL;
+					}
+					// JB 000811 - Move the Remove and NULL around since references to mis could otherwise cause a crash (occured once)
+					//requestList->Remove(pp);//-
+					//pp = NULL;//-
+					if (!mis->action_type && !(MissionData[mis->mission].flags & AMIS_FLYALWAYS))
+						missionsFilled++;
+					requestList->Remove(pp);//+
+					pp = NULL;//+
+					// JB 000811
+					break;
 				case PRET_DELAYED:
-						// Put this element on the delayed list
-						requestList->Detach(pp);
-						delayedList->Insert(pp);
-						pp = NULL;
-						break;
+					// Put this element on the delayed list
+					requestList->Detach(pp);
+					delayedList->Insert(pp);
+					pp = NULL;
+					break;
 				default:
-						// Delete this request
-						requestList->Remove(pp);
-						pp = NULL;
-						break;
+					// Delete this request
+					requestList->Remove(pp);
+					pp = NULL;
+					break;
 		}
 		CampLeaveCriticalSection();
 		// Clean up aborted packages (otherwise we can reuse the non-inserted entity)
-		if (pc) {
-			if (PackInserted){
+		if (pc) 
+		{
+			if (PackInserted)
+			{
 				ChillPackage(&pc);
 			}
 			else // JPO - brought into the loop - so it frees it here.
@@ -655,18 +661,21 @@ void AirTaskingManagerClass::DoCalculations(void)
 				// Check for objective:
 				sq->GetLocation(&x,&y);
 				airbase = GetObjectiveByXY(x,y);
-				if (!airbase || (airbase->GetType() != TYPE_AIRBASE && airbase->GetType() != TYPE_ARMYBASE)){
+				if (!airbase || (airbase->GetType() != TYPE_AIRBASE && airbase->GetType() != TYPE_ARMYBASE))
+				{
 					// Check for carrier unit
 					airbase = FindUnitByXY(AllRealList, x, y, DOMAIN_SEA);
-					if (!airbase || airbase->GetSType() != STYPE_UNIT_CARRIER){
+					if (!airbase || airbase->GetSType() != STYPE_UNIT_CARRIER)
+					{
 						// Check for a fixed flag (we're our own airbase)
-						if (sq->DontPlan()){
+						if (sq->DontPlan())
+						{
 							airbase = sq;
 						}
 					}
 				}
 			}
-	#ifdef DEBUG
+#ifdef DEBUG
 			if (airbase == sq && !sq->DontPlan())
 			{
 				GridIndex		x,y;
@@ -674,7 +683,7 @@ void AirTaskingManagerClass::DoCalculations(void)
 				MonoPrint("Error: Squadron @ %d,%d not on airbase. Contact Dave Power.\n",x,y);
 				airbase = NULL;
 			}
-	#endif
+#endif
 			if (airbase)
 			{
 				AddToAirbaseList(airbase);
@@ -682,9 +691,9 @@ void AirTaskingManagerClass::DoCalculations(void)
 			}
 			else
 			{
-	#ifdef DEBUG
+#ifdef DEBUG
 				MonoPrint("Couldn't find airbase for unit %d at %d,%d- Contact Kevin.\n",sq->GetCampID(),x,y);
-	#endif
+#endif
 				sq->SetUnitAirbase(FalconNullId);
 			}
 			// Shift usage schedule over by one
@@ -1390,10 +1399,10 @@ Squadron AirTaskingManagerClass::FindBestAir(MissionRequest mis, GridIndex bx, G
 				continue;
 
 			// KCK HACK TO FORCE ONLY ALERT MISSIONS (TO TRACK DOWN THE SCRAMBLE STUFF)
-		#ifdef TEST_SCRAMBLE
+#ifdef TEST_SCRAMBLE
 			if (mis->mission != AMIS_ALERT && sq->Id() == FalconLocalSession->GetPlayerSquadronID())
 				continue;
-		#endif
+#endif
 
 			// Check for required plane capibilities
 			uc = sq->GetUnitClassData();
@@ -1428,7 +1437,8 @@ Squadron AirTaskingManagerClass::FindBestAir(MissionRequest mis, GridIndex bx, G
 					db = (MissionData[mis->mission].loitertime * speed) / 60.0F;
 				
 				// RV - Biker - Reduce loiter time for short range AC
-				if (d+db > sq->GetUnitRange()) {
+				if (d+db > sq->GetUnitRange()) 
+				{
 					MissionData[mis->mission].loitertime = min(45, MissionData[mis->mission].loitertime);
 					db = (MissionData[mis->mission].loitertime * speed) / 60.0F;
 					if (d+db > sq->GetUnitRange())
@@ -2139,15 +2149,18 @@ void RebuildATMLists (void)
 	if (TeamInfo[0] && TeamInfo[0]->atm && !F4IsBadReadPtr(TeamInfo[0], sizeof(TeamClass)) && !F4IsBadReadPtr(TeamInfo[0]->atm, sizeof(AirTaskingManagerClass))) // JB 010220 CTD
 		cycle = (TeamInfo[0]->atm->cycle+1)%ATM_MAX_CYCLES;
 
-	for (t=0;t<NUM_TEAMS;t++){
+	for (t=0;t<NUM_TEAMS;t++)
+	{
 		// sfr: added mem check
-		if (TeamInfo[t] && TeamInfo[t]->VuState() == VU_MEM_ACTIVE){
+		if (TeamInfo[t] && TeamInfo[t]->VuState() == VU_MEM_ACTIVE)
+		{
 			TeamInfo[t]->atm->squadrons = 0;
 			TeamInfo[t]->atm->cycle = cycle;
 			// Truncate schedule time to minute.
 			TeamInfo[t]->atm->scheduleTime = TheCampaign.CurrentTime / CampaignMinutes;
 			TeamInfo[t]->atm->scheduleTime *= CampaignMinutes;
-			if (TeamInfo[t]->atm->squadronList){
+			if (TeamInfo[t]->atm->squadronList)
+			{
 				TeamInfo[t]->atm->squadronList->Purge();
 				TeamInfo[t]->atm->packageList->Purge();
 			}
@@ -2162,19 +2175,23 @@ void RebuildATMLists (void)
 		t = u->GetTeam();
 		// Since we know we have a squadron/package now, initialize the lists
 		// if we don't have them
-		if (TeamInfo[t]){
-			if (!TeamInfo[t]->atm->squadronList){
+		if (TeamInfo[t])
+		{
+			if (!TeamInfo[t]->atm->squadronList)
+			{
 				TeamInfo[t]->atm->squadronList = new FalconPrivateList(&AllAirFilter);
 				TeamInfo[t]->atm->squadronList->Register();
 				TeamInfo[t]->atm->packageList = new FalconPrivateList(&AllAirFilter);
 				TeamInfo[t]->atm->packageList->Register();
 			}
 			// Add to the correct list;
-			if (u->GetType() == TYPE_SQUADRON && !u->Scripted()){
+			if (u->GetType() == TYPE_SQUADRON && !u->Scripted())
+			{
 				TeamInfo[t]->atm->squadronList->ForcedInsert(u);
 				TeamInfo[t]->atm->squadrons++;
 			}
-			else if (u->GetType() == TYPE_PACKAGE){
+			else if (u->GetType() == TYPE_PACKAGE)
+			{
 				TeamInfo[t]->atm->packageList->ForcedInsert(u);
 			}
 		}
@@ -2466,11 +2483,13 @@ int TargetAllSites (Objective po, int action, int team, CampaignTime startTime)
 	{
 		VuListIterator		oit(AllObjList);
 		otarget = (Objective) oit.GetFirst();
-		while (otarget){
+		while (otarget)
+		{
 			if (otarget->GetObjectiveStatus() > 30 && GetRoE(team,otarget->GetTeam(),ROE_AIR_ATTACK) == ROE_ALLOWED){
 				otarget->GetLocation(&mis.tx,&mis.ty);
 				o = FindNearestObjective(POList, mis.tx, mis.ty, NULL);
-				if (o == po){
+				if (o == po)
+				{
 					mis.requesterID = otarget->Id();
 					mis.targetID = otarget->Id();
 					mis.vs = otarget->GetTeam();
@@ -2480,7 +2499,8 @@ int TargetAllSites (Objective po, int action, int team, CampaignTime startTime)
 						otarget->GetType() == TYPE_AIRBASE || 
 						otarget->GetType() == TYPE_AIRSTRIP || 
 						otarget->GetType() == TYPE_ARMYBASE
-					){
+					)
+					{
 						// Request enemy strike vs this airbase
 						mis.tot = startTime + 15*CampaignMinutes;
 						mis.mission = AMIS_OCASTRIKE;
@@ -2571,14 +2591,17 @@ int TargetAllSites (Objective po, int action, int team, CampaignTime startTime)
 	{
 		VuListIterator		ait(AirDefenseList);
 		utarget = (Unit) ait.GetFirst();
-		while (utarget){
+		while (utarget)
+		{
 			if (
 				GetRoE(team,utarget->GetTeam(),ROE_AIR_ATTACK) == ROE_ALLOWED && 
 				utarget->GetElectronicDetectionRange(Air) > 0
-			){
+			)
+			{
 				utarget->GetLocation(&mis.tx,&mis.ty);
 				o = FindNearestObjective(POList, mis.tx, mis.ty, NULL);
-				if (o == po){
+				if (o == po)
+				{
 					// Request enemy strike vs this air defense asset
 					mis.requesterID = utarget->Id();
 					mis.targetID = utarget->Id();

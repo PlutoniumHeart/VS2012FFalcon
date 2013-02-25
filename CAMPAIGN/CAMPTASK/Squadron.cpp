@@ -912,7 +912,7 @@ int SquadronClass::MoveChopperUnit (CampaignTime time)
 // RV - Biker - Scramble code with appropriate function
 void SquadronClass::Scramble (void) 
 {
-	int i, want_alert;
+	int i = 0, want_alert = 0; // Pu239 Initalized those!
 
 	// Set up an alert bird for this squadron
 	if (rating[ARO_CA] > 25) 
@@ -932,9 +932,9 @@ void SquadronClass::Scramble (void)
 		if (want_alert) 
 		{
 				
-			#ifdef DEBUG
+#ifdef DEBUG
 			MonoPrint("Requesting alert bird for squadron #%d.\n",GetCampID());
-			#endif
+#endif
 			
 			MissionRequestClass	mis;
 			// JB 010728 Make the wait time configurable
@@ -1173,7 +1173,8 @@ uchar SquadronClass::GetAvailableStores (int i)
 	have = GetUnitStores(i);
 	max = SquadronStoresDataTable[class_data->SpecialIndex].Stores[i];
 
-	ShiAssert(max);
+	// Pu239 max is allowed to be 0, 0 means the squadron doesn't have any of that type of ammunition left, I am changing the assertion condition.
+	ShiAssert(max>=0);
 	if(max)
 		return (have * 4) / max;
 	else

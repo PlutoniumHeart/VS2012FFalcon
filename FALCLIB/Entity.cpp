@@ -746,16 +746,19 @@ int LoadPtHeaderData(char *filename)
 {
 	FILE*		fp;
 
-	if ((fp = OpenCampFile(filename, "PHD", "rb")) == NULL){
+	if ((fp = OpenCampFile(filename, "PHD", "rb")) == NULL)
+	{
 		return 0;
 	}
 	fseek(fp, 0, SEEK_END); // JPO - work out if the file looks the right size.
 	unsigned int size = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
-	if (fread(&NumPtHeaders,sizeof(short),1,fp) < 1){
+	if (fread(&NumPtHeaders,sizeof(short),1,fp) < 1)
+	{
 		return 0;
 	}
-	if (size != sizeof(PtHeaderDataType) * NumPtHeaders + 2){
+	if (size != sizeof(PtHeaderDataType) * NumPtHeaders + 2)
+	{
 		return 0;
 	}
 	PtHeaderDataTable = new PtHeaderDataType[NumPtHeaders];
@@ -807,19 +810,23 @@ int LoadPtHeaderData(char *filename)
 	return 1;
 }
 
-int LoadPtData(char *filename){
+int LoadPtData(char *filename)
+{
 	FILE*		fp;
 
-	if ((fp = OpenCampFile(filename, "PD", "rb")) == NULL){
+	if ((fp = OpenCampFile(filename, "PD", "rb")) == NULL)
+	{
 		return 0;
 	}
 	fseek(fp, 0, SEEK_END); // JPO - work out if the file looks the right size.
 	unsigned int size = ftell(fp);
 	fseek(fp, 0, SEEK_SET);
-	if (fread(&NumPts, sizeof(short), 1, fp) < 1){
+	if (fread(&NumPts, sizeof(short), 1, fp) < 1)
+	{
 		return 0;
 	}
-	if (size != sizeof(PtDataType) * NumPts + 2){
+	if (size != sizeof(PtDataType) * NumPts + 2)
+	{
 		return 0;
 	}
 	PtDataTable = new PtDataType[NumPts];
@@ -1517,7 +1524,8 @@ void LoadVisIdMap()
 		idmap[i] = i; // identity map
 	if ((fp = OpenCampFile("visid", "map", "rt")) == NULL)
 		return;
-	while (fgets(buffer, sizeof buffer, fp)) {
+	while (fgets(buffer, sizeof buffer, fp)) 
+	{
 		if (buffer[0] == '/' || buffer[0] == '\n' || buffer[0] == '\r')
 			continue;
 		if (sscanf (buffer, "%d => %d", &id1, &id2) == 2 &&
@@ -1540,12 +1548,14 @@ void LoadRackTables()
 	int ngrp;
 	char buffer[MAX_PATH];
 
-	if ((fp = OpenCampFile("Rack", "dat", "rt")) == NULL) {
+	if ((fp = OpenCampFile("Rack", "dat", "rt")) == NULL) 
+	{
 		sprintf (buffer, "%s\\%s", FalconObjectDataDir, "Rack.dat");
 		if ((fp = fopen(buffer, "rt")) == NULL) return;
 	}
 
-	while (fgets (buffer, sizeof buffer, fp)) {
+	while (fgets (buffer, sizeof buffer, fp)) 
+	{
 		if (buffer[0] == '#' || buffer[0] == '\n')
 			continue;
 		if (sscanf(buffer, "NumGroups %d", &ngrp) != 1)
@@ -1553,12 +1563,17 @@ void LoadRackTables()
 		ShiAssert(ngrp >= 0 && ngrp < 1000); // arbitrary 1000
 		break;
 	}
-	if (feof(fp)) {fclose(fp); return; }
+	if (feof(fp)) 
+	{
+		fclose(fp); 
+		return; 
+	}
 	// read in the groups
 	MaxRackGroups = ngrp;
 	RackGroupTable = new RackGroup[MaxRackGroups];
 	int rg = 0;
-	while (rg < MaxRackGroups && fgets (buffer, sizeof buffer, fp)) {
+	while (rg < MaxRackGroups && fgets (buffer, sizeof buffer, fp)) 
+	{
 		if (buffer[0] == '#' || buffer[0] == '\n')
 			continue;
 		int grp;
@@ -1568,23 +1583,31 @@ void LoadRackTables()
 			continue;
 		cp += 5;
 		ShiAssert(grp < MaxRackGroups); // well it should be 
-		while (isdigit(*cp)) cp++;
-		while (isspace(*cp)) cp++;
+		while (isdigit(*cp)) 
+			cp++;
+		while (isspace(*cp)) 
+			cp++;
 		ngrp = atoi(cp);
 		ShiAssert(ngrp >= 0 && ngrp < 1000); // arbitrary 1000
 		RackGroupTable[grp].nentries = ngrp;
 		RackGroupTable[grp].entries = new int [ngrp];
-		while (isdigit(*cp)) cp++;
-		while (isspace(*cp)) cp++;
-		for (int i = 0; *cp && i < ngrp; i++)  {
+		while (isdigit(*cp)) 
+			cp++;
+		while (isspace(*cp)) 
+			cp++;
+		for (int i = 0; *cp && i < ngrp; i++) 
+		{
 			RackGroupTable[grp].entries[i] = atoi(cp);
-			while (isdigit(*cp)) cp++;
-			while (isspace(*cp)) cp++;
+			while (isdigit(*cp)) 
+				cp++;
+			while (isspace(*cp)) 
+				cp++;
 		}
 		rg ++;
 	}
 	// now read in the entries
-	while (fgets (buffer, sizeof buffer, fp)) {
+	while (fgets (buffer, sizeof buffer, fp)) 
+	{
 		if (buffer[0] == '#' || buffer[0] == '\n')
 			continue;
 		if (sscanf(buffer, "NumRacks %d", &ngrp) != 1)
@@ -1592,12 +1615,17 @@ void LoadRackTables()
 		ShiAssert(ngrp >= 0 && ngrp < 1000); // arbitrary 1000
 		break;
 	}
-	if (feof(fp)) {fclose(fp); return; }
+	if (feof(fp))
+	{
+		fclose(fp);
+		return; 
+	}
 	MaxRackObjects = ngrp;
 	RackObjectTable = new RackObject[MaxRackObjects];
 	memset(RackObjectTable, 0, sizeof(*RackObjectTable) * MaxRackObjects);
 	int rack = 0;
-	while (fgets (buffer, sizeof buffer, fp)) {
+	while (fgets (buffer, sizeof buffer, fp)) 
+	{
 		if (buffer[0] == '#' || buffer[0] == '\n')
 			continue;
 		int ctid, occ;
@@ -1615,7 +1643,8 @@ int FindBestRackID(int rackgroup, int count)
 {
 	if (rackgroup < 0 || rackgroup >= MaxRackGroups)
 		return -1;
-	for (int i = 0; i < RackGroupTable[rackgroup].nentries; i++) {
+	for (int i = 0; i < RackGroupTable[rackgroup].nentries; i++) 
+	{
 		int rack = RackGroupTable[rackgroup].entries[i];
 		if (rack > 0 && rack < MaxRackObjects && 
 						RackObjectTable[rack].maxoccupancy >= count)
@@ -1630,8 +1659,10 @@ int FindBestRackIDByPlaneAndWeapon(int planerg, int weaponrg, int count)
 					weaponrg < 0 || weaponrg >= MaxRackGroups)
 		return -1;
 	// first find a rackgroup in common
-	for(int i = 0; i < RackGroupTable[planerg].nentries; i++) {
-		for (int j = 0; j < RackGroupTable[weaponrg].nentries; j++) {
+	for(int i = 0; i < RackGroupTable[planerg].nentries; i++)
+	{
+		for (int j = 0; j < RackGroupTable[weaponrg].nentries; j++) 
+		{
 			int rack = RackGroupTable[planerg].entries[i];
 			if (rack == RackGroupTable[weaponrg].entries[j] &&
 							rack > 0 && rack < MaxRackObjects && 
@@ -1647,58 +1678,58 @@ int FindBestRackIDByPlaneAndWeapon(int planerg, int weaponrg, int count)
 
 class RDRackNode : public ANode
 {
-		public:
-				RDRackNode();
-				~RDRackNode();
+public:
+	RDRackNode();
+	~RDRackNode();
 
-				char rackName[32];
-				char mnemonic[12];
-				int rackCT; // could be 0
-				int stations;
-				int swdCount;
-				int *swd;
-				int wIdCount;
-				int *wId;
-				int wClassCount;
-				int *wClass;
-				int any; // anything goes here
-				int flags;
-				AList loadOrder;
+	char rackName[32];
+	char mnemonic[12];
+	int rackCT; // could be 0
+	int stations;
+	int swdCount;
+	int *swd;
+	int wIdCount;
+	int *wId;
+	int wClassCount;
+	int *wClass;
+	int any; // anything goes here
+	int flags;
+	AList loadOrder;
 };
 
 class RDLoadOrderNode : public ANode
 {
-		public:
-				RDLoadOrderNode(int Count);
-				~RDLoadOrderNode();
-				int count;
-				int *loadOrder;
+public:
+	RDLoadOrderNode(int Count);
+	~RDLoadOrderNode();
+	int count;
+	int *loadOrder;
 };
 
 class RDRackNameNode : public ANode
 {
-		public:
-				char rackName[32];
+public:
+	char rackName[32];
 };
 
 class RDPylonNode : public ANode
 {
-		public:
-				RDPylonNode();
-				~RDPylonNode();
-				char mnemonic[12];
-				int pylonCT; // could be 0
-				int flags; // RDF_
-				AList rackNameList;
+public:
+	RDPylonNode();
+	~RDPylonNode();
+	char mnemonic[12];
+	int pylonCT; // could be 0
+	int flags; // RDF_
+	AList rackNameList;
 };
 
 
 class RDHardpointNode : public ANode
 {
-		public:
-				~RDHardpointNode();
-				int		groupId;
-				AList	pylonList;
+public:
+	~RDHardpointNode();
+	int		groupId;
+	AList	pylonList;
 };
 
 /*************************************/
@@ -1856,12 +1887,12 @@ void RDLoadRackData(void)
 				{
 					switch(i)
 					{
-							case 0:
-									rn->flags|=RDF_EMERGENCY_JETT_RACK;
-									break;
-							case 1:
-									rn->flags|=RDF_SELECTIVE_JETT_RACK;
-									break;
+						case 0:
+							rn->flags|=RDF_EMERGENCY_JETT_RACK;
+							break;
+						case 1:
+							rn->flags|=RDF_SELECTIVE_JETT_RACK;
+							break;
 					}
 				}
 			}
@@ -1876,12 +1907,12 @@ void RDLoadRackData(void)
 				{
 					switch(i)
 					{
-							case 0:
-									rn->flags|=RDF_EMERGENCY_JETT_WEAPON;
-									break;
-							case 1:
-									rn->flags|=RDF_SELECTIVE_JETT_WEAPON;
-									break;
+						case 0:
+							rn->flags|=RDF_EMERGENCY_JETT_WEAPON;
+							break;
+						case 1:
+							rn->flags|=RDF_SELECTIVE_JETT_WEAPON;
+							break;
 					}
 				}
 			}
@@ -2048,12 +2079,12 @@ void RDLoadRackData(void)
 					{
 						switch(i)
 						{
-								case 0:
-										pn->flags|=RDF_EMERGENCY_JETT_PYLON;
-										break;
-								case 1:
-										pn->flags|=RDF_SELECTIVE_JETT_PYLON;
-										break;
+							case 0:
+								pn->flags|=RDF_EMERGENCY_JETT_PYLON;
+								break;
+							case 1:
+								pn->flags|=RDF_SELECTIVE_JETT_PYLON;
+								break;
 						}
 					}
 				}
