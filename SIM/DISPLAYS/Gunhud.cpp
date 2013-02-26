@@ -589,7 +589,7 @@ int		tfms;
 // ASSOCIATOR 03/12/03: Added the combined SnapShot LCOS Gunmode SSLC 
 void HudClass::DrawSSLC (void)
 {
-float	tf, range, interp;
+float	tf = 0.0, range = 0.0, interp = 0.0; //Pu239
 float	xPos, yPos;		// The HUD space location of the hypothetical bullet in flight
 int		tfms, idx;
 float	radius;

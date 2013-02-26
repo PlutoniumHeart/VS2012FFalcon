@@ -2639,7 +2639,7 @@ void SaveObjectiveDeltas (char* savefile)
 
 	fwrite(&csize, sizeof(long), 1, fp);
 	fwrite(cbuffer, csize, 1, fp);
-	delete cbuffer;
+	delete [] cbuffer; // Pu239
 	CloseCampFile(fp);
 }
 

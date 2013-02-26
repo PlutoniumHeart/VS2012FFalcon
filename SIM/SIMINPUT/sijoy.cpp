@@ -1418,13 +1418,13 @@ BOOL JoystickCreateEffect(DWORD)
 
       if (axesArray)
       {
-         delete axesArray;
+         delete [] axesArray; // Pu239
          axesArray = NULL;
       }
 
       if (dirArray)
       {
-         delete dirArray;
+         delete [] dirArray; // Pu239
          dirArray = NULL;
       }
 
@@ -1503,7 +1503,7 @@ BOOL JoystickCreateEffect(DWORD)
 
             if (forceData)
             {
-               delete forceData;
+               delete [] forceData; // Pu239
                forceData = NULL;
             }
             forceData = new long[customHolder.cChannels * customHolder.cSamples];
@@ -1624,7 +1624,7 @@ BOOL JoystickCreateEffect(DWORD)
          case DIEFT_CONDITION:
             if (conditionHolder)
             {
-               delete conditionHolder;
+               delete [] conditionHolder; // Pu239
                conditionHolder = NULL;
             }
 
@@ -1659,25 +1659,25 @@ BOOL JoystickCreateEffect(DWORD)
 
    if (axesArray)
    {
-      delete axesArray;
+      delete [] axesArray; // Pu239
       axesArray = NULL;
    }
 
    if (dirArray)
    {
-      delete dirArray;
+      delete [] dirArray; // Pu239
       dirArray = NULL;
    }
 
    if (forceData)
    {
-      delete forceData;
+      delete [] forceData; // Pu239
       forceData = NULL;
    }
 
    if (conditionHolder)
    {
-      delete conditionHolder;
+      delete [] conditionHolder; // Pu239
       conditionHolder = NULL;
    }
 

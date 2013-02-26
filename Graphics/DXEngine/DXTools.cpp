@@ -176,7 +176,7 @@ bool DXScript_Beacon(D3DVECTOR *pos, ObjectInstance *obj, DWORD *Argument)
 	float	Delta=TheTimeManager.GetClockTime() * 36.0f * DegreesPerSecond;
 #endif
 
-	float RelAngle;
+	float RelAngle = 0.0; // Pu239
 	// get the angular difference btw camera and object ALWAYS POSITIVE ( + 2PI )
 	if(pos->y) RelAngle=(float)atan2(pos->x, pos->y);
 	// calculate the Beacon World Transformation 

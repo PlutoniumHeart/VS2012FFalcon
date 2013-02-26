@@ -639,7 +639,7 @@ FalconMessageFilter::FalconMessageFilter(FalconEvent::HandlingThread theThread, 
 {
 }
 #else
-FalconMessageFilter::FalconMessageFilter(FalconEvent::HandlingThread theThread, ulong vuMessageBits){
+FalconMessageFilter::FalconMessageFilter(FalconEvent::HandlingThread theThread, ulong vuMessageBits) // Pu239 WTF!
 {
 	filterThread = theThread;
 #if MF_DONT_PROCESS_DELETE

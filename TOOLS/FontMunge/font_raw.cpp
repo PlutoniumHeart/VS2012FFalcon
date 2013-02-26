@@ -131,7 +131,7 @@ long UseReplace=0;
 
 void ExportToRaw(char *filename)
 {
-	RGB24BIT *mem;
+	RGB24BIT *mem = NULL; // Pu239
 	long i,j,s,x,y,k,l,count;
 	short rep;
 	long owidth;
@@ -222,7 +222,7 @@ void ExportToRaw(char *filename)
 	}
 	else
 		printf("Can't open output bitmap (%s)\n",buffer);
-	delete mem;
+	delete [] mem; // Pu239
 }
 
 void LoadFont(char *fontname)

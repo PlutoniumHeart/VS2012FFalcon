@@ -219,7 +219,7 @@ void ExportToRaw(char *filename)
 	}
 	else
 		printf("Can't open output bitmap (%s)\n",buffer);
-	delete mem;
+	delete [] mem; // Pu239
 }
 
 void LoadFont(char *fontname)

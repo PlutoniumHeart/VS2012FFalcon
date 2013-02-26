@@ -82,9 +82,9 @@ mlTrig trig;
 void DrawCursorBullseyeData(VirtualDisplay* display, float cursorX, float cursorY)
 {
 	AircraftClass *playerAC = SimDriver.GetPlayerAircraft();
-	float bullseyeX, bullseyeY;
-	float azFrom, range;
-	float cursX, cursY;
+	float bullseyeX = 0.0, bullseyeY = 0.0;
+	float azFrom = 0.0, range = 0.0; //Pu239
+	float cursX = 0.0, cursY = 0.0;
 	float ownYaw = cockpitFlightData.yaw;
 	char str[12];
 	mlTrig trig;

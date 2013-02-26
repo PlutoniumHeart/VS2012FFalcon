@@ -421,7 +421,7 @@ void TLevel::PreProcessBlock( LoaderQ* request )
 		// MemFreeFS( postArray );
 		MemFreePtr( postArray );
 #else
-		delete postArray;
+		delete [] postArray; // Pu239
 #endif
 		postArray = NULL;
 

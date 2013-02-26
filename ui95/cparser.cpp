@@ -528,7 +528,7 @@ void C_Parser::LoadIDTable(char *filename)
 		    fprintf(Perror_,"LoadIDTable read failed (%s)\n",filename);
 	    }
 	    UI_CLOSE(ifp);
-	    delete idfile;
+	    delete [] idfile; // Pu239
 	    return;
 	}
 	idfile[size]=0;
@@ -563,7 +563,7 @@ void C_Parser::LoadIDTable(char *filename)
 		}
 	}
 
-	delete idfile;
+	delete [] idfile; // Pu239
 }
 
 void C_Parser::LoadIDList(char *filename)
@@ -610,7 +610,7 @@ void C_Parser::LoadIDList(char *filename)
 	listfile=new char [size+5]; // just in case :)
 	if(UI_READ(listfile,size,1,ifp) != 1)
 	{
-		delete listfile;
+		delete [] listfile; // Pu239
 		UI_CLOSE(ifp);
 		return;
 	}
@@ -647,7 +647,7 @@ void C_Parser::LoadIDList(char *filename)
 			}
 		}
 	}
-	delete listfile;
+	delete [] listfile; // Pu239
 }
 
 long C_Parser::FindID(char *token)
@@ -818,7 +818,7 @@ BOOL C_Parser::LoadWindowList(char *filename)
 		if(Perror_)
 		    fprintf(Perror_,"LoadWindowList read failed (%s)\n",filename);
 	    }
-	    delete listfile;
+	    delete [] listfile; // Pu239
 	    UI_CLOSE(ifp);
 	    return(FALSE);
 	}
@@ -878,7 +878,7 @@ BOOL C_Parser::LoadWindowList(char *filename)
 			}
 		}
 	}
-	delete listfile;
+	delete [] listfile; // Pu239
 	return(TRUE);
 }
 
@@ -930,7 +930,7 @@ BOOL C_Parser::LoadPopupMenuList(char *filename)
 		if(Perror_)
 		    fprintf(Perror_,"LoadPopupMenuList read failed (%s)\n",filename);
 	    }
-	    delete listfile;
+	    delete [] listfile; // Pu239
 		UI_CLOSE(ifp);
 		return(FALSE);
 	}
@@ -980,7 +980,7 @@ BOOL C_Parser::LoadPopupMenuList(char *filename)
 			}
 		}
 	}
-	delete listfile;
+	delete [] listfile; // Pu239
 	return(TRUE);
 }
 
@@ -1030,7 +1030,7 @@ BOOL C_Parser::LoadImageList(char *filename)
 		if(Perror_)
 		    fprintf(Perror_,"LoadImageList read failed (%s)\n",filename);
 	    }
-	    delete listfile;
+	    delete [] listfile; // Pu239
 		UI_CLOSE(ifp);
 		return(FALSE);
 	}
@@ -1064,7 +1064,7 @@ BOOL C_Parser::LoadImageList(char *filename)
 			}
 		}
 	}
-	delete listfile;
+	delete [] listfile; // Pu239
 	return(TRUE);
 }
 
@@ -1114,7 +1114,7 @@ BOOL C_Parser::LoadSoundList(char *filename)
 		if(Perror_)
 		    fprintf(Perror_,"LoadSoundList read failed (%s)\n",filename);
 	    }
-	    delete listfile;
+	    delete [] listfile; // Pu239
 	    UI_CLOSE(ifp);
 	    return(FALSE);
 	}
@@ -1149,7 +1149,7 @@ BOOL C_Parser::LoadSoundList(char *filename)
 			}
 		}
 	}
-	delete listfile;
+	delete [] listfile; // Pu239
 	return(TRUE);
 }
 
@@ -1199,7 +1199,7 @@ BOOL C_Parser::LoadStringList(char *filename)
 		if(Perror_)
 		    fprintf(Perror_,"LoadStringList read failed (%s)\n",filename);
 	    }
-	    delete listfile;
+	    delete [] listfile; // Pu239
 	    UI_CLOSE(ifp);
 	    return(FALSE);
 	}
@@ -1233,7 +1233,7 @@ BOOL C_Parser::LoadStringList(char *filename)
 			}
 		}
 	}
-	delete listfile;
+	delete [] listfile; // Pu239
 	return(TRUE);
 }
 
@@ -1284,7 +1284,7 @@ BOOL C_Parser::LoadMovieList(char *filename)
 		if(Perror_)
 		    fprintf(Perror_,"LoadMovieList read failed (%s)\n",filename);
 	    }
-	    delete listfile;
+	    delete [] listfile; // Pu239
 	    UI_CLOSE(ifp);
 	    return(FALSE);
 	}
@@ -1321,7 +1321,7 @@ BOOL C_Parser::LoadMovieList(char *filename)
 			}
 		}
 	}
-	delete listfile;
+	delete [] listfile; // Pu239
 	return(TRUE);
 }
 

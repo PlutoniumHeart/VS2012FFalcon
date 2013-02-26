@@ -4642,7 +4642,7 @@ void SaveUnits (char* scenario)
 	fwrite (&size, sizeof(long), 1, fp);
 	fwrite (buffer, size, 1, fp);
 	CloseCampFile(fp);
-	delete buffer;
+	delete [] buffer; // Pu239
 }
 
 //sfr: added to size(as remaining) to DecodeUnitData

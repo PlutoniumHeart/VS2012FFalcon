@@ -1724,7 +1724,7 @@ void TankerBrain::FrameExec (SimObjectType* tList, SimObjectType* tPtr)
 
 			check if we go from TP 0 to TP 3 or from TP 0 to TP 1
 */
-				float dist, dx, dy, longleg, shortleg, heading, distance;
+				float dist, dx, dy, longleg = 0.0 , shortleg = 0.0, heading, distance; // Pu239
 				bool boxside = false;
 				int farthercloser = 0;
 

@@ -1125,7 +1125,7 @@ int GroundClass::Exec (void)
 
 
 				//I-Hawk - Separate wake effect for different ships size
-				int theSFX;
+				int theSFX = 0.0; // Pu239
 			
 				if ( radius < 200.0f )
 				{

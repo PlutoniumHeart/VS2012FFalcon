@@ -2504,7 +2504,7 @@ void DigitalBrain::AiCheckInPositionCall(float trX, float trY, float trZ)
 void DigitalBrain::AiCheckPosition (void)
 {
 float xdiff, ydiff, zdiff;
-float trX, trY, trZ, rangeFactor;
+float trX = 0.0, trY = 0.0, trZ = 0.0, rangeFactor = 0.0; // Pu239
 ACFormationData::PositionData *curPosition;
 AircraftClass* paircraft;
 int vehInFlight, flightIdx;

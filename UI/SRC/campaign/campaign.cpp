@@ -2596,7 +2596,7 @@ void LoadTroopMovementHistory()
 						rec++;
 					}
 					hist->SetReady(1);
-					delete filedata;
+					delete [] filedata; // Pu239
 					win->AddControl(hist);
 					recnum++;
 				}

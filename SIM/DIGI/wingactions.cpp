@@ -218,7 +218,7 @@ void DigitalBrain::AiSetInPosition(void)
 void DigitalBrain::AiCheckPlayerInPosition(void)
 {
 	float xdiff, ydiff, zdiff;
-	float trkX, trkY, trkZ;
+	float trkX = 0.0, trkY = 0.0, trkZ = 0.0; // Pu239
 	int vehInFlight;
 	int flightIdx;
 	ACFormationData::PositionData* curPosition;
